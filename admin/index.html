@@ -1,0 +1,623 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Admin - SEJITU</title>
+<style>
+:root{
+  --bg:#f5f7fb;--white:#fff;--ink:#172238;
+  --muted:#7d8799;--line:#e9edf3;
+  --nav:#151d2d;--accent:#6658df;
+  --green:#15966a;--orange:#dc9144;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:Inter,Arial,sans-serif;
+}
+a{text-decoration:none;color:inherit}
+button{font:inherit;cursor:pointer}
+.app{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:250px 1fr;
+}
+.sidebar{
+  position:sticky;top:0;height:100vh;
+  background:var(--nav);color:white;
+  padding:24px 17px;
+  display:flex;flex-direction:column;
+}
+.brand{
+  height:70px;display:flex;align-items:center;
+  padding:0 10px 18px;
+  border-bottom:1px solid #ffffff18;
+}
+.brand img{
+  width:155px;height:48px;
+  object-fit:contain;object-position:left center;
+}
+.nav-label{
+  margin:28px 10px 12px;
+  color:#78869d;font-size:10px;
+  font-weight:800;letter-spacing:1.5px;
+}
+.nav{display:grid;gap:6px}
+.nav a{
+  display:flex;align-items:center;gap:13px;
+  padding:13px;border-radius:10px;
+  color:#aab4c5;font-size:13px;
+  transition:.2s;
+}
+.nav a:hover{background:#ffffff12;color:white}
+.nav a.active{
+  background:linear-gradient(100deg,#6558df,#5549c5);
+  color:white;box-shadow:0 7px 18px #5145c544;
+}
+.nav svg{width:18px;height:18px;flex:none}
+.sidebar-bottom{margin-top:auto}
+.site-link{
+  display:flex;align-items:center;gap:10px;
+  margin:15px 3px;padding:12px;
+  border:1px solid #ffffff20;border-radius:10px;
+  color:#d6ddeb;font-size:12px;
+}
+.site-link svg{width:17px;color:#aaa2ff}
+.user-mini{
+  display:flex;align-items:center;gap:10px;
+  padding:15px 5px 3px;
+  border-top:1px solid #ffffff18;
+}
+.avatar{
+  width:36px;height:36px;display:grid;
+  place-items:center;border-radius:11px;
+  background:#e9e7ff;color:#5c50cf;
+  font-size:12px;font-weight:800;
+}
+.user-meta{flex:1}
+.user-meta strong{display:block;font-size:11px}
+.user-meta span{font-size:10px;color:#8d9ab0}
+.logout{
+  border:0;background:none;color:#aab4c5;
+  font-size:18px;
+}
+.main{min-width:0}
+.topbar{
+  height:75px;padding:0 35px;
+  background:white;border-bottom:1px solid var(--line);
+  display:flex;align-items:center;
+  justify-content:space-between;
+}
+.breadcrumb{font-size:12px;color:#8993a5}
+.breadcrumb strong{color:#29354a}
+.top-user{display:flex;align-items:center;gap:10px}
+.top-user strong{font-size:11px}
+.top-user span{display:block;font-size:10px;color:var(--muted)}
+.content{
+  max-width:1500px;margin:auto;
+  padding:34px 35px 45px;
+}
+.welcome{
+  display:flex;align-items:flex-end;
+  justify-content:space-between;
+  gap:20px;margin-bottom:27px;
+}
+.welcome h1{margin:0;font-size:28px;letter-spacing:-1px}
+.welcome p{margin:8px 0 0;color:var(--muted);font-size:12px}
+.date{
+  background:white;border:1px solid var(--line);
+  border-radius:9px;padding:10px 13px;
+  color:#697589;font-size:11px;
+}
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:16px;margin-bottom:22px;
+}
+.stat{
+  background:white;border:1px solid var(--line);
+  border-radius:14px;padding:19px;
+  box-shadow:0 8px 28px #1b27410a;
+}
+.stat-head{
+  display:flex;justify-content:space-between;
+  align-items:center;color:#778296;font-size:11px;
+}
+.stat-icon{
+  width:36px;height:36px;border-radius:10px;
+  background:#f0efff;color:var(--accent);
+  display:grid;place-items:center;font-size:18px;
+}
+.stat-icon.green{background:#e9f7f1;color:var(--green)}
+.stat-icon.orange{background:#fff4e8;color:var(--orange)}
+.stat-icon.blue{background:#eaf2ff;color:#4c7dd2}
+.stat-value{
+  margin:15px 0 7px;font-size:28px;
+  font-weight:800;letter-spacing:-1px;
+}
+.stat-foot{font-size:10px;color:#98a1af}
+.trend{color:var(--green);font-weight:800}
+.grid-main{
+  display:grid;
+  grid-template-columns:minmax(0,1.65fr) minmax(260px,.85fr);
+  gap:18px;align-items:start;
+}
+.panel{
+  background:white;border:1px solid var(--line);
+  border-radius:14px;overflow:hidden;
+  box-shadow:0 8px 28px #1b27410a;
+}
+.panel-head{
+  padding:19px 20px 15px;
+  display:flex;align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid #f0f2f6;
+}
+.panel-head h2{margin:0;font-size:13px}
+.panel-head p{margin:5px 0 0;color:#9aa3b1;font-size:10px}
+.text-link{color:var(--accent);font-size:10px;font-weight:750}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;white-space:nowrap}
+th{
+  text-align:left;padding:13px 17px;
+  color:#9aa3b1;font-size:9px;
+  letter-spacing:.7px;background:#fcfcfe;
+}
+td{
+  padding:14px 17px;border-top:1px solid #f1f3f6;
+  font-size:10px;color:#667286;
+}
+.post-title{display:flex;align-items:center;gap:10px}
+.thumb{
+  width:38px;height:38px;border-radius:9px;
+  display:grid;place-items:center;color:white;
+  font-weight:800;background:linear-gradient(135deg,#a8a1ff,#6359d7);
+}
+.thumb.orange{background:linear-gradient(135deg,#f7c58b,#d88743)}
+.thumb.green{background:linear-gradient(135deg,#8ad8bb,#279b77)}
+.thumb.blue{background:linear-gradient(135deg,#9fc5f7,#5484d0)}
+.post-title strong{display:block;color:#2a3549;font-size:10px}
+.post-title span{display:block;margin-top:4px;color:#a0a8b5;font-size:9px}
+.status{
+  display:inline-block;padding:5px 8px;
+  border-radius:20px;font-size:9px;font-weight:750;
+}
+.published{background:#eaf7f1;color:#16865f}
+.draft{background:#fff4e8;color:#bd7a31}
+.right-stack{display:grid;gap:18px}
+.quick-grid{
+  padding:16px;display:grid;
+  grid-template-columns:1fr 1fr;gap:10px;
+}
+.quick{
+  display:flex;align-items:center;gap:9px;
+  padding:13px 10px;border:1px solid #edf0f5;
+  border-radius:11px;font-size:10px;font-weight:750;
+  color:#465166;transition:.2s;
+}
+.quick:hover{border-color:#d5d0ff;background:#faf9ff}
+.quick-icon{
+  width:31px;height:31px;display:grid;
+  place-items:center;border-radius:9px;
+  background:#f0efff;color:var(--accent);
+  font-size:16px;
+}
+.activity{padding:5px 19px 15px}
+.activity-item{
+  display:flex;gap:11px;padding:13px 0;
+  border-bottom:1px solid #f1f3f6;
+}
+.activity-item:last-child{border:0}
+.activity-icon{
+  width:29px;height:29px;border-radius:9px;
+  display:grid;place-items:center;
+  background:#f1efff;color:var(--accent);
+}
+.activity-text{font-size:10px;color:#657186;line-height:1.6}
+.activity-text strong{color:#344057}
+.activity-text small{display:block;color:#a0a8b5;font-size:9px}
+.site-status{padding:18px}
+.status-row{
+  display:flex;justify-content:space-between;
+  margin-bottom:14px;font-size:10px;color:#758095;
+}
+.online{color:var(--green);font-weight:800}
+.status-desc{font-size:10px;line-height:1.6;color:#9aa3b1}
+@media(max-width:1100px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .grid-main{grid-template-columns:1fr}
+}
+@media(max-width:800px){
+  .app{grid-template-columns:72px 1fr}
+  .sidebar{padding:20px 9px}
+  .brand{justify-content:center;padding:0 0 18px}
+  .brand img{width:45px}
+  .nav-label{font-size:0;margin:22px 0 10px}
+  .nav a{justify-content:center;padding:12px 5px}
+  .nav a span,.site-link span,.user-meta,.logout{display:none}
+  .site-link{justify-content:center}
+  .user-mini{justify-content:center}
+  .content{padding:25px 20px}
+  .topbar{padding:0 20px}
+}
+@media(max-width:600px){
+  .app{display:block}
+  .sidebar{
+    position:fixed;top:auto;bottom:0;left:0;right:0;
+    height:68px;padding:6px 8px;
+    display:block;z-index:10;
+  }
+  .brand,.nav-label,.sidebar-bottom{display:none}
+  .nav{
+    height:100%;display:flex;
+    justify-content:space-around;align-items:center;
+  }
+  .nav a{
+    flex:1;display:flex;flex-direction:column;
+    justify-content:center;gap:4px;
+    padding:5px 2px;font-size:8px;
+  }
+  .nav a span{display:block}
+  .nav svg{width:17px;height:17px}
+  .main{padding-bottom:75px}
+  .topbar{height:60px;padding:0 15px}
+  .top-user{display:none}
+  .content{padding:23px 14px}
+  .welcome{align-items:flex-start;flex-direction:column}
+  .welcome h1{font-size:24px}
+  .stats{gap:10px}
+  .stat{padding:14px}
+  .stat-value{font-size:23px}
+  .stat-head{font-size:10px}
+  .grid-main{gap:14px}
+  .panel-head{padding:15px}
+  .quick-grid{padding:12px}
+  .quick{padding:10px 7px;gap:6px;font-size:9px}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+<aside class="sidebar">
+
+  <a class="brand" href="/buktijepe/">
+    <img src="https://wpsejitu.github.io/buktijepe/assets/sejitu-logo.png" alt="SEJITU">
+  </a>
+
+  <div class="nav-label">WORKSPACE</div>
+
+  <nav class="nav">
+    <a class="active" href="/buktijepe/admin/">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <rect x="3" y="3" width="8" height="8" rx="2"/>
+        <rect x="13" y="3" width="8" height="5" rx="2"/>
+        <rect x="13" y="10" width="8" height="11" rx="2"/>
+        <rect x="3" y="13" width="8" height="8" rx="2"/>
+      </svg>
+      <span>Dashboard</span>
+    </a>
+
+    <a href="/buktijepe/admin/posts/">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <path d="M7 3h8l5 5v13H7z"/>
+        <path d="M15 3v6h5M10 13h7M10 17h7"/>
+      </svg>
+      <span>Artikel</span>
+    </a>
+
+    <a href="/buktijepe/admin/pages/">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <rect x="4" y="3" width="16" height="18" rx="2"/>
+        <path d="M8 8h8M8 12h8M8 16h5"/>
+      </svg>
+      <span>Halaman</span>
+    </a>
+
+    <a href="/buktijepe/admin/media/">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <rect x="3" y="3" width="18" height="18" rx="2"/>
+        <circle cx="8.5" cy="8.5" r="1.5"/>
+        <path d="m21 15-5-5L5 21"/>
+      </svg>
+      <span>Media</span>
+    </a>
+
+    <a href="/buktijepe/admin/settings/">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M19 13.5a7 7 0 0 0 0-3l2-1.5-2-3.5-2.4 1a7 7 0 0 0-2.6-1.5L13.5 3h-4L9 5a7 7 0 0 0-2.6 1.5L4 5.5 2 9l2 1.5a7 7 0 0 0 0 3L2 15l2 3.5 2.4-1A7 7 0 0 0 9 19l.5 2h4l.5-2a7 7 0 0 0 2.6-1.5l2.4 1 2-3.5z"/>
+      </svg>
+      <span>Pengaturan</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-bottom">
+    <a class="site-link" href="/buktijepe/" target="_blank" rel="noopener">
+      <span>↗</span>
+      <span>Lihat Website</span>
+    </a>
+
+    <div class="user-mini">
+      <div class="avatar">SA</div>
+      <div class="user-meta">
+        <strong>Super Admin</strong>
+        <span>Administrator</span>
+      </div>
+      <button class="logout" id="logoutBtn" title="Keluar">↪</button>
+    </div>
+  </div>
+
+</aside>
+
+<main class="main">
+
+  <header class="topbar">
+    <div class="breadcrumb">
+      Workspace <span style="padding:0 7px;color:#c0c6d0">/</span>
+      <strong>Dashboard</strong>
+    </div>
+
+    <div class="top-user">
+      <div class="avatar">SA</div>
+      <div>
+        <strong>Super Admin</strong>
+        <span>Administrator</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <section class="welcome">
+      <div>
+        <h1>Dashboard</h1>
+        <p>Selamat datang kembali! Berikut ringkasan aktivitas website SEJITU.</p>
+      </div>
+      <div class="date" id="today"></div>
+    </section>
+
+    <section class="stats">
+
+      <article class="stat">
+        <div class="stat-head">
+          <span>Total Artikel</span>
+          <span class="stat-icon">▤</span>
+        </div>
+        <div class="stat-value">24</div>
+        <div class="stat-foot"><span class="trend">+3</span> artikel bulan ini</div>
+      </article>
+
+      <article class="stat">
+        <div class="stat-head">
+          <span>Halaman</span>
+          <span class="stat-icon green">▧</span>
+        </div>
+        <div class="stat-value">8</div>
+        <div class="stat-foot">Halaman website aktif</div>
+      </article>
+
+      <article class="stat">
+        <div class="stat-head">
+          <span>Media</span>
+          <span class="stat-icon orange">▣</span>
+        </div>
+        <div class="stat-value">56</div>
+        <div class="stat-foot">File tersimpan</div>
+      </article>
+
+      <article class="stat">
+        <div class="stat-head">
+          <span>Draft</span>
+          <span class="stat-icon blue">◷</span>
+        </div>
+        <div class="stat-value">4</div>
+        <div class="stat-foot">Menunggu diterbitkan</div>
+      </article>
+
+    </section>
+
+    <section class="grid-main">
+
+      <div class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>Artikel Terbaru</h2>
+            <p>Ringkasan konten yang terakhir dikelola</p>
+          </div>
+          <a class="text-link" href="/buktijepe/admin/posts/">Lihat semua →</a>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Artikel</th>
+                <th>Status</th>
+                <th>Tanggal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="post-title">
+                    <div class="thumb">S</div>
+                    <div>
+                      <strong>Selamat Datang di SEJITU</strong>
+                      <span>Umum · 4 menit baca</span>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="status published">Published</span></td>
+                <td>11 Nov 2026</td>
+              </tr>
+
+              <tr>
+                <td>
+                  <div class="post-title">
+                    <div class="thumb orange">T</div>
+                    <div>
+                      <strong>Panduan Mengelola Konten Website</strong>
+                      <span>Tutorial · 6 menit baca</span>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="status published">Published</span></td>
+                <td>09 Nov 2026</td>
+              </tr>
+
+              <tr>
+                <td>
+                  <div class="post-title">
+                    <div class="thumb green">I</div>
+                    <div>
+                      <strong>Informasi dan Pembaruan Terbaru</strong>
+                      <span>Berita · 3 menit baca</span>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="status draft">Draft</span></td>
+                <td>08 Nov 2026</td>
+              </tr>
+
+              <tr>
+                <td>
+                  <div class="post-title">
+                    <div class="thumb blue">K</div>
+                    <div>
+                      <strong>Kenali Fitur Website SEJITU</strong>
+                      <span>Umum · 5 menit baca</span>
+                    </div>
+                  </div>
+                </td>
+                <td><span class="status published">Published</span></td>
+                <td>06 Nov 2026</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="right-stack">
+
+        <section class="panel">
+          <div class="panel-head">
+            <div>
+              <h2>Akses Cepat</h2>
+              <p>Kelola website dengan cepat</p>
+            </div>
+          </div>
+
+          <div class="quick-grid">
+            <a class="quick" href="/buktijepe/admin/posts/">
+              <span class="quick-icon">＋</span>
+              Buat Artikel
+            </a>
+            <a class="quick" href="/buktijepe/admin/pages/">
+              <span class="quick-icon">▧</span>
+              Buat Halaman
+            </a>
+            <a class="quick" href="/buktijepe/admin/media/">
+              <span class="quick-icon">▣</span>
+              Upload Media
+            </a>
+            <a class="quick" href="/buktijepe/admin/settings/">
+              <span class="quick-icon">⚙</span>
+              Pengaturan
+            </a>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <div>
+              <h2>Aktivitas Terbaru</h2>
+              <p>Aktivitas di dashboard</p>
+            </div>
+          </div>
+
+          <div class="activity">
+            <div class="activity-item">
+              <div class="activity-icon">＋</div>
+              <div class="activity-text">
+                <strong>Artikel baru dibuat</strong><br>
+                Selamat Datang di SEJITU
+                <small>Hari ini · 09:42</small>
+              </div>
+            </div>
+
+            <div class="activity-item">
+              <div class="activity-icon">▣</div>
+              <div class="activity-text">
+                <strong>Media ditambahkan</strong><br>
+                sejitu-banner.png
+                <small>Kemarin · 16:20</small>
+              </div>
+            </div>
+
+            <div class="activity-item">
+              <div class="activity-icon">▤</div>
+              <div class="activity-text">
+                <strong>Halaman diperbarui</strong><br>
+                Tentang Kami
+                <small>10 Nov 2026 · 14:05</small>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <div>
+              <h2>Status Website</h2>
+              <p>Kondisi publikasi website</p>
+            </div>
+          </div>
+
+          <div class="site-status">
+            <div class="status-row">
+              <span>Website</span>
+              <span class="online">● Online</span>
+            </div>
+            <div class="status-row">
+              <span>Platform</span>
+              <strong>GitHub Pages</strong>
+            </div>
+            <div class="status-desc">
+              Website SEJITU menggunakan GitHub Pages.
+              Statistik dan data pada halaman ini masih berupa contoh.
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </section>
+
+  </div>
+</main>
+</div>
+
+<script>
+// DEMO ONLY: nanti diganti verifikasi token dari Google Apps Script.
+if(sessionStorage.getItem("sejitu_demo_login") !== "true"){
+  window.location.replace("/buktijepe/login/");
+}
+
+document.getElementById("logoutBtn").addEventListener("click",()=>{
+  sessionStorage.removeItem("sejitu_demo_login");
+  window.location.href="/buktijepe/login/";
+});
+
+document.getElementById("today").textContent =
+  new Intl.DateTimeFormat("id-ID",{
+    weekday:"long",
+    day:"numeric",
+    month:"long",
+    year:"numeric"
+  }).format(new Date());
+</script>
+
+</body>
+</html>

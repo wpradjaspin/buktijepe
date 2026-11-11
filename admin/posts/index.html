@@ -221,7 +221,7 @@ td{padding:14px 15px;border-top:1px solid var(--border);font-size:11px}
               <button class="tool" data-cmd="removeFormat">Tx</button>
             </div>
             <div id="editor" class="editor-area" contenteditable="true"></div>
-            <div class="editor-help">Gunakan toolbar untuk mengatur format tulisan, heading, daftar, tautan, dan gambar.</div>
+            <div class="editor-help">Gunakan toolbar untuk mengatur format tulisan, heading, daftar, tautan, dan gambar. Gambar dapat diunggah langsung melalui jendela Media.</div>
           </div>
         </div>
       </div>
@@ -247,9 +247,11 @@ td{padding:14px 15px;border-top:1px solid var(--border);font-size:11px}
             <div class="field" style="margin:0">
               <label for="postCategory">PILIH KATEGORI</label>
               <select id="postCategory">
-                <option value="">Tanpa kategori</option>
-                <option>Berita</option><option>Artikel</option>
-                <option>Informasi</option><option>Tutorial</option><option>Pengumuman</option>
+                <option value="">Pilih kategori</option>
+                <option value="SLOT GAME">SLOT GAME</option>
+                <option value="LIVE GAME">LIVE GAME</option>
+                <option value="FISHING GAME">FISHING GAME</option>
+                <option value="SPORT GAME">SPORT GAME</option>
               </select>
             </div>
           </div>
@@ -268,6 +270,16 @@ td{padding:14px 15px;border-top:1px solid var(--border);font-size:11px}
           </div>
         </div>
 
+        <div class="panel">
+          <div class="panel-title">Tag Artikel</div>
+          <div class="panel-body">
+            <div class="field" style="margin:0">
+              <label for="postTags">HASHTAG (#)</label>
+              <input id="postTags" placeholder="#radjaspin, #slotgame, #promo">
+              <p class="info-text">Pisahkan setiap hashtag dengan koma.</p>
+            </div>
+          </div>
+        </div>
         <div class="panel">
           <div class="panel-title">Koneksi Database</div>
           <div class="panel-body">
@@ -305,6 +317,11 @@ td{padding:14px 15px;border-top:1px solid var(--border);font-size:11px}
     </div>
     <div class="media-picker-tools">
       <input type="search" id="mediaPickerSearch" placeholder="Cari nama gambar...">
+      <div style="display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:10px">
+        <button type="button" class="btn btn-primary" id="uploadMediaFromPost">＋ Upload Gambar Baru</button>
+        <span class="info-text" style="margin:0">Upload langsung ke Media Manager.</span>
+        <input type="file" id="postMediaFile" accept="image/jpeg,image/png,image/webp,image/gif" hidden>
+      </div>
     </div>
     <div class="media-picker-grid" id="mediaPickerGrid">
       <div class="media-picker-empty">Memuat perpustakaan media...</div>
@@ -484,12 +501,17 @@ function insertEditorLink() {
   $("editor").focus();
   document.execCommand("createLink", false, url);
 }
+let mediaPickerMode = "thumbnail";
+let savedEditorRange = null;
+
 function insertEditorImage() {
-  const url = window.prompt("Masukkan URL gambar:");
-  if (!url) return;
-  if (!/^https?:\/\//i.test(url)) return toast("URL harus diawali http:// atau https://");
-  $("editor").focus();
-  document.execCommand("insertImage", false, url);
+  const selection = window.getSelection();
+  savedEditorRange = selection && selection.rangeCount
+    ? selection.getRangeAt(0).cloneRange()
+    : null;
+  mediaPickerMode = "editor";
+  $("mediaPickerTitle").textContent = "Tambahkan Gambar ke Artikel";
+  openMediaPicker();
 }
 $("linkBtn").onclick = insertEditorLink;
 $("imageBtn").onclick = insertEditorImage;
@@ -597,7 +619,11 @@ async function openMediaPicker() {
   }
 }
 
-$("openMediaPicker").addEventListener("click", openMediaPicker);
+$("openMediaPicker").addEventListener("click", () => {
+  mediaPickerMode = "thumbnail";
+  $("mediaPickerTitle").textContent = "Pilih Thumbnail Artikel";
+  openMediaPicker();
+});
 $("closeMediaPicker").addEventListener("click", closeMediaPicker);
 $("mediaPickerSearch").addEventListener("input", renderMediaPicker);
 
@@ -605,16 +631,115 @@ $("mediaPickerBackdrop").addEventListener("click", event => {
   if (event.target === $("mediaPickerBackdrop")) closeMediaPicker();
 });
 
+function insertImageAtSavedCursor(imageUrl, altText) {
+  const editor = $("editor");
+  editor.focus();
+  let range = savedEditorRange;
+
+  if (!range || !editor.contains(range.commonAncestorContainer)) {
+    range = document.createRange();
+    range.selectNodeContents(editor);
+    range.collapse(false);
+  }
+
+  const img = document.createElement("img");
+  img.src = imageUrl;
+  img.alt = altText || "Gambar artikel";
+  img.loading = "lazy";
+  img.style.maxWidth = "100%";
+  img.style.height = "auto";
+
+  range.deleteContents();
+  range.insertNode(img);
+  range.setStartAfter(img);
+  range.collapse(true);
+
+  const selection = window.getSelection();
+  selection.removeAllRanges();
+  selection.addRange(range);
+  savedEditorRange = range.cloneRange();
+}
+
 $("useSelectedMedia").addEventListener("click", () => {
   if (!selectedMediaFile || !selectedMediaFile.url) {
     toast("Pilih gambar terlebih dahulu.");
     return;
   }
 
-  $("thumbnailUrl").value = selectedMediaFile.url;
-  renderThumbnail(selectedMediaFile.url);
-  closeMediaPicker();
-  toast("Thumbnail artikel berhasil dipilih.");
+  if (mediaPickerMode === "editor") {
+    insertImageAtSavedCursor(selectedMediaFile.url, selectedMediaFile.name);
+    closeMediaPicker();
+    toast("Gambar ditambahkan ke isi artikel.");
+  } else {
+    $("thumbnailUrl").value = selectedMediaFile.url;
+    renderThumbnail(selectedMediaFile.url);
+    closeMediaPicker();
+    toast("Thumbnail artikel berhasil dipilih.");
+  }
+});
+
+$("uploadMediaFromPost").addEventListener("click", () => $("postMediaFile").click());
+
+$("postMediaFile").addEventListener("change", async event => {
+  const file = event.target.files && event.target.files[0];
+  event.target.value = "";
+  if (!file) return;
+
+  if (!["image/jpeg","image/png","image/webp","image/gif"].includes(file.type)) {
+    toast("Format gambar harus JPG, PNG, WebP, atau GIF.");
+    return;
+  }
+  if (file.size > 5 * 1024 * 1024) {
+    toast("Ukuran gambar maksimal 5 MB.");
+    return;
+  }
+
+  const button = $("uploadMediaFromPost");
+  button.disabled = true;
+  button.textContent = "Mengunggah...";
+
+  try {
+    const base64 = await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(String(reader.result).split(",")[1] || "");
+      reader.onerror = () => reject(new Error("Gagal membaca file gambar."));
+      reader.readAsDataURL(file);
+    });
+
+    const result = await apiRequest("uploadMedia", {
+      filename: file.name,
+      mimeType: file.type,
+      base64
+    });
+
+    if (!result.file || !result.file.url) {
+      throw new Error("URL gambar dari server tidak ditemukan.");
+    }
+
+    const uploaded = {
+      name: result.file.name || file.name,
+      url: result.file.url,
+      path: result.file.path || ""
+    };
+
+    mediaPickerFiles.unshift(uploaded);
+
+    if (mediaPickerMode === "editor") {
+      insertImageAtSavedCursor(uploaded.url, uploaded.name);
+      closeMediaPicker();
+      toast("Gambar diunggah dan dimasukkan ke artikel.");
+    } else {
+      $("thumbnailUrl").value = uploaded.url;
+      renderThumbnail(uploaded.url);
+      closeMediaPicker();
+      toast("Gambar diunggah dan dipakai sebagai thumbnail.");
+    }
+  } catch (error) {
+    toast("Upload gagal: " + error.message);
+  } finally {
+    button.disabled = false;
+    button.textContent = "＋ Upload Gambar Baru";
+  }
 });
 
 /* EDITOR BARU */
@@ -627,6 +752,7 @@ function newPost() {
   $("postSlug").value = "";
   $("editor").innerHTML = "";
   $("postCategory").value = "";
+  $("postTags").value = "";
   $("thumbnailUrl").value = "";
   renderThumbnail("");
 
@@ -674,6 +800,7 @@ function editPost(id) {
   $("postSlug").value = post.slug || "";
   $("editor").innerHTML = post.content || "";
   $("postCategory").value = post.category || "";
+  $("postTags").value = post.tags || "";
   $("thumbnailUrl").value = post.thumbnail || "";
   renderThumbnail(post.thumbnail || "");
 
@@ -713,6 +840,7 @@ async function savePost(status) {
     content,
     thumbnail,
     category: $("postCategory").value,
+    tags: $("postTags").value.trim(),
     status
   };
 

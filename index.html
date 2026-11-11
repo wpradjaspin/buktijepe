@@ -98,31 +98,21 @@
 }
 
 
-/* Logo GIF pada panel sidebar */
-.about-gif{
-  min-height:196px;
-  padding:14px 18px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-}
-.about-gif img{
-  display:block;
-  width:100%;
-  max-width:280px;
-  height:160px;
-  object-fit:contain;
-  object-position:center;
-  background:transparent;
-}
-
+/* Logo header berupa GIF, tetap sejajar dengan navigasi */
+.brand{display:flex;align-items:center;gap:0}
+.brand-logo{display:block;width:205px;height:54px;object-fit:contain;object-position:left center}
+@media(max-width:760px){.brand-logo{width:160px;height:46px}}
+/* GIF sidebar dapat diklik dan mempertahankan area transparan */
+.about-gif{min-height:196px;padding:14px 18px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.about-gif a{width:100%;height:168px;display:flex;align-items:center;justify-content:center;text-decoration:none}
+.about-gif img{display:block;width:100%;max-width:280px;height:160px;object-fit:contain;object-position:center;background:transparent}
+.about-gif a:focus-visible,.brand:focus-visible{outline:2px solid #6854d9;outline-offset:4px;border-radius:8px}
 </style>
 </head>
 <body>
 <header class="header">
     <div class="header-inner">
-      <a class="brand" href="#home"><span class="brand-mark">R</span>RADJASPIN</a>
+      <a class="brand" id="headerLogoLink" href="#home" aria-label="RADJASPIN"><img class="brand-logo" src="https://wpradjaspin.github.io/buktijepe/assets/radjaspin-logo.gif" alt="RADJASPIN"></a>
       <nav class="nav" id="mainNav">
 <a data-route="home" class="active" href="./">BERANDA</a>
 <a data-route="slot-game" href="?kategori=slot-game">SLOT GAME</a>
@@ -143,7 +133,7 @@
           <div class="loading-posts">Memuat artikel RADJASPIN...</div>
         </div>
         <aside class="sidebar">
-          <section class="side-box about about-gif" id="tentang" aria-label="RADJASPIN"><img src="https://radjaspinnew.com/public/general/radja.gif" alt="RADJASPIN" loading="eager"></section>
+          <section class="side-box about about-gif" id="tentang" aria-label="RADJASPIN"><a id="sidebarLogoLink" href="#home" aria-label="Buka tautan logo RADJASPIN"><img src="https://radjaspinnew.com/public/general/radja.gif" alt="RADJASPIN" loading="eager"></a></section>
           <section class="side-box" id="kategori"><h3>Kategori</h3><ul class="category-list" id="categoryCounts"></ul></section>
           <section class="side-box"><h3>Artikel populer</h3><div id="popularPosts"><p class="post-meta">Menghitung artikel populer...</p></div></section>
           <section class="side-box contact-box" id="kontak"><h3>CONTACT RESMI RADJASPIN</h3><p class="contact-intro">Pilih kanal resmi RADJASPIN sesuai kebutuhan kamu.</p><div class="contact-list" id="publicContacts"><div class="contact-empty">Memuat kanal kontak resmi...</div></div></section>
@@ -195,6 +185,11 @@
     ];
     function renderPublicContacts(settings){
       const data=settings?.settings||settings?.data||settings||{};
+      const safeTarget=value=>/^https?:\/\//i.test(String(value||"").trim())?String(value).trim():"#home";
+      const headerLogoLink=$("headerLogoLink");
+      const sidebarLogoLink=$("sidebarLogoLink");
+      if(headerLogoLink)headerLogoLink.href=safeTarget(data.headerLogoTarget);
+      if(sidebarLogoLink)sidebarLogoLink.href=safeTarget(data.sidebarLogoTarget);
       const enabled=data.enabled||{};
       const rows=CONTACTS.filter(c=>enabled[c.key]!==false && data[c.linkKey] && /^https?:\/\//i.test(String(data[c.linkKey])));
       const markup=rows.length?rows.map(c=>{

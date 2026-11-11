@@ -49,7 +49,7 @@
     <div class="setting-card" style="opacity:.72"><span class="setting-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.7 2.9-.2-.1a1.7 1.7 0 0 0-1.8.1l-.2.1h-3.4l-.1-.2a1.7 1.7 0 0 0-1.5-1l-.2-.1-2.9-1.7.1-.2a1.7 1.7 0 0 0-.1-1.8l-.1-.2v-3.4l.2-.1a1.7 1.7 0 0 0 1-1.5l.1-.2 1.7-2.9.2.1a1.7 1.7 0 0 0 1.8-.1l.2-.1h3.4l.1.2a1.7 1.7 0 0 0 1.5 1l.2.1 2.9 1.7-.1.2a1.7 1.7 0 0 0 .1 1.8l.1.2v3.4Z"/></svg></span><span class="setting-copy"><h3>Pengaturan Umum</h3><p>Konfigurasi website lainnya.</p></span><span class="soon">SEGERA</span></div>
     <div class="setting-card" style="opacity:.72"><span class="setting-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg></span><span class="setting-copy"><h3>Informasi Website</h3><p>Identitas dan informasi RADJASPIN.</p></span><span class="soon">SEGERA</span></div>
   </div>
-  <div class="info-note">Menu Pengaturan akan menjadi tempat untuk fitur konfigurasi lainnya. Untuk tahap ini, bagian yang dapat dibuka adalah <strong>Edit Contact Resmi</strong>.</div>
+  <div class="info-note">Menu Pengaturan contact sekarang disimpan ke Google Sheets melalui API. Bagian yang dapat dibuka adalah <strong>Edit Contact Resmi</strong>.</div>
 </div>
 </main>
 </div>
@@ -71,12 +71,41 @@
 </div>
 <div class="toast" id="toast" role="status"></div>
 <script>
-const STORAGE_KEY='radjaspin_contact_settings_v1';
+const API_URL='https://radjaspin-api.simeryoay.workers.dev/';
+const TOKEN_KEY='radjaspin_auth_token';
+const USER_KEY='radjaspin_auth_username';
 const fields=['waName','waLink','tgName','tgLink','fbName','fbLink','groupName','groupLink','siteName','siteLink'];
 const channels=['whatsapp','telegram','facebook','group','site'];
 function setChannelToggle(button,enabled){button.setAttribute('aria-checked',String(enabled));const state=button.parentElement.querySelector('.channel-state');if(state)state.textContent=enabled?'ON':'OFF';}
 const overlay=document.getElementById('contactOverlay');
-function openModal(){overlay.classList.add('show');overlay.setAttribute('aria-hidden','false');try{const saved=JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}');fields.forEach(id=>document.getElementById(id).value=saved[id]||'');channels.forEach(channel=>{const button=document.querySelector('[data-channel="'+channel+'"]');setChannelToggle(button,saved.enabled?saved.enabled[channel]!==false:true)})}catch(e){}}
+async function api(action,extra={}){
+ const token=sessionStorage.getItem(TOKEN_KEY)||'';
+ const response=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,token,...extra})});
+ const raw=await response.text();
+ let result;
+ try{result=JSON.parse(raw)}catch(error){throw new Error('Respons API bukan JSON yang valid.')}
+ if(!response.ok)throw new Error(result.message||'API gagal. HTTP '+response.status);
+ if(!result.success){
+   if(result.message&&/sesi admin|token admin|sesi tidak valid/i.test(result.message)){
+     sessionStorage.removeItem(TOKEN_KEY);sessionStorage.removeItem(USER_KEY);
+     location.href='/buktijepe/login/';
+   }
+   throw new Error(result.message||'Permintaan API gagal.');
+ }
+ return result;
+}
+async function openModal(){
+ overlay.classList.add('show');overlay.setAttribute('aria-hidden','false');
+ try{
+   const result=await api('getSettings');
+   const saved=result.settings||{};
+   fields.forEach(id=>document.getElementById(id).value=saved[id]||'');
+   channels.forEach(channel=>{const button=document.querySelector('[data-channel="'+channel+'"]');setChannelToggle(button,saved.enabled?saved.enabled[channel]!==false:true)});
+ }catch(error){
+   closeModal();
+   toast(error.message==='Failed to fetch'?'API tidak dapat dihubungi. Coba muat ulang halaman.':error.message);
+ }
+}
 function closeModal(){overlay.classList.remove('show');overlay.setAttribute('aria-hidden','true')}
 function toast(message){const el=document.getElementById('toast');el.textContent=message;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2600)}
 document.querySelectorAll('.channel-toggle').forEach(button=>button.addEventListener('click',()=>setChannelToggle(button,button.getAttribute('aria-checked')!=='true')));
@@ -85,12 +114,22 @@ document.getElementById('closeModal').addEventListener('click',closeModal);
 document.getElementById('cancelModal').addEventListener('click',closeModal);
 overlay.addEventListener('click',e=>{if(e.target===overlay)closeModal()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
-document.getElementById('contactForm').addEventListener('submit',e=>{
+document.getElementById('contactForm').addEventListener('submit',async e=>{
  e.preventDefault();const data={};fields.forEach(id=>data[id]=document.getElementById(id).value.trim());data.enabled={};channels.forEach(channel=>{data.enabled[channel]=document.querySelector('[data-channel="'+channel+'"]').getAttribute('aria-checked')==='true'});
  for(const id of ['waLink','tgLink','fbLink','groupLink','siteLink']){if(data[id]&&!/^https?:\/\//i.test(data[id])){toast('Link harus diawali http:// atau https://');document.getElementById(id).focus();return}}
- try{localStorage.setItem(STORAGE_KEY,JSON.stringify(data));closeModal();toast('Pengaturan contact berhasil disimpan di browser ini.')}catch(err){toast('Tidak dapat menyimpan pengaturan di browser.')}
+ const submit=document.querySelector('#contactForm button[type="submit"]');submit.disabled=true;submit.textContent='Menyimpan...';
+ try{await api('saveSettings',{settings:data});closeModal();toast('Pengaturan contact berhasil disimpan.')}catch(err){toast(err.message||'Gagal menyimpan pengaturan.')}finally{submit.disabled=false;submit.textContent='Simpan Pengaturan';}
 });
-document.getElementById('logoutBtn').addEventListener('click',e=>{e.preventDefault();try{localStorage.removeItem('radjaspin_admin_session')}catch(err){}location.href='/buktijepe/login/'});
+document.getElementById('logoutBtn').addEventListener('click',async e=>{
+ e.preventDefault();
+ const token=sessionStorage.getItem(TOKEN_KEY)||'';
+ try{if(token)await api('logout')}catch(err){}
+ sessionStorage.removeItem(TOKEN_KEY);sessionStorage.removeItem(USER_KEY);
+ location.href='/buktijepe/login/';
+});
+const adminName=sessionStorage.getItem(USER_KEY);
+if(adminName)document.getElementById('adminName').textContent=adminName;
+if(!sessionStorage.getItem(TOKEN_KEY)){location.href='/buktijepe/login/';}
 </script>
 </body>
 </html>

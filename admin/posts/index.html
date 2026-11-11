@@ -3,59 +3,42 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#11152b">
 <title>Artikel | RADJASPIN CMS</title>
 <style>
-:root{
-  --navy:#11152b;--purple:#7257e8;--bg:#f5f6fa;
-  --text:#20243a;--muted:#8990a5;--border:#e9eaf0;
-  --green:#159c68;--red:#e45454;--white:#fff
-}
+:root{--navy:#11152b;--purple:#7257e8;--bg:#f5f6fa;--text:#20243a;--muted:#8990a5;--border:#e9eaf0;--green:#159c68;--red:#e45454}
 *{box-sizing:border-box}
 body{margin:0;font-family:Inter,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
-button,input,select{font:inherit}
-button{cursor:pointer}
-.hidden{display:none!important}
-.layout{min-height:100vh}
+button,input,select{font:inherit}button{cursor:pointer}.hidden{display:none!important}
 .sidebar{position:fixed;inset:0 auto 0 0;width:245px;background:var(--navy);color:white;padding:25px 16px;display:flex;flex-direction:column;z-index:20}
 .brand{display:flex;align-items:center;gap:11px;padding:0 10px 30px}
 .brand-mark{width:39px;height:39px;border-radius:12px;background:linear-gradient(135deg,#9c82ff,#6244d9);display:grid;place-items:center;font-size:20px;font-weight:900}
-.brand-name{font-size:17px;font-weight:800;letter-spacing:.5px}
-.brand-sub{font-size:10px;color:#9298b6;margin-top:3px}
+.brand-name{font-size:17px;font-weight:800}.brand-sub{font-size:10px;color:#9298b6;margin-top:3px}
 .nav-label{font-size:10px;color:#777e9e;font-weight:700;letter-spacing:1.3px;padding:12px}
 .nav-link{display:flex;align-items:center;gap:13px;padding:12px 14px;margin:3px 0;border-radius:9px;text-decoration:none;color:#aeb3cb;font-size:13px}
-.nav-link:hover{background:#ffffff0d;color:white}
-.nav-link.active{background:var(--purple);color:white}
-.nav-icon{width:19px;text-align:center;font-size:17px}
-.sidebar-bottom{margin-top:auto}
+.nav-link:hover{background:#ffffff0d;color:white}.nav-link.active{background:var(--purple);color:white}
+.nav-icon{width:19px;text-align:center;font-size:17px}.sidebar-bottom{margin-top:auto}
 .user-box{display:flex;align-items:center;gap:10px;padding:14px 9px;border-top:1px solid #ffffff16;margin-top:15px}
 .avatar,.top-avatar{width:35px;height:35px;border-radius:50%;display:grid;place-items:center;background:var(--purple);color:white;font-size:12px;font-weight:800}
-.user-name{font-size:12px;font-weight:700}
-.user-role{font-size:10px;color:#9399b5;margin-top:3px}
+.user-name{font-size:12px;font-weight:700}.user-role{font-size:10px;color:#9399b5;margin-top:3px}
 .main{margin-left:245px;min-height:100vh}
 .topbar{height:69px;background:white;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 32px}
-.breadcrumb{font-size:12px;color:var(--muted)}
-.breadcrumb strong{color:var(--text)}
+.breadcrumb{font-size:12px;color:var(--muted)}.breadcrumb strong{color:var(--text)}
 .top-right{display:flex;align-items:center;gap:15px}
 .api-status{display:flex;align-items:center;gap:7px;padding:7px 11px;border-radius:30px;background:#fff8e9;color:#9a6b1f;font-size:11px;font-weight:700}
-.dot{width:7px;height:7px;border-radius:50%;background:currentColor}
-.top-avatar{background:#eeeaff;color:var(--purple)}
+.dot{width:7px;height:7px;border-radius:50%;background:currentColor}.top-avatar{background:#eeeaff;color:var(--purple)}
 .content{padding:29px 32px 60px;max-width:1500px;margin:auto}
 .page-heading{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:23px}
-.page-heading h1{font-size:24px;margin:0 0 7px}
-.page-heading p{font-size:12px;color:var(--muted);margin:0}
+.page-heading h1{font-size:24px;margin:0 0 7px}.page-heading p{font-size:12px;color:var(--muted);margin:0}
 .btn{border:0;border-radius:8px;padding:11px 17px;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:8px}
-.btn-primary{background:var(--purple);color:white}
-.btn-primary:hover{background:#6045d2}
+.btn-primary{background:var(--purple);color:white}.btn-primary:hover{background:#6045d2}
 .btn-light{background:white;border:1px solid var(--border);color:#555b70}
-.btn-danger{background:#fff0f0;color:var(--red)}
-.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-danger{background:#fff0f0;color:var(--red)}.btn:disabled{opacity:.5;cursor:not-allowed}
 .panel{background:white;border:1px solid var(--border);border-radius:11px;overflow:hidden}
-.panel-body{padding:20px}
-.panel-title{font-size:13px;font-weight:800;padding:17px 19px;border-bottom:1px solid var(--border)}
+.panel-body{padding:20px}.panel-title{font-size:13px;font-weight:800;padding:17px 19px;border-bottom:1px solid var(--border)}
 .editor-layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:20px;align-items:start}
-.field{margin-bottom:19px}
-.field label{display:block;font-size:11px;font-weight:700;margin-bottom:8px;color:#555b70}
+.field{margin-bottom:19px}.field label{display:block;font-size:11px;font-weight:700;margin-bottom:8px;color:#555b70}
 .field input,.field select{width:100%;border:1px solid #e4e6ed;border-radius:7px;padding:11px 12px;font-size:12px;outline:none;color:var(--text);background:white}
 .field input:focus,.field select:focus{border-color:var(--purple)}
 .title-input{font-size:22px!important;font-weight:700;padding:15px!important}
@@ -63,51 +46,39 @@ button{cursor:pointer}
 .slug-box input{border:0;background:#f7f7fa;padding:7px 8px;flex:1;min-width:0;border-radius:5px}
 .editor-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:4px;padding:9px;border:1px solid #e4e6ed;border-bottom:0;border-radius:8px 8px 0 0;background:#fafafd}
 .tool{width:31px;height:30px;border:0;border-radius:5px;background:transparent;color:#4f5367;font-weight:700;font-size:13px}
-.tool:hover{background:#eae7ff;color:var(--purple)}
-.tool-separator{height:20px;width:1px;background:#ddd;margin:0 5px}
+.tool:hover{background:#eae7ff;color:var(--purple)}.tool-separator{height:20px;width:1px;background:#ddd;margin:0 5px}
 .editor-area{min-height:390px;padding:18px;border:1px solid #e4e6ed;border-radius:0 0 8px 8px;outline:none;font-size:14px;line-height:1.8;color:#30354a;overflow-wrap:anywhere}
 .editor-area:focus{border-color:var(--purple)}
 .editor-area:empty:before{content:"Mulai tulis artikel RADJASPIN di sini...";color:#a5a8b5;pointer-events:none}
-.editor-area img{max-width:100%;height:auto;border-radius:8px}
-.editor-area h2,.editor-area h3{line-height:1.35}
-.editor-area a{color:var(--purple)}
-.editor-help,.info-text{font-size:10px;color:var(--muted);line-height:1.6;margin-top:9px}
+.editor-area img{max-width:100%;height:auto;border-radius:8px}.editor-area h2,.editor-area h3{line-height:1.35}
+.editor-area a{color:var(--purple)}.editor-help,.info-text{font-size:10px;color:var(--muted);line-height:1.6;margin-top:9px}
 .side-panel{display:flex;flex-direction:column;gap:16px}
 .status-row{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:11px;margin-bottom:14px}
 .status-pill{padding:5px 9px;border-radius:20px;font-size:10px;font-weight:700;background:#f0edff;color:var(--purple)}
-.status-pill.published{background:#eaf8f1;color:var(--green)}
-.status-pill.draft{background:#fff5e5;color:#c58727}
-.publish-actions{display:grid;gap:9px}
-.publish-actions button{width:100%}
+.status-pill.published{background:#eaf8f1;color:var(--green)}.status-pill.draft{background:#fff5e5;color:#c58727}
+.publish-actions{display:grid;gap:9px}.publish-actions button{width:100%}
 .thumbnail-box{width:100%;aspect-ratio:16/9;background:#f6f6fa;border:1px dashed #d8d9e2;border-radius:8px;display:grid;place-items:center;overflow:hidden;color:var(--muted);font-size:11px;cursor:pointer}
 .thumbnail-box img{width:100%;height:100%;object-fit:cover}
 .connection-card{display:flex;align-items:center;gap:10px;padding:12px;background:#f8f9fc;border-radius:8px}
 .connection-icon{width:32px;height:32px;border-radius:8px;background:#e9f8f0;color:var(--green);display:grid;place-items:center}
-.connection-card strong{font-size:11px;display:block}
-.connection-card small{font-size:10px;color:var(--muted)}
+.connection-card strong{font-size:11px;display:block}.connection-card small{font-size:10px;color:var(--muted)}
 .notice{padding:12px 14px;border-radius:8px;font-size:11px;line-height:1.6;margin-bottom:18px;background:#fff8e9;color:#9a6b1f;border:1px solid #f5e5c4}
 .notice.error{background:#fff0f0;color:#b53d3d;border-color:#f3d0d0}
 .notice.success{background:#eaf8f1;color:#16805a;border-color:#ccebdc}
 .list-toolbar{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:15px}
 .search-input,.filter-select{border:1px solid var(--border);border-radius:7px;padding:10px 12px;background:white;font-size:11px;outline:none}
-.search-input{min-width:220px}
-.table-wrap{overflow-x:auto}
+.search-input{min-width:220px}.table-wrap{overflow-x:auto}
 table{border-collapse:collapse;width:100%;min-width:650px}
 th{text-align:left;padding:13px 15px;font-size:10px;color:var(--muted);background:#fafafd;font-weight:700}
 td{padding:14px 15px;border-top:1px solid var(--border);font-size:11px}
-.post-title{font-weight:700}
-.post-sub{font-size:10px;color:var(--muted);margin-top:4px}
+.post-title{font-weight:700}.post-sub{font-size:10px;color:var(--muted);margin-top:4px}
 .empty-state{text-align:center;padding:45px 15px;color:var(--muted)}
 .empty-state strong{display:block;color:var(--text);font-size:13px;margin-bottom:6px}
-.row-actions{display:flex;gap:6px}
-.icon-btn{border:1px solid var(--border);background:white;width:29px;height:29px;border-radius:6px;color:#687087}
+.row-actions{display:flex;gap:6px}.icon-btn{border:1px solid var(--border);background:white;width:29px;height:29px;border-radius:6px;color:#687087}
 .icon-btn:hover{border-color:var(--purple);color:var(--purple)}
-.view-switch{display:flex;gap:8px}
 .modal-backdrop{position:fixed;inset:0;background:#11152b88;z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
-.modal-backdrop.show{display:flex}
-.modal{background:white;width:100%;max-width:420px;border-radius:12px;padding:23px;box-shadow:0 20px 70px #0003}
-.modal h3{margin:0 0 9px;font-size:16px}
-.modal p{font-size:12px;color:var(--muted);line-height:1.6}
+.modal-backdrop.show{display:flex}.modal{background:white;width:100%;max-width:420px;border-radius:12px;padding:23px;box-shadow:0 20px 70px #0003}
+.modal h3{margin:0 0 9px;font-size:16px}.modal p{font-size:12px;color:var(--muted);line-height:1.6}
 .modal-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:20px}
 .toast{position:fixed;bottom:25px;right:25px;background:#20243a;color:white;padding:13px 18px;border-radius:8px;font-size:12px;box-shadow:0 8px 30px #0002;z-index:200;opacity:0;transform:translateY(10px);pointer-events:none;transition:.25s}
 .toast.show{opacity:1;transform:translateY(0)}
@@ -117,9 +88,8 @@ td{padding:14px 15px;border-top:1px solid var(--border);font-size:11px}
 .sidebar{width:68px;padding:20px 9px}.brand{justify-content:center;padding:0 0 25px}
 .brand-name,.brand-sub,.nav-label,.nav-link span:not(.nav-icon),.sidebar-bottom .user-info{display:none}
 .nav-link{justify-content:center;padding:13px 5px}.nav-icon{font-size:19px}
-.user-box{justify-content:center;padding:14px 0}
-.main{margin-left:68px}.editor-layout{grid-template-columns:1fr}
-.side-panel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.user-box{justify-content:center;padding:14px 0}.main{margin-left:68px}
+.editor-layout{grid-template-columns:1fr}.side-panel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
 .topbar{padding:0 18px}
 }
 @media(max-width:560px){
@@ -137,10 +107,7 @@ td{padding:14px 15px;border-top:1px solid var(--border);font-size:11px}
 <aside class="sidebar">
   <div class="brand">
     <div class="brand-mark">R</div>
-    <div>
-      <div class="brand-name">RADJASPIN</div>
-      <div class="brand-sub">CONTENT MANAGEMENT</div>
-    </div>
+    <div><div class="brand-name">RADJASPIN</div><div class="brand-sub">CONTENT MANAGEMENT</div></div>
   </div>
   <div class="nav-label">MENU UTAMA</div>
   <a class="nav-link" href="/buktijepe/admin/"><span class="nav-icon">▦</span><span>Dashboard</span></a>
@@ -152,7 +119,7 @@ td{padding:14px 15px;border-top:1px solid var(--border);font-size:11px}
     <a class="nav-link" href="/buktijepe/"><span class="nav-icon">↗</span><span>Lihat Website</span></a>
     <div class="user-box">
       <div class="avatar">SA</div>
-      <div class="user-info"><div class="user-name">Super Admin</div><div class="user-role">Administrator</div></div>
+      <div class="user-info"><div class="user-name" id="adminName">Super Admin</div><div class="user-role">Administrator</div></div>
     </div>
     <a class="nav-link" href="#" id="logoutBtn"><span class="nav-icon">⇥</span><span>Keluar</span></a>
   </div>
@@ -187,6 +154,7 @@ td{padding:14px 15px;border-top:1px solid var(--border);font-size:11px}
           <option value="draft">Draft</option>
           <option value="published">Published</option>
         </select>
+        <button class="btn btn-light" id="refreshBtn">↻ Muat Ulang</button>
       </div>
       <div class="table-wrap">
         <table>
@@ -197,7 +165,7 @@ td{padding:14px 15px;border-top:1px solid var(--border);font-size:11px}
       <div class="empty-state" id="emptyState">
         <div style="font-size:32px;margin-bottom:12px">▤</div>
         <strong>Belum ada artikel</strong>
-        <span>Buat artikel pertamamu untuk memulai.</span>
+        <span>Belum ada artikel yang tersimpan.</span>
       </div>
     </div>
   </section>
@@ -207,7 +175,7 @@ td{padding:14px 15px;border-top:1px solid var(--border);font-size:11px}
       <div class="panel">
         <div class="panel-body">
           <div class="field">
-            <label>JUDUL ARTIKEL</label>
+            <label for="postTitle">JUDUL ARTIKEL</label>
             <input id="postTitle" class="title-input" placeholder="Masukkan judul artikel...">
             <div class="slug-box"><span>URL:</span><span>/</span><input id="postSlug" placeholder="judul-artikel"></div>
           </div>
@@ -256,7 +224,7 @@ td{padding:14px 15px;border-top:1px solid var(--border);font-size:11px}
           <div class="panel-title">Kategori</div>
           <div class="panel-body">
             <div class="field" style="margin:0">
-              <label>PILIH KATEGORI</label>
+              <label for="postCategory">PILIH KATEGORI</label>
               <select id="postCategory">
                 <option value="">Tanpa kategori</option>
                 <option>Berita</option><option>Artikel</option>
@@ -272,10 +240,10 @@ td{padding:14px 15px;border-top:1px solid var(--border);font-size:11px}
             <label class="thumbnail-box" for="thumbnailFile" id="thumbnailPreview"><span>＋ Pilih gambar thumbnail</span></label>
             <input type="file" id="thumbnailFile" accept="image/*" class="hidden">
             <div class="field" style="margin:10px 0 0">
-              <label>ATAU URL GAMBAR</label>
+              <label for="thumbnailUrl">ATAU URL GAMBAR</label>
               <input id="thumbnailUrl" placeholder="https://...">
             </div>
-            <p class="info-text">Untuk tahap awal, thumbnail menggunakan URL gambar. Upload media akan dibuat berikutnya.</p>
+            <p class="info-text">Saat ini thumbnail menggunakan URL gambar. Upload media akan dibuat terpisah.</p>
           </div>
         </div>
 
@@ -284,7 +252,7 @@ td{padding:14px 15px;border-top:1px solid var(--border);font-size:11px}
           <div class="panel-body">
             <div class="connection-card">
               <div class="connection-icon">✓</div>
-              <div><strong id="connectionTitle">Memeriksa...</strong><small id="connectionDesc">Google Apps Script</small></div>
+              <div><strong id="connectionTitle">Memeriksa...</strong><small id="connectionDesc">Cloudflare Worker</small></div>
             </div>
             <p class="info-text">Database: RADJASPIN CMS<br>Tab: Posts</p>
           </div>
@@ -313,185 +281,215 @@ td{padding:14px 15px;border-top:1px solid var(--border);font-size:11px}
 "use strict";
 
 /* KONFIGURASI */
-const CONFIG={
-  API_URL:"https://script.google.com/macros/s/AKfycby2-64KuCKeOWtVn6y5_VV6fqSM8GgsyWTuZ2NnKOlqFiquJppoXWWkB-nZM5xvMc9l/exec",
-  LOGIN_URL:"/buktijepe/login/"
+const CONFIG = {
+  API_URL: "https://radjaspin-api.simeryoay.workers.dev/",
+  LOGIN_URL: "/buktijepe/login/",
+  TOKEN_KEY: "radjaspin_auth_token",
+  USER_KEY: "radjaspin_auth_username"
 };
 
-const $=id=>document.getElementById(id);
-let posts=[];
-let currentPostId=null;
-let currentStatus="draft";
-let autoSlug=true;
-let modalAction=null;
-let apiConnected=false;
+/* AUTH GUARD */
+const authToken = sessionStorage.getItem(CONFIG.TOKEN_KEY);
 
-/* LOGIN DEMO GUARD */
-if(sessionStorage.getItem("radjaspin_demo_login")!=="true"){
+if (!authToken) {
   window.location.replace(CONFIG.LOGIN_URL);
+  throw new Error("Sesi admin tidak ditemukan.");
+}
+
+const $ = id => document.getElementById(id);
+let posts = [];
+let currentPostId = null;
+let currentStatus = "draft";
+let autoSlug = true;
+let modalAction = null;
+let apiConnected = false;
+let busy = false;
+
+/* USER */
+$("adminName").textContent =
+  sessionStorage.getItem(CONFIG.USER_KEY) || "Super Admin";
+
+/* API REQUEST */
+async function apiRequest(action, extra = {}) {
+  const token = sessionStorage.getItem(CONFIG.TOKEN_KEY);
+
+  if (!token && action !== "login") {
+    window.location.replace(CONFIG.LOGIN_URL);
+    throw new Error("Sesi admin tidak ditemukan. Silakan login kembali.");
+  }
+
+  const response = await fetch(CONFIG.API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ action, token, ...extra })
+  });
+
+  const raw = await response.text();
+  let result;
+
+  try {
+    result = JSON.parse(raw);
+  } catch {
+    throw new Error("Respons API bukan JSON yang valid.");
+  }
+
+  if (!response.ok) {
+    throw new Error(result.message || "API gagal. HTTP " + response.status);
+  }
+
+  if (!result.success) {
+    if (result.message && /sesi admin|token admin/i.test(result.message)) {
+      sessionStorage.removeItem(CONFIG.TOKEN_KEY);
+      sessionStorage.removeItem(CONFIG.USER_KEY);
+      window.location.replace(CONFIG.LOGIN_URL);
+    }
+    throw new Error(result.message || "Permintaan API gagal.");
+  }
+
+  return result;
 }
 
 /* NOTIFIKASI */
-function toast(message){
-  const el=$("toast");
-  el.textContent=message;
+function toast(message) {
+  const el = $("toast");
+  el.textContent = message;
   el.classList.add("show");
   clearTimeout(window.toastTimer);
-  window.toastTimer=setTimeout(()=>el.classList.remove("show"),3000);
+  window.toastTimer = setTimeout(() => el.classList.remove("show"), 3200);
 }
 
-function showNotice(message,type="warning"){
-  const el=$("notice");
-  el.textContent=message;
-  el.className="notice";
-  if(type==="error")el.classList.add("error");
-  if(type==="success")el.classList.add("success");
+function showNotice(message, type = "warning") {
+  const el = $("notice");
+  el.textContent = message;
+  el.className = "notice";
+  if (type === "error") el.classList.add("error");
+  if (type === "success") el.classList.add("success");
   el.classList.remove("hidden");
 }
 
-/* PEMERIKSAAN KONEKSI GAS */
-function checkAPI(){
-  const callbackName="radjaspinPing_"+Date.now();
-  const script=document.createElement("script");
-  let finished=false;
-  let timer;
+/* STATUS KONEKSI */
+async function checkAPI() {
+  $("apiStatusText").textContent = "Memeriksa API...";
+  $("connectionTitle").textContent = "Memeriksa koneksi";
+  $("connectionDesc").textContent = "Menghubungi Worker...";
 
-  $("apiStatusText").textContent="Memeriksa API...";
-  $("connectionTitle").textContent="Memeriksa koneksi";
-  $("connectionDesc").textContent="Menghubungi Google Apps Script...";
-  $("apiStatus").style.background="#fff8e9";
-  $("apiStatus").style.color="#9a6b1f";
+  try {
+    const response = await fetch(CONFIG.API_URL, { method: "GET" });
+    const data = await response.json();
 
-  function finish(ok,message){
-    if(finished)return;
-    finished=true;
-    clearTimeout(timer);
-    delete window[callbackName];
-    script.remove();
+    apiConnected = !!(response.ok && data.success && data.status === "connected");
+    setConnectionUI(apiConnected, data.message || "Respons API diterima.");
 
-    apiConnected=ok;
-    $("apiStatus").style.background=ok?"#eaf8f1":"#fff0f0";
-    $("apiStatus").style.color=ok?"#159c68":"#d34b4b";
-    $("apiStatusText").textContent=ok?"API Connected":"API Offline";
-    $("connectionTitle").textContent=ok?"Database terhubung":"Koneksi gagal";
-    $("connectionDesc").textContent=message;
-
-    console.log("[RADJASPIN API]",ok?"CONNECTED":"OFFLINE",message);
+    if (apiConnected) {
+      await loadPosts();
+    }
+  } catch (error) {
+    apiConnected = false;
+    setConnectionUI(false, error.message || "Koneksi gagal.");
   }
+}
 
-  window[callbackName]=data=>{
-    const ok=!!(data&&data.success===true&&data.status==="connected");
-    finish(ok,ok?"Google Apps Script berhasil terhubung.":(data?.message||"Respons API tidak valid."));
-  };
-
-  timer=setTimeout(()=>finish(false,"Waktu koneksi habis."),20000);
-
-  script.async=true;
-  script.onerror=()=>finish(false,"Browser gagal memuat Google Apps Script.");
-  script.src=CONFIG.API_URL+"?callback="+encodeURIComponent(callbackName)+"&_="+Date.now();
-  document.head.appendChild(script);
+function setConnectionUI(ok, message) {
+  $("apiStatus").style.background = ok ? "#eaf8f1" : "#fff0f0";
+  $("apiStatus").style.color = ok ? "#159c68" : "#d34b4b";
+  $("apiStatusText").textContent = ok ? "API Connected" : "API Offline";
+  $("connectionTitle").textContent = ok ? "Database terhubung" : "Koneksi gagal";
+  $("connectionDesc").textContent = message;
 }
 
 /* NAVIGASI */
-function showView(view){
-  $("listView").classList.toggle("hidden",view!=="list");
-  $("editorView").classList.toggle("hidden",view!=="editor");
-  $("listBtn").className="btn "+(view==="list"?"btn-primary":"btn-light");
-  $("newBtn").classList.toggle("hidden",view==="editor");
+function showView(view) {
+  $("listView").classList.toggle("hidden", view !== "list");
+  $("editorView").classList.toggle("hidden", view !== "editor");
+  $("listBtn").className = "btn " + (view === "list" ? "btn-primary" : "btn-light");
+  $("newBtn").classList.toggle("hidden", view === "editor");
 }
-$("listBtn").onclick=()=>showView("list");
-$("newBtn").onclick=newPost;
-$("cancelBtn").onclick=()=>showView("list");
+$("listBtn").onclick = () => showView("list");
+$("newBtn").onclick = newPost;
+$("cancelBtn").onclick = () => showView("list");
+$("refreshBtn").onclick = loadPosts;
 
-/* SLUG OTOMATIS */
-function makeSlug(value){
+/* SLUG */
+function makeSlug(value) {
   return value.toLowerCase().trim().normalize("NFD")
-    .replace(/[\u0300-\u036f]/g,"")
-    .replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
-$("postTitle").addEventListener("input",()=>{
-  if(autoSlug)$("postSlug").value=makeSlug($("postTitle").value);
+$("postTitle").addEventListener("input", () => {
+  if (autoSlug) $("postSlug").value = makeSlug($("postTitle").value);
 });
-$("postSlug").addEventListener("input",()=>autoSlug=false);
+$("postSlug").addEventListener("input", () => autoSlug = false);
 
-/* VISUAL EDITOR */
-document.querySelectorAll("[data-cmd]").forEach(button=>{
-  button.addEventListener("mousedown",e=>e.preventDefault());
-  button.addEventListener("click",()=>{
+/* EDITOR */
+document.querySelectorAll("[data-cmd]").forEach(button => {
+  button.addEventListener("mousedown", event => event.preventDefault());
+  button.addEventListener("click", () => {
     $("editor").focus();
-    document.execCommand(button.dataset.cmd,false,null);
+    document.execCommand(button.dataset.cmd, false, null);
   });
 });
-document.querySelectorAll("[data-block]").forEach(button=>{
-  button.addEventListener("mousedown",e=>e.preventDefault());
-  button.addEventListener("click",()=>{
+document.querySelectorAll("[data-block]").forEach(button => {
+  button.addEventListener("mousedown", event => event.preventDefault());
+  button.addEventListener("click", () => {
     $("editor").focus();
-    document.execCommand("formatBlock",false,button.dataset.block);
+    document.execCommand("formatBlock", false, button.dataset.block);
   });
 });
 
-function insertEditorLink(){
-  const url=window.prompt("Masukkan URL tautan:");
-  if(!url)return;
-  if(!/^https?:\/\//i.test(url)){
-    toast("URL harus diawali http:// atau https://");
-    return;
-  }
+function insertEditorLink() {
+  const url = window.prompt("Masukkan URL tautan:");
+  if (!url) return;
+  if (!/^https?:\/\//i.test(url)) return toast("URL harus diawali http:// atau https://");
   $("editor").focus();
-  document.execCommand("createLink",false,url);
+  document.execCommand("createLink", false, url);
 }
-
-function insertEditorImage(){
-  const url=window.prompt("Masukkan URL gambar:");
-  if(!url)return;
-  if(!/^https?:\/\//i.test(url)){
-    toast("URL harus diawali http:// atau https://");
-    return;
-  }
+function insertEditorImage() {
+  const url = window.prompt("Masukkan URL gambar:");
+  if (!url) return;
+  if (!/^https?:\/\//i.test(url)) return toast("URL harus diawali http:// atau https://");
   $("editor").focus();
-  document.execCommand("insertImage",false,url);
+  document.execCommand("insertImage", false, url);
 }
-$("linkBtn").onclick=insertEditorLink;
-$("imageBtn").onclick=insertEditorImage;
+$("linkBtn").onclick = insertEditorLink;
+$("imageBtn").onclick = insertEditorImage;
 
 /* THUMBNAIL */
-function renderThumbnail(url){
-  const preview=$("thumbnailPreview");
+function renderThumbnail(url) {
+  const preview = $("thumbnailPreview");
   preview.replaceChildren();
 
-  if(!url){
-    preview.textContent="＋ Pilih gambar thumbnail";
+  if (!url) {
+    preview.textContent = "＋ Pilih gambar thumbnail";
     return;
   }
 
-  const img=document.createElement("img");
-  img.src=url;
-  img.alt="Thumbnail artikel";
-  img.onerror=()=>preview.textContent="Gambar tidak dapat dimuat";
+  const img = document.createElement("img");
+  img.src = url;
+  img.alt = "Thumbnail artikel";
+  img.onerror = () => preview.textContent = "Gambar tidak dapat dimuat";
   preview.appendChild(img);
 }
-$("thumbnailUrl").addEventListener("input",e=>renderThumbnail(e.target.value));
-
-$("thumbnailFile").addEventListener("change",e=>{
-  const file=e.target.files[0];
-  if(!file)return;
-  const localURL=URL.createObjectURL(file);
+$("thumbnailUrl").addEventListener("input", event => renderThumbnail(event.target.value));
+$("thumbnailFile").addEventListener("change", event => {
+  const file = event.target.files[0];
+  if (!file) return;
+  const localURL = URL.createObjectURL(file);
   renderThumbnail(localURL);
-  toast("Ini hanya preview lokal. Upload media belum tersedia.");
+  toast("Preview lokal saja. Upload gambar belum tersedia.");
 });
 
 /* EDITOR BARU */
-function newPost(){
-  currentPostId=null;
-  currentStatus="draft";
-  autoSlug=true;
+function newPost() {
+  currentPostId = null;
+  currentStatus = "draft";
+  autoSlug = true;
 
-  $("postTitle").value="";
-  $("postSlug").value="";
-  $("editor").innerHTML="";
-  $("postCategory").value="";
-  $("thumbnailUrl").value="";
-  $("thumbnailFile").value="";
+  $("postTitle").value = "";
+  $("postSlug").value = "";
+  $("editor").innerHTML = "";
+  $("postCategory").value = "";
+  $("thumbnailUrl").value = "";
+  $("thumbnailFile").value = "";
   renderThumbnail("");
 
   updateStatusUI();
@@ -501,155 +499,271 @@ function newPost(){
   $("postTitle").focus();
 }
 
-/* STATUS ARTIKEL */
-function updateStatusUI(){
-  $("statusPill").textContent=currentStatus==="published"?"Published":"Draft";
-  $("statusPill").className="status-pill "+currentStatus;
+function updateStatusUI() {
+  $("statusPill").textContent = currentStatus === "published" ? "Published" : "Draft";
+  $("statusPill").className = "status-pill " + currentStatus;
 }
 
-/* EDIT ARTIKEL DEMO */
-function editPost(id){
-  const post=posts.find(item=>item.post_id===id);
-  if(!post)return;
+/* DAFTAR ARTIKEL DARI SHEETS */
+async function loadPosts() {
+  $("refreshBtn").disabled = true;
+  $("refreshBtn").textContent = "Memuat...";
 
-  currentPostId=id;
-  currentStatus=post.status||"draft";
-  autoSlug=false;
+  try {
+    const result = await apiRequest("listPosts");
+    posts = Array.isArray(result.posts) ? result.posts : [];
+    renderPosts();
+    showNotice("Daftar artikel berhasil dimuat dari Google Sheets.", "success");
+  } catch (error) {
+    showNotice(error.message, "error");
+    toast(error.message);
+  } finally {
+    $("refreshBtn").disabled = false;
+    $("refreshBtn").textContent = "↻ Muat Ulang";
+  }
+}
 
-  $("postTitle").value=post.title||"";
-  $("postSlug").value=post.slug||"";
-  $("editor").innerHTML=post.content||"";
-  $("postCategory").value=post.category||"";
-  $("thumbnailUrl").value=post.thumbnail||"";
-  renderThumbnail(post.thumbnail||"");
+/* EDIT ARTIKEL */
+function editPost(id) {
+  const post = posts.find(item => item.post_id === id);
+  if (!post) return;
+
+  currentPostId = id;
+  currentStatus = post.status || "draft";
+  autoSlug = false;
+
+  $("postTitle").value = post.title || "";
+  $("postSlug").value = post.slug || "";
+  $("editor").innerHTML = post.content || "";
+  $("postCategory").value = post.category || "";
+  $("thumbnailUrl").value = post.thumbnail || "";
+  renderThumbnail(post.thumbnail || "");
 
   updateStatusUI();
   $("deleteBtn").classList.remove("hidden");
+  $("notice").classList.add("hidden");
   showView("editor");
 }
 
-/* SIMPAN ARTIKEL
-   Operasi CRUD frontend akan disambungkan pada tahap berikutnya.
-*/
-function savePost(status){
-  const title=$("postTitle").value.trim();
-  const content=$("editor").innerHTML.trim();
+/* SIMPAN / UPDATE */
+async function savePost(status) {
+  if (busy) return;
 
-  if(!title){
+  const title = $("postTitle").value.trim();
+  const content = $("editor").innerHTML.trim();
+
+  if (!title) {
     toast("Judul artikel wajib diisi.");
     $("postTitle").focus();
     return;
   }
-  if(!content){
+  if (!content || content === "<br>") {
     toast("Isi artikel masih kosong.");
     $("editor").focus();
     return;
   }
-  if(!apiConnected){
-    toast("API belum terhubung. Periksa koneksi dahulu.");
+
+  const thumbnail = $("thumbnailUrl").value.trim();
+  if (thumbnail && !/^https?:\/\/\S+$/i.test(thumbnail)) {
+    toast("URL thumbnail harus menggunakan HTTP atau HTTPS.");
     return;
   }
 
-  showNotice("Koneksi GAS berhasil. Tombol penyimpanan artikel akan diaktifkan setelah integrasi CRUD frontend selesai.","warning");
-}
-$("saveDraftBtn").onclick=()=>savePost("draft");
-$("publishBtn").onclick=()=>savePost("published");
+  const payload = {
+    title,
+    slug: $("postSlug").value.trim() || makeSlug(title),
+    content,
+    thumbnail,
+    category: $("postCategory").value,
+    status
+  };
 
-/* MODAL KONFIRMASI */
-function openConfirm(title,message,action){
-  $("modalTitle").textContent=title;
-  $("modalMessage").textContent=message;
-  modalAction=action;
+  busy = true;
+  $("saveDraftBtn").disabled = true;
+  $("publishBtn").disabled = true;
+
+  try {
+    let result;
+
+    if (currentPostId) {
+      result = await apiRequest("updatePost", {
+        post_id: currentPostId,
+        ...payload
+      });
+    } else {
+      result = await apiRequest("createPost", payload);
+    }
+
+    currentPostId = result.post && result.post.post_id
+      ? result.post.post_id
+      : currentPostId;
+
+    currentStatus = status;
+    updateStatusUI();
+
+    toast(result.message || "Artikel berhasil disimpan.");
+    await loadPosts();
+    showView("list");
+
+  } catch (error) {
+    showNotice(error.message, "error");
+    toast(error.message);
+  } finally {
+    busy = false;
+    $("saveDraftBtn").disabled = false;
+    $("publishBtn").disabled = false;
+  }
+}
+
+$("saveDraftBtn").onclick = () => savePost("draft");
+$("publishBtn").onclick = () => savePost("published");
+
+/* MODAL */
+function openConfirm(title, message, action) {
+  $("modalTitle").textContent = title;
+  $("modalMessage").textContent = message;
+  modalAction = action;
   $("confirmModal").classList.add("show");
 }
-$("modalCancel").onclick=()=>$("confirmModal").classList.remove("show");
-$("modalConfirm").onclick=()=>{
+$("modalCancel").onclick = () => {
   $("confirmModal").classList.remove("show");
-  if(modalAction)modalAction();
+  modalAction = null;
+};
+$("modalConfirm").onclick = async () => {
+  $("confirmModal").classList.remove("show");
+  const action = modalAction;
+  modalAction = null;
+  if (action) await action();
 };
 
-/* HAPUS ARTIKEL */
-function deletePost(id){
-  openConfirm("Hapus artikel?","Fitur hapus akan aktif setelah integrasi CRUD selesai.",()=>{
-    toast("Integrasi API hapus belum diaktifkan.");
-  });
-}
-$("deleteBtn").onclick=()=>currentPostId&&deletePost(currentPostId);
+/* HAPUS SATU BARIS PENUH BERDASARKAN post_id */
+async function deletePost(id) {
+  if (!id || busy) return;
 
-/* DAFTAR ARTIKEL */
-function renderPosts(){
-  const query=$("searchPosts").value.toLowerCase();
-  const filter=$("filterStatus").value;
-  const filtered=posts.filter(post=>
-    (post.title||"").toLowerCase().includes(query)&&
-    (!filter||post.status===filter)
+  openConfirm(
+    "Hapus artikel?",
+    "Seluruh baris artikel ini akan dihapus dari Google Sheets. Tindakan ini tidak dapat dibatalkan.",
+    async () => {
+      busy = true;
+      $("deleteBtn").disabled = true;
+
+      try {
+        const result = await apiRequest("deletePost", { post_id: id });
+
+        // Hanya ubah daftar setelah server mengonfirmasi sukses.
+        posts = posts.filter(post => post.post_id !== id);
+        renderPosts();
+
+        currentPostId = null;
+        toast(result.message || "Artikel berhasil dihapus.");
+        showNotice("Artikel dan seluruh baris datanya berhasil dihapus dari Google Sheets.", "success");
+        showView("list");
+
+      } catch (error) {
+        showNotice(error.message, "error");
+        toast(error.message);
+      } finally {
+        busy = false;
+        $("deleteBtn").disabled = false;
+      }
+    }
+  );
+}
+
+$("deleteBtn").onclick = () => {
+  if (currentPostId) deletePost(currentPostId);
+};
+
+/* RENDER DAFTAR */
+function renderPosts() {
+  const query = $("searchPosts").value.toLowerCase();
+  const filter = $("filterStatus").value;
+
+  const filtered = posts.filter(post =>
+    (post.title || "").toLowerCase().includes(query) &&
+    (!filter || post.status === filter)
   );
 
-  const table=$("postsTable");
+  const table = $("postsTable");
   table.replaceChildren();
-  $("emptyState").style.display=filtered.length?"none":"block";
+  $("emptyState").style.display = filtered.length ? "none" : "block";
 
-  filtered.forEach(post=>{
-    const row=document.createElement("tr");
-    const titleCell=document.createElement("td");
-    const title=document.createElement("div");
-    const slug=document.createElement("div");
+  filtered.forEach(post => {
+    const row = document.createElement("tr");
 
-    title.className="post-title";
-    title.textContent=post.title||"Tanpa judul";
-    slug.className="post-sub";
-    slug.textContent="/"+(post.slug||"");
-    titleCell.append(title,slug);
+    const titleCell = document.createElement("td");
+    const title = document.createElement("div");
+    const slug = document.createElement("div");
+    title.className = "post-title";
+    title.textContent = post.title || "Tanpa judul";
+    slug.className = "post-sub";
+    slug.textContent = "/" + (post.slug || "");
+    titleCell.append(title, slug);
 
-    const category=document.createElement("td");
-    category.textContent=post.category||"-";
+    const category = document.createElement("td");
+    category.textContent = post.category || "-";
 
-    const statusCell=document.createElement("td");
-    const pill=document.createElement("span");
-    pill.className="status-pill "+(post.status==="published"?"published":"draft");
-    pill.textContent=post.status==="published"?"Published":"Draft";
+    const statusCell = document.createElement("td");
+    const pill = document.createElement("span");
+    pill.className = "status-pill " + (post.status === "published" ? "published" : "draft");
+    pill.textContent = post.status === "published" ? "Published" : "Draft";
     statusCell.appendChild(pill);
 
-    const date=document.createElement("td");
-    date.textContent=post.updated_at||post.created_at||"-";
+    const date = document.createElement("td");
+    date.textContent = post.updated_at || post.created_at || "-";
 
-    const actions=document.createElement("td");
-    const actionBox=document.createElement("div");
-    actionBox.className="row-actions";
+    const actions = document.createElement("td");
+    const actionBox = document.createElement("div");
+    actionBox.className = "row-actions";
 
-    const edit=document.createElement("button");
-    edit.className="icon-btn";
-    edit.textContent="✎";
-    edit.title="Edit";
-    edit.onclick=()=>editPost(post.post_id);
+    const edit = document.createElement("button");
+    edit.className = "icon-btn";
+    edit.textContent = "✎";
+    edit.title = "Edit";
+    edit.onclick = () => editPost(post.post_id);
 
-    const remove=document.createElement("button");
-    remove.className="icon-btn";
-    remove.textContent="×";
-    remove.title="Hapus";
-    remove.onclick=()=>deletePost(post.post_id);
+    const remove = document.createElement("button");
+    remove.className = "icon-btn";
+    remove.textContent = "×";
+    remove.title = "Hapus";
+    remove.onclick = () => deletePost(post.post_id);
 
-    actionBox.append(edit,remove);
+    actionBox.append(edit, remove);
     actions.appendChild(actionBox);
-    row.append(titleCell,category,statusCell,date,actions);
+    row.append(titleCell, category, statusCell, date, actions);
     table.appendChild(row);
   });
 }
-$("searchPosts").addEventListener("input",renderPosts);
-$("filterStatus").addEventListener("change",renderPosts);
+
+$("searchPosts").addEventListener("input", renderPosts);
+$("filterStatus").addEventListener("change", renderPosts);
 
 /* LOGOUT */
-$("logoutBtn").onclick=e=>{
-  e.preventDefault();
-  openConfirm("Keluar dari RADJASPIN?","Kamu akan kembali ke halaman login.",()=>{
-    sessionStorage.removeItem("radjaspin_demo_login");
-    window.location.href=CONFIG.LOGIN_URL;
-  });
+$("logoutBtn").onclick = event => {
+  event.preventDefault();
+
+  openConfirm(
+    "Keluar dari RADJASPIN?",
+    "Sesi admin akan diakhiri dan kamu akan kembali ke halaman login.",
+    async () => {
+      const token = sessionStorage.getItem(CONFIG.TOKEN_KEY);
+
+      try {
+        await apiRequest("logout");
+      } catch (error) {
+        console.warn("Logout API:", error);
+      } finally {
+        sessionStorage.removeItem(CONFIG.TOKEN_KEY);
+        sessionStorage.removeItem(CONFIG.USER_KEY);
+        sessionStorage.removeItem("radjaspin_demo_login");
+        window.location.replace(CONFIG.LOGIN_URL);
+      }
+    }
+  );
 };
 
 /* MULAI */
-renderPosts();
-window.addEventListener("load",checkAPI);
+checkAPI();
 </script>
 </body>
 </html>

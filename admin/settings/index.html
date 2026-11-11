@@ -18,6 +18,9 @@
 .modal-head{padding:21px 23px 17px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:15px}.modal-head h2{font-size:17px;margin:0 0 5px}.modal-head p{font-size:11px;color:var(--muted);margin:0}.close{border:0;background:#f4f4f8;width:30px;height:30px;border-radius:8px;font-size:19px;color:#777;cursor:pointer}.modal-body{padding:20px 23px}.contact-row{display:grid;grid-template-columns:38px minmax(0,1fr) 42px;gap:12px;margin-bottom:17px;align-items:start}.channel-toggle{width:38px;height:22px;border:0;border-radius:20px;background:#d9d9e2;padding:3px;cursor:pointer;transition:.18s;margin-top:7px;justify-self:end}.channel-toggle:before{content:'';display:block;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 3px #0002;transition:.18s}.channel-toggle[aria-checked='true']{background:#25b985}.channel-toggle[aria-checked='true']:before{transform:translateX(16px)}.channel-toggle:focus-visible{outline:3px solid #dcd6ff;outline-offset:2px}.channel-state{font-size:9px;color:#999;display:block;text-align:center;margin-top:4px}.channel-toggle-wrap{width:42px}.contact-icon{width:36px;height:36px;border-radius:10px;background:#f1efff;color:var(--purple);display:grid;place-items:center}.contact-icon svg{width:19px;height:19px}.fields{min-width:0}.fields label{display:block;font-size:11px;font-weight:700;color:#55566b;margin:0 0 6px}.fields input{width:100%;height:39px;border:1px solid #e3e3eb;border-radius:7px;padding:0 11px;font:inherit;font-size:12px;outline:none;margin-bottom:9px}.fields input:focus{border-color:#8b7be9;box-shadow:0 0 0 3px #f0edff}.fields input::placeholder{color:#b2b3bf}.modal-foot{padding:15px 23px 20px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:10px}.hint{font-size:10px;color:#9999a8}.actions{display:flex;gap:8px}.btn{border:0;border-radius:7px;padding:10px 15px;font-size:11px;font-weight:700;cursor:pointer}.btn-light{background:#f1f1f6;color:#66677a}.btn-primary{background:var(--purple);color:#fff}.btn-primary:hover{background:var(--purple-dark)}.toast{position:fixed;right:22px;bottom:22px;background:#24243a;color:white;padding:12px 16px;border-radius:9px;font-size:12px;box-shadow:var(--shadow);opacity:0;transform:translateY(8px);transition:.2s;z-index:40;pointer-events:none}.toast.show{opacity:1;transform:none}
 @media(max-width:800px){.sidebar{width:68px;padding:20px 9px}.brand{justify-content:center;padding:0 0 25px}.brand-name,.brand-sub,.nav-label,.nav-link span:not(.nav-icon),.sidebar-bottom .user-info{display:none}.nav-link{justify-content:center;padding:13px 5px}.nav-icon{font-size:19px}.user-box{justify-content:center;padding:14px 0}.main{margin-left:68px}.topbar{padding:0 18px}.content{padding:25px 20px 45px}}
 @media(max-width:560px){.contact-row{grid-template-columns:34px minmax(0,1fr) 38px;gap:9px}.channel-toggle-wrap{width:38px}.topbar{height:58px;padding:0 13px}.content{padding:22px 13px 40px}.page-heading h1{font-size:21px}.settings-grid{grid-template-columns:1fr;gap:11px}.setting-card{min-height:96px;padding:16px}.api-status{font-size:0}.modal-head,.modal-body{padding-left:17px;padding-right:17px}.modal-foot{padding:14px 17px 17px;align-items:flex-start;flex-direction:column}.actions{width:100%;justify-content:flex-end}.hint{line-height:1.5}}
+
+.settings-extra-title{font-size:10px;font-weight:800;letter-spacing:1px;color:#8b86a5;margin:24px 0 12px;padding-top:18px;border-top:1px solid var(--border)}
+.logo-setting-row{margin-bottom:12px}
 </style>
 </head>
 <body>
@@ -64,6 +67,16 @@
         <div class="contact-row"><div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></div><div class="fields"><label for="fbName">Facebook</label><input id="fbName" placeholder="Nama halaman Facebook"><input id="fbLink" type="url" placeholder="https://facebook.com/..." aria-label="Link Facebook"></div><div class="channel-toggle-wrap"><button class="channel-toggle" type="button" data-channel="facebook" role="switch" aria-checked="true" aria-label="Aktifkan atau nonaktifkan Facebook"></button><span class="channel-state">ON</span></div></div>
         <div class="contact-row"><div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="fields"><label for="groupName">Grup Resmi</label><input id="groupName" placeholder="Nama grup resmi"><input id="groupLink" type="url" placeholder="https://..." aria-label="Link grup"></div><div class="channel-toggle-wrap"><button class="channel-toggle" type="button" data-channel="group" role="switch" aria-checked="true" aria-label="Aktifkan atau nonaktifkan Grup Resmi"></button><span class="channel-state">ON</span></div></div>
         <div class="contact-row" style="margin-bottom:0"><div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg></div><div class="fields"><label for="siteName">Situs Resmi</label><input id="siteName" placeholder="Nama situs / website"><input id="siteLink" type="url" placeholder="https://..." aria-label="Link situs resmi"></div><div class="channel-toggle-wrap"><button class="channel-toggle" type="button" data-channel="site" role="switch" aria-checked="true" aria-label="Aktifkan atau nonaktifkan Situs Resmi"></button><span class="channel-state">ON</span></div></div>
+        <div class="settings-extra-title">LINK LOGO WEBSITE</div>
+        <div class="contact-row logo-setting-row">
+          <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 10h8M8 14h5"/></svg></div>
+          <div class="fields"><label for="headerLogoTarget">Logo bagian atas (header)</label><input id="headerLogoTarget" type="url" placeholder="https://link-tujuan-logo-header.com"></div>
+        </div>
+        <div class="contact-row logo-setting-row" style="margin-bottom:0">
+          <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="12" cy="12" r="4"/><path d="M7 7h.01"/></svg></div>
+          <div class="fields"><label for="sidebarLogoTarget">Logo GIF bagian sidebar</label><input id="sidebarLogoTarget" type="url" placeholder="https://link-tujuan-logo-sidebar.com"></div>
+        </div>
+      
       </div>
       <div class="modal-foot"><span class="hint">ON = aktif ditampilkan di website. OFF = disembunyikan.</span><div class="actions"><button class="btn btn-light" type="button" id="cancelModal">Batal</button><button class="btn btn-primary" type="submit">Simpan Pengaturan</button></div></div>
     </form>
@@ -74,24 +87,15 @@
 const API_URL='https://radjaspin-api.simeryoay.workers.dev/';
 const TOKEN_KEY='radjaspin_auth_token';
 const USER_KEY='radjaspin_auth_username';
-const fields=['waName','waLink','tgName','tgLink','fbName','fbLink','groupName','groupLink','siteName','siteLink'];
+const fields=['waName','waLink','tgName','tgLink','fbName','fbLink','groupName','groupLink','siteName','siteLink','headerLogoTarget','sidebarLogoTarget'];
 const channels=['whatsapp','telegram','facebook','group','site'];
 function setChannelToggle(button,enabled){button.setAttribute('aria-checked',String(enabled));const state=button.parentElement.querySelector('.channel-state');if(state)state.textContent=enabled?'ON':'OFF';}
 const overlay=document.getElementById('contactOverlay');
 async function api(action,extra={}){
  const token=sessionStorage.getItem(TOKEN_KEY)||'';
  const response=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,token,...extra})});
- const raw=await response.text();
- let result;
- try{result=JSON.parse(raw)}catch(error){throw new Error('Respons API bukan JSON yang valid.')}
- if(!response.ok)throw new Error(result.message||'API gagal. HTTP '+response.status);
- if(!result.success){
-   if(result.message&&/sesi admin|token admin|sesi tidak valid/i.test(result.message)){
-     sessionStorage.removeItem(TOKEN_KEY);sessionStorage.removeItem(USER_KEY);
-     location.href='/buktijepe/login/';
-   }
-   throw new Error(result.message||'Permintaan API gagal.');
- }
+ const result=await response.json();
+ if(!response.ok||!result.success)throw new Error(result.message||'Permintaan API gagal.');
  return result;
 }
 async function openModal(){
@@ -116,7 +120,7 @@ overlay.addEventListener('click',e=>{if(e.target===overlay)closeModal()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 document.getElementById('contactForm').addEventListener('submit',async e=>{
  e.preventDefault();const data={};fields.forEach(id=>data[id]=document.getElementById(id).value.trim());data.enabled={};channels.forEach(channel=>{data.enabled[channel]=document.querySelector('[data-channel="'+channel+'"]').getAttribute('aria-checked')==='true'});
- for(const id of ['waLink','tgLink','fbLink','groupLink','siteLink']){if(data[id]&&!/^https?:\/\//i.test(data[id])){toast('Link harus diawali http:// atau https://');document.getElementById(id).focus();return}}
+ for(const id of ['waLink','tgLink','fbLink','groupLink','siteLink','headerLogoTarget','sidebarLogoTarget']){if(data[id]&&!/^https?:\/\//i.test(data[id])){toast('Link harus diawali http:// atau https://');document.getElementById(id).focus();return}}
  const submit=document.querySelector('#contactForm button[type="submit"]');submit.disabled=true;submit.textContent='Menyimpan...';
  try{await api('saveSettings',{settings:data});closeModal();toast('Pengaturan contact berhasil disimpan.')}catch(err){toast(err.message||'Gagal menyimpan pengaturan.')}finally{submit.disabled=false;submit.textContent='Simpan Pengaturan';}
 });

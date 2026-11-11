@@ -215,10 +215,9 @@ h1 { font-size:25px; margin:0 0 7px; }
 }
 .media-info { padding:12px; }
 
-/* BARIS NAMA FILE */
 .filename-row {
-  display:flex !important;
-  align-items:center !important;
+  display:flex;
+  align-items:center;
   gap:8px;
   width:100%;
   min-width:0;
@@ -233,7 +232,7 @@ h1 { font-size:25px; margin:0 0 7px; }
   min-width:0;
 }
 
-/* TOMBOL PENSIL */
+/* Pensil hanya untuk preview upload */
 .pencil-btn {
   display:inline-flex !important;
   visibility:visible !important;
@@ -281,7 +280,6 @@ h1 { font-size:25px; margin:0 0 7px; }
   flex:1;
   padding:8px 5px;
 }
-
 .filesize {
   font-size:10px;
   color:var(--muted);
@@ -600,14 +598,14 @@ async function checkApi() {
 }
 
 // ========================================
-// PENCIL BUTTON
+// PENCIL BUTTON - PREVIEW ONLY
 // ========================================
 
-function createPencil(onClick, title) {
+function createPencil(onClick) {
   const button = el("button", "pencil-btn", "✎");
   button.type = "button";
-  button.title = title;
-  button.setAttribute("aria-label", title);
+  button.title = "Ubah nama sebelum upload";
+  button.setAttribute("aria-label", "Ubah nama sebelum upload");
   button.addEventListener("click", onClick);
   return button;
 }
@@ -633,12 +631,11 @@ function renderPreviews() {
     const filename = el("div", "filename", entry.name);
     filename.title = entry.name;
 
+    // Ikon pensil hanya ada di Preview Upload.
     const pencil = createPencil(
-      () => editPreviewName(index),
-      "Ubah nama sebelum upload"
+      () => editPreviewName(index)
     );
 
-    // PENTING: nama dan pensil dimasukkan ke baris.
     filenameRow.appendChild(filename);
     filenameRow.appendChild(pencil);
 
@@ -664,6 +661,10 @@ function renderPreviews() {
 
   $("uploadBtn").disabled = selectedFiles.length === 0 || busy;
 }
+
+// ========================================
+// EDIT NAME - PREVIEW ONLY
+// ========================================
 
 function editPreviewName(index) {
   const entry = selectedFiles[index];
@@ -712,6 +713,10 @@ function editPreviewName(index) {
   input.focus();
   input.select();
 }
+
+// ========================================
+// SELECT FILES
+// ========================================
 
 function addFiles(files) {
   const allowed = [
@@ -827,7 +832,7 @@ async function uploadSelected() {
 }
 
 // ========================================
-// MEDIA LIBRARY
+// LOAD MEDIA
 // ========================================
 
 async function loadMedia() {
@@ -844,6 +849,10 @@ async function loadMedia() {
     );
   }
 }
+
+// ========================================
+// MEDIA LIBRARY - TANPA RENAME
+// ========================================
 
 function renderMedia() {
   const query = $("searchInput").value.toLowerCase();
@@ -876,19 +885,13 @@ function renderMedia() {
     imageBox.appendChild(img);
 
     const info = el("div", "media-info");
-    const filenameRow = el("div", "filename-row");
 
+    const filenameRow = el("div", "filename-row");
     const filename = el("div", "filename", file.name);
     filename.title = file.name;
 
-    const pencil = createPencil(
-      () => editLibraryName(file, info),
-      "Ubah nama file di GitHub"
-    );
-
-    // PENTING: nama dan pensil dimasukkan ke baris.
+    // Hanya nama file. Tidak ada tombol pensil di sini.
     filenameRow.appendChild(filename);
-    filenameRow.appendChild(pencil);
 
     const size = el("div", "filesize", formatSize(file.size || 0));
 
@@ -919,75 +922,6 @@ function renderMedia() {
 
     $("mediaGrid").appendChild(card);
   });
-}
-
-// ========================================
-// RENAME LIBRARY FILE
-// ========================================
-
-function editLibraryName(file, info) {
-  if (info.querySelector(".filename-edit")) return;
-
-  const form = el("div", "filename-edit");
-  const input = el("input");
-  input.type = "text";
-  input.value = file.name;
-  input.maxLength = 100;
-
-  const buttons = el("div", "edit-buttons");
-  const save = el("button", "btn btn-primary", "Simpan");
-  const cancel = el("button", "btn btn-light", "Batal");
-
-  cancel.addEventListener("click", () => form.remove());
-
-  save.addEventListener("click", async () => {
-    const newName = input.value.trim();
-    const error = validateName(newName, file.name);
-
-    if (error) {
-      toast(error);
-      input.focus();
-      return;
-    }
-
-    if (newName === file.name) {
-      form.remove();
-      return;
-    }
-
-    save.disabled = true;
-    cancel.disabled = true;
-    save.textContent = "Menyimpan...";
-
-    try {
-      const result = await api("renameMedia", {
-        filename:file.name,
-        newName
-      });
-
-      toast(result.message || "Nama file berhasil diubah.");
-      await loadMedia();
-    } catch (error) {
-      toast(error.message);
-      save.disabled = false;
-      cancel.disabled = false;
-      save.textContent = "Simpan";
-    }
-  });
-
-  input.addEventListener("keydown", event => {
-    if (event.key === "Enter") save.click();
-    if (event.key === "Escape") cancel.click();
-  });
-
-  buttons.appendChild(save);
-  buttons.appendChild(cancel);
-  form.appendChild(input);
-  form.appendChild(buttons);
-  info.appendChild(form);
-
-  input.focus();
-  input.select();
 }
 
 // ========================================

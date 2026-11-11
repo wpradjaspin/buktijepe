@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#101827">
-  <title>Login Admin — SEJITU</title>
+  <title>Login Admin — RADJASPIN</title>
   <style>
     :root {
       --navy: #101827;
@@ -242,17 +242,17 @@
 </head>
 <body>
   <main class="page">
-    <section class="brand-panel" aria-label="Informasi SEJITU">
+    <section class="brand-panel" aria-label="Informasi RADJASPUN">
       <div class="brand-top">
-        <a class="brand-logo-wrap" href="/buktijepe/" aria-label="SEJITU - kembali ke website">
-          <img class="brand-logo" src="https://wpsejitu.github.io/buktijepe/assets/sejitu-logo.png" alt="Logo SEJITU">
+        <a class="brand-logo-wrap" href="/buktijepe/" aria-label="RADJASPIN - kembali ke website">
+          <img class="brand-logo" src="https://wpradjaspin.github.io/buktijepe/assets/radjaspin-logo.png" alt="Logo RADJASPIN">
         </a>
       </div>
 
       <div class="brand-copy">
         <div class="eyebrow">PRIVATE ADMIN PORTAL</div>
         <h1>Kelola konten.<br><span>Dengan lebih mudah.</span></h1>
-        <p>Selamat datang di ruang pengelolaan SEJITU. Masuk untuk mengatur konten dan menjaga website tetap terorganisir dari satu tempat.</p>
+        <p>Selamat datang di ruang pengelolaan RADJASPIN. Masuk untuk mengatur konten dan menjaga website tetap terorganisir dari satu tempat.</p>
         <div class="brand-points">
           <div class="brand-point">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></svg>
@@ -266,20 +266,20 @@
       </div>
 
       <div class="brand-bottom">
-        <span>© <span id="yearBrand"></span> SEJITU</span>
+        <span>© <span id="yearBrand"></span> RADJASPIN</span>
         <span>Private workspace</span>
       </div>
     </section>
 
     <section class="login-panel">
       <div class="login-card">
-        <a class="mobile-brand" href="/buktijepe/" aria-label="SEJITU - kembali ke website">
-          <img src="https://wpsejitu.github.io/buktijepe/assets/sejitu-logo.png" alt="Logo SEJITU">
+        <a class="mobile-brand" href="/buktijepe/" aria-label="RADJASPIN - kembali ke website">
+          <img src="https://wpradjaspin.github.io/buktijepe/assets/radjaspin-logo.png" alt="Logo RADJASPIN">
         </a>
 
         <div class="login-kicker"><span class="dot"></span> ADMINISTRATOR ACCESS</div>
         <h2>Selamat datang<br>kembali</h2>
-        <p class="intro">Silakan masuk menggunakan akun administrator untuk melanjutkan ke dashboard SEJITU.</p>
+        <p class="intro">Silakan masuk menggunakan akun administrator untuk melanjutkan ke dashboard RADJASPIN.</p>
 
         <form id="loginForm" novalidate>
           <div class="form-field">
@@ -321,7 +321,7 @@
 
         <div class="demo-note">
           <strong>Mode demo sementara</strong><br>
-          ID: <strong>admin</strong> &nbsp;·&nbsp; Password: <strong>sejitu123</strong><br>
+          ID: <strong>admin</strong> &nbsp;·&nbsp; Password: <strong>radjaspin123</strong><br>
           Kredensial ini hanya untuk uji tampilan. Ganti dan pindahkan autentikasi ke Google Apps Script sebelum website digunakan sungguhan.
         </div>
 
@@ -329,7 +329,7 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></svg>
           <span>Halaman ini merupakan area khusus administrator. Jangan bagikan informasi login kepada orang lain.</span>
         </div>
-        <div class="login-footer">© <span id="yearFooter"></span> SEJITU. All rights reserved.</div>
+        <div class="login-footer">© <span id="yearFooter"></span> RADJASPIN. All rights reserved.</div>
       </div>
     </section>
   </main>
@@ -337,7 +337,7 @@
   <script>
     // DEMO ONLY — replace with Google Apps Script authentication later.
     const DEMO_USERNAME = "admin";
-    const DEMO_PASSWORD = "sejitu123";
+    const DEMO_PASSWORD = "radjaspin123";
     const ADMIN_URL = "/buktijepe/admin/";
 
     const $ = (id) => document.getElementById(id);
@@ -345,7 +345,7 @@
     $("yearFooter").textContent = new Date().getFullYear();
 
     // Restore only the username if the visitor selected "Ingat ID saya".
-    const savedId = localStorage.getItem("sejitu_saved_admin_id");
+    const savedId = localStorage.getItem("radjaspin_saved_admin_id");
     if (savedId) {
       $("username").value = savedId;
       $("remember").checked = true;
@@ -393,11 +393,11 @@
       // Short delay to make the demo interaction feel like a real sign-in.
       setTimeout(() => {
         if (username === DEMO_USERNAME && password === DEMO_PASSWORD) {
-          if ($("remember").checked) localStorage.setItem("sejitu_saved_admin_id", username);
-          else localStorage.removeItem("sejitu_saved_admin_id");
+          if ($("remember").checked) localStorage.setItem("radjaspin_saved_admin_id", username);
+          else localStorage.removeItem("radjaspin_saved_admin_id");
 
           // Demo marker only. This is NOT a secure authenticated session.
-          sessionStorage.setItem("sejitu_demo_login", "true");
+          sessionStorage.setItem("radjaspin_demo_login", "true");
           message.classList.add("success");
           message.textContent = "Login demo berhasil. Mengalihkan ke dashboard...";
           setTimeout(() => { window.location.href = ADMIN_URL; }, 650);

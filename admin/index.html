@@ -600,14 +600,40 @@ td{
 </div>
 
 <script>
-// DEMO ONLY: nanti diganti verifikasi token dari Google Apps Script.
-if(sessionStorage.getItem("radjaspin_demo_login") !== "true"){
+
+/* RADJASPIN AUTH TOKEN */
+const authToken = sessionStorage.getItem("radjaspin_auth_token");
+
+if (!authToken) {
   window.location.replace("/buktijepe/login/");
 }
 
-document.getElementById("logoutBtn").addEventListener("click",()=>{
-  sessionStorage.removeItem("radjaspin_demo_login");
-  window.location.href="/buktijepe/login/";
+/* LOGOUT */
+document.getElementById("logoutBtn").addEventListener("click", async () => {
+  const token = sessionStorage.getItem("radjaspin_auth_token");
+
+  try {
+    if (token) {
+      await fetch("https://radjaspin-api.simeryoay.workers.dev/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          action: "logout",
+          token: token
+        })
+      });
+    }
+  } catch (error) {
+    console.error("Logout API:", error);
+  } finally {
+    sessionStorage.removeItem("radjaspin_auth_token");
+    sessionStorage.removeItem("radjaspin_auth_username");
+    sessionStorage.removeItem("radjaspin_demo_login");
+
+    window.location.replace("/buktijepe/login/");
+  }
 });
 
 document.getElementById("today").textContent =

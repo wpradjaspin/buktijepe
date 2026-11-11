@@ -3,87 +3,248 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#101827">
 <title>Login Admin — RADJASPIN</title>
+
 <style>
 :root{
-  --navy:#101827;--purple:#6957e8;--purple2:#5141cf;
-  --ink:#172033;--muted:#778196;--line:#e7eaf0;
-  --bg:#f3f5fa;--green:#16865d;--red:#c94b55;
+  --navy:#101827;
+  --purple:#6957e8;
+  --purple-dark:#5141cf;
+  --ink:#172033;
+  --muted:#778196;
+  --line:#e7eaf0;
+  --green:#16865d;
+  --red:#c94b55;
 }
 *{box-sizing:border-box}
 body{
-  margin:0;min-height:100vh;font-family:Inter,"Segoe UI",sans-serif;
-  color:var(--ink);background:var(--bg)
+  margin:0;
+  min-height:100vh;
+  font-family:Inter,"Segoe UI",sans-serif;
+  color:var(--ink);
+  background:#f3f5fa;
 }
 button,input{font:inherit}
-.page{min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
+.page{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+}
 .brand{
-  padding:42px clamp(30px,5vw,76px);color:white;
-  display:flex;flex-direction:column;justify-content:space-between;
+  padding:42px clamp(30px,5vw,76px);
+  color:white;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
   background:
     radial-gradient(circle at 16% 18%,#7667ff55,transparent 34%),
     radial-gradient(circle at 88% 78%,#2faea42b,transparent 32%),
-    linear-gradient(145deg,#101827,#17243b 55%,#202c4c)
+    linear-gradient(145deg,#101827,#17243b 55%,#202c4c);
 }
-.logo{width:290px;max-width:100%;height:92px;object-fit:contain;object-position:left}
-.brand-copy{max-width:510px;margin:auto 0;padding:65px 0}
-.eyebrow{color:#c7c3ff;font-size:11px;font-weight:800;letter-spacing:2px}
-.brand h1{font-size:clamp(38px,4.5vw,62px);line-height:1.08;letter-spacing:-2px}
+.logo{
+  width:290px;
+  max-width:100%;
+  height:92px;
+  object-fit:contain;
+  object-position:left;
+}
+.brand-copy{
+  max-width:510px;
+  margin:auto 0;
+  padding:65px 0;
+}
+.eyebrow{
+  color:#c7c3ff;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:2px;
+}
+.brand h1{
+  font-size:clamp(38px,4.5vw,62px);
+  line-height:1.08;
+  letter-spacing:-2px;
+}
 .brand h1 span{color:#aaa0ff}
-.brand p{color:#b6c0d1;font-size:14px;line-height:1.8}
-.points{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
-.points span{padding:9px 12px;border:1px solid #ffffff24;border-radius:30px;font-size:11px}
-.brand-footer{display:flex;justify-content:space-between;color:#8793a8;font-size:11px}
+.brand p{
+  color:#b6c0d1;
+  font-size:14px;
+  line-height:1.8;
+}
+.points{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:28px;
+}
+.points span{
+  padding:9px 12px;
+  border:1px solid #ffffff24;
+  border-radius:30px;
+  font-size:11px;
+}
+.brand-footer{
+  display:flex;
+  justify-content:space-between;
+  color:#8793a8;
+  font-size:11px;
+}
 .login-area{
-  display:flex;align-items:center;justify-content:center;padding:40px 25px;
-  background:radial-gradient(circle at 95% 5%,#6957e812,transparent 26%),#fbfcfe
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:40px 25px;
+  background:
+    radial-gradient(circle at 95% 5%,#6957e812,transparent 26%),
+    #fbfcfe;
 }
 .card{width:min(100%,430px)}
-.mobile-logo{display:none}
-.kicker{color:var(--purple);font-size:11px;font-weight:800;letter-spacing:1.6px}
-.kicker:before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-right:9px}
-h2{font-size:34px;letter-spacing:-1px;margin:16px 0 9px}
-.intro{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:30px}
+.mobile-logo{
+  display:none;
+}
+.kicker{
+  color:var(--purple);
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:1.6px;
+}
+.kicker:before{
+  content:"";
+  display:inline-block;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--green);
+  margin-right:9px;
+}
+h2{
+  font-size:34px;
+  letter-spacing:-1px;
+  margin:16px 0 9px;
+}
+.intro{
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.7;
+  margin-bottom:30px;
+}
 .field{margin:19px 0}
-label{display:block;font-size:12px;font-weight:750;margin-bottom:9px}
+.field label{
+  display:block;
+  font-size:12px;
+  font-weight:750;
+  margin-bottom:9px;
+}
 input{
-  width:100%;height:53px;padding:0 14px;border:1px solid #e0e5ed;
-  border-radius:11px;background:white;outline:none;font-size:13px
+  width:100%;
+  height:53px;
+  padding:0 14px;
+  border:1px solid #e0e5ed;
+  border-radius:11px;
+  background:white;
+  outline:none;
+  font-size:13px;
 }
-input:focus{border-color:#8b7df0;box-shadow:0 0 0 4px #6957e81a}
+input:focus{
+  border-color:#8b7df0;
+  box-shadow:0 0 0 4px #6957e81a;
+}
 .password-wrap{position:relative}
-.password-wrap input{padding-right:75px}
+.password-wrap input{padding-right:90px}
 .toggle{
-  position:absolute;right:8px;top:8px;height:37px;padding:0 10px;
-  border:0;background:#f3f2fc;color:var(--purple);border-radius:8px;
-  cursor:pointer;font-size:11px
+  position:absolute;
+  right:8px;
+  top:8px;
+  height:37px;
+  padding:0 10px;
+  border:0;
+  background:#f3f2fc;
+  color:var(--purple);
+  border-radius:8px;
+  cursor:pointer;
+  font-size:11px;
 }
-.options{display:flex;justify-content:space-between;align-items:center;margin:8px 0 24px}
-.remember{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted)}
-.remember input{width:14px;height:14px;accent-color:var(--purple)}
-.forgot{font-size:11px;color:var(--purple);font-weight:700}
+.options{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:8px 0 24px;
+}
+.remember{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:11px;
+  color:var(--muted);
+}
+.remember input{
+  width:14px;
+  height:14px;
+  accent-color:var(--purple);
+}
+.forgot{
+  font-size:11px;
+  color:var(--purple);
+  font-weight:700;
+  text-decoration:none;
+}
 .submit{
-  width:100%;height:53px;border:0;border-radius:11px;color:white;
+  width:100%;
+  height:53px;
+  border:0;
+  border-radius:11px;
+  color:white;
   background:linear-gradient(105deg,#6b5be8,#5145c9);
-  box-shadow:0 10px 22px #5b4cd338;font-weight:800;cursor:pointer
+  box-shadow:0 10px 22px #5b4cd338;
+  font-weight:800;
+  cursor:pointer;
 }
-.submit:disabled{opacity:.6;cursor:wait}
-.message{min-height:24px;margin:12px 2px 0;font-size:11px;line-height:1.5}
+.submit:disabled{
+  opacity:.6;
+  cursor:wait;
+}
+.message{
+  min-height:24px;
+  margin:12px 2px 0;
+  font-size:11px;
+  line-height:1.6;
+  overflow-wrap:anywhere;
+}
 .message.error{color:var(--red)}
 .message.success{color:var(--green)}
-.security{margin-top:27px;color:#9aa3b1;font-size:10px;line-height:1.7}
-.footer{text-align:center;margin-top:35px;color:#a0a8b6;font-size:10px}
+.security{
+  margin-top:27px;
+  color:#9aa3b1;
+  font-size:10px;
+  line-height:1.7;
+}
+.footer{
+  text-align:center;
+  margin-top:35px;
+  color:#a0a8b6;
+  font-size:10px;
+}
 @media(max-width:700px){
   .page{display:block}
   .brand{display:none}
-  .login-area{min-height:100vh;padding:28px 22px}
-  .mobile-logo{display:block;width:205px;height:76px;object-fit:contain;object-position:left;margin-bottom:35px}
+  .login-area{
+    min-height:100vh;
+    padding:28px 22px;
+  }
+  .mobile-logo{
+    display:block;
+    width:205px;
+    height:76px;
+    object-fit:contain;
+    object-position:left;
+    margin-bottom:35px;
+  }
   h2{font-size:30px}
 }
 </style>
 </head>
+
 <body>
 <main class="page">
 
@@ -155,14 +316,17 @@ input:focus{border-color:#8b7df0;box-shadow:0 0 0 4px #6957e81a}
           <input type="checkbox" id="remember">
           Ingat ID saya
         </label>
-        <a href="#" class="forgot" id="forgotLink">Lupa password?</a>
+        <a href="#" class="forgot" id="forgotLink">
+          Lupa password?
+        </a>
       </div>
 
       <button class="submit" id="submitBtn" type="submit">
         Masuk ke Dashboard
       </button>
 
-      <div class="message" id="message" role="status"></div>
+      <div class="message" id="message" role="status"
+        aria-live="polite"></div>
     </form>
 
     <div class="security">
@@ -175,7 +339,6 @@ input:focus{border-color:#8b7df0;box-shadow:0 0 0 4px #6957e81a}
     </div>
   </div>
 </section>
-
 </main>
 
 <script>
@@ -185,6 +348,7 @@ input:focus{border-color:#8b7df0;box-shadow:0 0 0 4px #6957e81a}
 const CONFIG = {
   API_URL: "https://radjaspin-api.simeryoay.workers.dev/",
   ADMIN_URL: "/buktijepe/admin/",
+  LOGIN_URL: "/buktijepe/login/",
   TOKEN_KEY: "radjaspin_auth_token",
   USER_KEY: "radjaspin_auth_username"
 };
@@ -195,7 +359,7 @@ document.querySelectorAll(".year").forEach(el => {
   el.textContent = new Date().getFullYear();
 });
 
-/* INGAT ID ADMIN */
+/* RESTORE ID */
 const savedId = localStorage.getItem("radjaspin_saved_admin_id");
 
 if (savedId) {
@@ -203,30 +367,32 @@ if (savedId) {
   $("remember").checked = true;
 }
 
-/* TAMPILKAN PASSWORD */
+/* TOGGLE PASSWORD */
 $("togglePassword").addEventListener("click", () => {
   const input = $("password");
   const show = input.type === "password";
+
   input.type = show ? "text" : "password";
-  $("togglePassword").textContent = show ? "Sembunyikan" : "Tampilkan";
+  $("togglePassword").textContent =
+    show ? "Sembunyikan" : "Tampilkan";
 });
 
-/* LUPA PASSWORD */
+/* MESSAGE */
+function showMessage(message, type = "") {
+  $("message").textContent = message;
+  $("message").className = "message " + type;
+}
+
+/* FORGOT PASSWORD */
 $("forgotLink").addEventListener("click", event => {
   event.preventDefault();
   showMessage(
-    "Pemulihan password belum tersedia. Hubungi administrator untuk mengatur ulang password.",
+    "Fitur pemulihan password belum tersedia. Hubungi administrator.",
     "error"
   );
 });
 
-/* PESAN */
-function showMessage(message, type) {
-  $("message").textContent = message;
-  $("message").className = "message " + (type || "");
-}
-
-/* LOGIN KE GOOGLE APPS SCRIPT MELALUI WORKER */
+/* LOGIN */
 $("loginForm").addEventListener("submit", async event => {
   event.preventDefault();
 
@@ -234,7 +400,7 @@ $("loginForm").addEventListener("submit", async event => {
   const password = $("password").value;
   const button = $("submitBtn");
 
-  showMessage("", "");
+  showMessage("");
 
   if (!username || !password) {
     showMessage("Username dan password wajib diisi.", "error");
@@ -244,6 +410,9 @@ $("loginForm").addEventListener("submit", async event => {
   button.disabled = true;
   button.textContent = "Memeriksa akun...";
 
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 30000);
+
   try {
     const response = await fetch(CONFIG.API_URL, {
       method: "POST",
@@ -252,19 +421,37 @@ $("loginForm").addEventListener("submit", async event => {
       },
       body: JSON.stringify({
         action: "login",
-        username: username,
-        password: password
-      })
+        username,
+        password
+      }),
+      signal: controller.signal
     });
 
-    if (!response.ok) {
-      throw new Error("Server API merespons dengan HTTP " + response.status);
+    const raw = await response.text();
+
+    let result;
+    try {
+      result = JSON.parse(raw);
+    } catch {
+      throw new Error(
+        "Respons server bukan JSON. Periksa konfigurasi Worker dan GAS."
+      );
     }
 
-    const result = await response.json();
+    if (!response.ok) {
+      throw new Error(
+        result.message || "Server mengalami kesalahan HTTP " + response.status
+      );
+    }
 
-    if (!result.success || !result.token) {
-      throw new Error(result.message || "Login gagal.");
+    if (!result.success) {
+      throw new Error(result.message || "Username atau password salah.");
+    }
+
+    if (!result.token) {
+      throw new Error(
+        "Login diterima tetapi token tidak ditemukan pada respons GAS."
+      );
     }
 
     if ($("remember").checked) {
@@ -273,29 +460,42 @@ $("loginForm").addEventListener("submit", async event => {
       localStorage.removeItem("radjaspin_saved_admin_id");
     }
 
-    // Simpan token untuk sesi tab/browser saat ini.
     sessionStorage.setItem(CONFIG.TOKEN_KEY, result.token);
-    sessionStorage.setItem(CONFIG.USER_KEY, result.username || username);
+    sessionStorage.setItem(
+      CONFIG.USER_KEY,
+      result.username || username
+    );
 
-    // Hapus penanda login demo lama.
+    // Hapus sesi demo lama.
     sessionStorage.removeItem("radjaspin_demo_login");
 
-    showMessage("Login berhasil. Membuka dashboard...", "success");
+    showMessage("Login berhasil. Mengalihkan ke Admin...", "success");
+    button.textContent = "Login berhasil";
 
-    button.textContent = "Berhasil";
-    window.location.replace(CONFIG.ADMIN_URL);
+    window.location.assign(CONFIG.ADMIN_URL);
 
   } catch (error) {
     console.error("[RADJASPIN LOGIN]", error);
-    showMessage(error.message || "Tidak dapat menghubungi server.", "error");
+
+    if (error.name === "AbortError") {
+      showMessage(
+        "Permintaan login timeout. Periksa koneksi Worker dan GAS.",
+        "error"
+      );
+    } else if (error instanceof TypeError) {
+      showMessage(
+        "Tidak dapat menghubungi Worker. Periksa URL dan koneksi jaringan.",
+        "error"
+      );
+    } else {
+      showMessage(error.message || "Login gagal.", "error");
+    }
 
     button.disabled = false;
     button.textContent = "Masuk ke Dashboard";
 
   } finally {
-    if (button.textContent === "Berhasil") {
-      button.disabled = true;
-    }
+    clearTimeout(timeout);
   }
 });
 </script>

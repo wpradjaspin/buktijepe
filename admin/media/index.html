@@ -153,30 +153,24 @@ h1{font-size:25px;margin:0 0 7px}
 .btn:disabled{opacity:.5;cursor:not-allowed}
 .preview-list{
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+  grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
   gap:13px;
   margin-top:18px;
 }
 .preview-item{
   border:1px solid var(--border);
   border-radius:10px;
-  padding:9px;
+  padding:10px;
   min-width:0;
+  background:white;
 }
 .preview-item img{
   width:100%;
-  height:105px;
+  height:120px;
   object-fit:contain;
   background:#f4f5f8;
   border-radius:7px;
 }
-.preview-item p{
-  font-size:11px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-.preview-item button{width:100%}
 .progress{
   height:5px;
   background:#eee;
@@ -232,11 +226,13 @@ h1{font-size:25px;margin:0 0 7px}
   object-fit:contain;
 }
 .media-info{padding:12px}
+
+/* NAMA FILE DAN TOMBOL PENSIL */
 .filename-row{
   display:flex;
   align-items:center;
-  gap:6px;
-  min-width:0;
+  gap:8px;
+  width:100%;
 }
 .filename{
   font-size:12px;
@@ -247,35 +243,57 @@ h1{font-size:25px;margin:0 0 7px}
   flex:1;
   min-width:0;
 }
-.edit-name-btn{
-  width:27px;
-  height:27px;
-  flex-shrink:0;
-  border:0;
-  border-radius:6px;
-  background:#f0efff;
-  color:#7255dc;
+.pencil-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  flex:0 0 32px;
+  width:32px;
+  height:32px;
+  padding:0;
+  border:1px solid #dcd5ff;
+  border-radius:8px;
+  background:#f0edff;
+  color:#684bd0;
   cursor:pointer;
-  font-size:15px;
+  font-size:19px;
+  line-height:1;
+  font-weight:bold;
+  visibility:visible;
+  opacity:1;
 }
-.edit-name-btn:hover{background:#e4dfff}
-.rename-form{
+.pencil-btn:hover{
+  background:#7255dc;
+  color:white;
+  border-color:#7255dc;
+}
+.filename-edit{
   display:flex;
   flex-direction:column;
   gap:8px;
-  margin-top:9px;
+  margin-top:10px;
 }
-.rename-input{
+.filename-edit input{
   width:100%;
-  border:1px solid #d9d4f5;
+  min-width:0;
+  padding:9px 10px;
+  border:1px solid #c9bfff;
   border-radius:7px;
-  padding:9px;
   outline:none;
   font-size:12px;
 }
-.rename-input:focus{border-color:var(--purple)}
-.rename-actions{display:flex;gap:6px}
-.rename-actions button{flex:1;padding:8px 5px}
+.filename-edit input:focus{
+  border-color:var(--purple);
+  box-shadow:0 0 0 2px #7255dc20;
+}
+.edit-buttons{
+  display:flex;
+  gap:7px;
+}
+.edit-buttons button{
+  flex:1;
+  padding:8px 5px;
+}
 .filesize{
   font-size:10px;
   color:var(--muted);
@@ -381,10 +399,8 @@ h1{font-size:25px;margin:0 0 7px}
 <body>
 
 <div class="layout">
-
   <aside class="sidebar">
     <div class="brand">RADJA<span>SPIN</span></div>
-
     <div class="nav-label">MENU UTAMA</div>
 
     <nav class="nav">
@@ -401,30 +417,22 @@ h1{font-size:25px;margin:0 0 7px}
   </aside>
 
   <main class="main">
-
     <header class="topbar">
       <small>RADJASPIN CMS / Media</small>
       <div class="user" id="username">Admin</div>
     </header>
 
     <div class="content">
-
       <div class="heading">
         <div>
           <h1>Media Manager</h1>
-          <div class="subtitle">
-            Kelola gambar dan file media website kamu.
-          </div>
+          <div class="subtitle">Kelola gambar dan file media website kamu.</div>
         </div>
         <div class="status" id="apiStatus">Menghubungkan API...</div>
       </div>
 
-      <!-- UPLOAD -->
-
       <section class="card">
-
         <div class="card-title">Upload Media</div>
-
         <div class="card-desc">
           Pilih gambar JPG, PNG, WebP, atau GIF. Maksimal 5 MB per file.
         </div>
@@ -433,49 +441,27 @@ h1{font-size:25px;margin:0 0 7px}
           <div class="upload-icon">☁️</div>
           <strong>Tarik gambar ke sini atau klik untuk memilih</strong>
           <p>Format JPG, PNG, WebP, GIF · Maksimal 5 MB per gambar</p>
-
-          <input
-            type="file"
-            id="fileInput"
+          <input type="file" id="fileInput"
             accept="image/jpeg,image/png,image/webp,image/gif"
-            multiple
-            hidden
-          >
+            multiple hidden>
         </div>
 
         <div class="preview-list" id="previewList"></div>
 
-        <div
-          id="uploadProgress"
-          class="progress"
-          style="display:none"
-        >
+        <div id="uploadProgress" class="progress" style="display:none">
           <div id="progressBar"></div>
         </div>
 
-        <div
-          id="uploadStatus"
-          class="subtitle"
-          style="margin-top:10px"
-        ></div>
+        <div id="uploadStatus" class="subtitle" style="margin-top:10px"></div>
 
-        <button
-          class="btn btn-primary"
-          id="uploadBtn"
-          style="margin-top:15px"
-          disabled
-        >
+        <button class="btn btn-primary" id="uploadBtn"
+          style="margin-top:15px" disabled>
           Upload gambar terpilih
         </button>
-
       </section>
 
-      <!-- MEDIA LIBRARY -->
-
       <section class="card">
-
         <div class="toolbar">
-
           <div>
             <div class="card-title">Perpustakaan Media</div>
             <div class="card-desc" style="margin:5px 0 0">
@@ -484,64 +470,38 @@ h1{font-size:25px;margin:0 0 7px}
           </div>
 
           <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-            <input
-              class="search"
-              id="searchInput"
-              placeholder="Cari nama gambar..."
-            >
-
-            <button class="btn btn-light" id="refreshBtn">
-              ↻ Refresh
-            </button>
+            <input class="search" id="searchInput"
+              placeholder="Cari nama gambar...">
+            <button class="btn btn-light" id="refreshBtn">↻ Refresh</button>
           </div>
-
         </div>
 
         <div class="media-grid" id="mediaGrid">
           <div class="loading">Memuat media...</div>
         </div>
-
       </section>
-
     </div>
   </main>
 </div>
 
 <div class="toast" id="toast"></div>
 
-<!-- DELETE MODAL -->
-
 <div class="modal-backdrop" id="deleteModal">
   <div class="modal">
     <h3>Hapus gambar?</h3>
-    <p id="deleteMessage">
-      Gambar akan dihapus dari repository GitHub.
-    </p>
-
+    <p id="deleteMessage">Gambar akan dihapus dari repository GitHub.</p>
     <div class="modal-actions">
-      <button class="btn btn-light" id="cancelDelete">
-        Batal
-      </button>
-
-      <button class="btn btn-danger" id="confirmDelete">
-        Ya, hapus
-      </button>
+      <button class="btn btn-light" id="cancelDelete">Batal</button>
+      <button class="btn btn-danger" id="confirmDelete">Ya, hapus</button>
     </div>
   </div>
 </div>
 
 <script>
+"use strict";
 
-// ========================================
-// CONFIGURATION
-// ========================================
-
-const API_URL =
-  "https://radjaspin-api.simeryoay.workers.dev/";
-
-const token = sessionStorage.getItem(
-  "radjaspin_auth_token"
-);
+const API_URL = "https://radjaspin-api.simeryoay.workers.dev/";
+const token = sessionStorage.getItem("radjaspin_auth_token");
 
 if (!token) {
   location.replace("/buktijepe/login/");
@@ -555,140 +515,177 @@ $("username").textContent =
 let selectedFiles = [];
 let mediaFiles = [];
 let pendingDelete = null;
-let renameInProgress = false;
-
-// ========================================
-// TOAST
-// ========================================
+let busy = false;
 
 function toast(message) {
   $("toast").textContent = message;
   $("toast").style.display = "block";
-
   clearTimeout(toast.timer);
-
   toast.timer = setTimeout(() => {
     $("toast").style.display = "none";
   }, 3500);
 }
 
-// ========================================
-// API REQUEST
-// ========================================
-
 async function api(action, extra = {}) {
-
   const response = await fetch(API_URL, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      action,
-      token,
-      ...extra
-    })
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({action, token, ...extra})
   });
 
   const result = await response.json();
 
   if (!response.ok || !result.success) {
-    throw new Error(
-      result.message || "Permintaan gagal."
-    );
+    throw new Error(result.message || "Permintaan gagal.");
   }
 
   return result;
 }
-
-// ========================================
-// CHECK API
-// ========================================
 
 async function checkApi() {
   try {
     const response = await fetch(API_URL);
     const result = await response.json();
 
-    if (!response.ok || !result.success) {
-      throw new Error("API error");
-    }
+    if (!response.ok || !result.success) throw new Error();
 
     $("apiStatus").textContent = "API Terhubung";
     $("apiStatus").className = "status";
-
   } catch {
     $("apiStatus").textContent = "API Bermasalah";
     $("apiStatus").className = "status error";
   }
 }
 
-// ========================================
-// FORMAT SIZE
-// ========================================
-
 function formatSize(bytes) {
   if (bytes < 1024) return bytes + " B";
-
-  if (bytes < 1024 * 1024) {
-    return (bytes / 1024).toFixed(1) + " KB";
-  }
-
+  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
   return (bytes / 1024 / 1024).toFixed(2) + " MB";
 }
 
-// ========================================
-// PREVIEW UPLOAD
-// ========================================
+function makeElement(tag, className, text) {
+  const element = document.createElement(tag);
+  if (className) element.className = className;
+  if (text !== undefined) element.textContent = text;
+  return element;
+}
+
+function getExtension(name) {
+  const index = name.lastIndexOf(".");
+  return index >= 0 ? name.slice(index).toLowerCase() : "";
+}
+
+function validNewName(name, originalName) {
+  if (!name.trim()) return "Nama file tidak boleh kosong.";
+  if (/[\/\\]/.test(name) || name.includes("..")) {
+    return "Nama file tidak boleh mengandung path.";
+  }
+  if (!/^[a-zA-Z0-9._ -]+$/.test(name)) {
+    return "Gunakan huruf, angka, spasi, titik, garis bawah, atau tanda minus.";
+  }
+  if (name.length > 100) return "Nama file maksimal 100 karakter.";
+  if (getExtension(name) !== getExtension(originalName)) {
+    return "Ekstensi file tidak boleh diubah.";
+  }
+  return "";
+}
+
+// ==================================================
+// PREVIEW UPLOAD: PENSIL + EDIT NAMA SEBELUM UPLOAD
+// ==================================================
 
 function renderPreviews() {
+  const container = $("previewList");
+  container.innerHTML = "";
 
-  $("previewList").innerHTML = "";
+  selectedFiles.forEach((entry, index) => {
+    const item = makeElement("div", "preview-item");
 
-  selectedFiles.forEach((file, index) => {
+    const img = makeElement("img");
+    img.src = entry.previewUrl;
+    img.alt = entry.name;
 
-    const url = URL.createObjectURL(file);
+    const filenameRow = makeElement("div", "filename-row");
+    filenameRow.style.marginTop = "9px";
 
-    const item = document.createElement("div");
-    item.className = "preview-item";
+    const filename = makeElement("div", "filename", entry.name);
+    filename.title = entry.name;
 
-    const img = document.createElement("img");
-    img.src = url;
-    img.alt = "Preview";
+    const pencil = makeElement("button", "pencil-btn", "✎");
+    pencil.type = "button";
+    pencil.title = "Ubah nama sebelum upload";
+    pencil.setAttribute("aria-label", "Ubah nama " + entry.name);
+    pencil.onclick = () => editPreviewName(index);
 
-    img.onload = () => URL.revokeObjectURL(url);
+    filenameRow.append(filename, pencil);
 
-    const name = document.createElement("p");
-    name.textContent = file.name;
+    const size = makeElement("div", "filesize", formatSize(entry.file.size));
 
-    const size = document.createElement("p");
-    size.textContent = formatSize(file.size);
-
-    const remove = document.createElement("button");
-    remove.className = "btn btn-danger";
-    remove.textContent = "Hapus pilihan";
-
+    const remove = makeElement("button", "btn btn-danger", "Hapus pilihan");
+    remove.style.width = "100%";
+    remove.style.marginTop = "10px";
     remove.onclick = () => {
+      URL.revokeObjectURL(entry.previewUrl);
       selectedFiles.splice(index, 1);
       renderPreviews();
     };
 
-    item.append(img, name, size, remove);
-
-    $("previewList").appendChild(item);
-
+    item.append(img, filenameRow, size, remove);
+    container.appendChild(item);
   });
 
-  $("uploadBtn").disabled =
-    selectedFiles.length === 0;
+  $("uploadBtn").disabled = selectedFiles.length === 0 || busy;
 }
 
-// ========================================
-// SELECT FILES
-// ========================================
+function editPreviewName(index) {
+  const entry = selectedFiles[index];
+  const item = $("previewList").children[index];
+  if (!entry || !item) return;
+
+  if (item.querySelector(".filename-edit")) return;
+
+  const form = makeElement("div", "filename-edit");
+  const input = makeElement("input");
+  input.type = "text";
+  input.value = entry.name;
+  input.maxLength = 100;
+
+  const buttons = makeElement("div", "edit-buttons");
+
+  const save = makeElement("button", "btn btn-primary", "Simpan");
+  const cancel = makeElement("button", "btn btn-light", "Batal");
+
+  cancel.onclick = () => renderPreviews();
+
+  save.onclick = () => {
+    const value = input.value.trim();
+    const error = validNewName(value, entry.name);
+
+    if (error) {
+      toast(error);
+      input.focus();
+      return;
+    }
+
+    selectedFiles[index].name = value;
+    renderPreviews();
+    toast("Nama file preview berhasil diubah.");
+  };
+
+  input.addEventListener("keydown", event => {
+    if (event.key === "Enter") save.click();
+    if (event.key === "Escape") cancel.click();
+  });
+
+  buttons.append(save, cancel);
+  form.append(input, buttons);
+  item.appendChild(form);
+
+  input.focus();
+  input.select();
+}
 
 function addFiles(files) {
-
   const allowed = [
     "image/jpeg",
     "image/png",
@@ -699,7 +696,6 @@ function addFiles(files) {
   let added = 0;
 
   for (const file of files) {
-
     if (!allowed.includes(file.type)) {
       toast("Format tidak didukung: " + file.name);
       continue;
@@ -710,162 +706,126 @@ function addFiles(files) {
       continue;
     }
 
-    if (
-      selectedFiles.some(f =>
-        f.name === file.name &&
-        f.size === file.size
-      )
-    ) {
+    if (selectedFiles.some(entry =>
+      entry.file.name === file.name &&
+      entry.file.size === file.size
+    )) {
       continue;
     }
 
-    selectedFiles.push(file);
-    added++;
+    selectedFiles.push({
+      file,
+      name: file.name,
+      previewUrl: URL.createObjectURL(file)
+    });
 
+    added++;
   }
 
   renderPreviews();
 
-  if (added) {
-    toast(added + " gambar ditambahkan.");
-  }
+  if (added) toast(added + " gambar ditambahkan.");
 }
 
-// ========================================
-// FILE TO BASE64
-// ========================================
-
 function fileToBase64(file) {
-
   return new Promise((resolve, reject) => {
-
     const reader = new FileReader();
 
     reader.onload = () => {
       const result = String(reader.result);
-
-      resolve(
-        result.substring(result.indexOf(",") + 1)
-      );
+      resolve(result.substring(result.indexOf(",") + 1));
     };
 
-    reader.onerror = () => {
-      reject(new Error("Gagal membaca file."));
-    };
-
+    reader.onerror = () => reject(new Error("Gagal membaca file."));
     reader.readAsDataURL(file);
-
   });
 }
 
-// ========================================
-// UPLOAD FILES
-// ========================================
+// ==================================================
+// UPLOAD: MENGIRIM NAMA FILE YANG SUDAH DIEDIT
+// ==================================================
 
 async function uploadSelected() {
+  if (!selectedFiles.length || busy) return;
 
-  if (!selectedFiles.length) return;
-
-  const files = [...selectedFiles];
-
+  busy = true;
   $("uploadBtn").disabled = true;
   $("uploadProgress").style.display = "block";
 
+  const files = [...selectedFiles];
   let success = 0;
   let failed = 0;
 
   for (let i = 0; i < files.length; i++) {
-
-    const file = files[i];
+    const entry = files[i];
 
     $("uploadStatus").textContent =
-      "Mengunggah " +
-      (i + 1) +
-      " dari " +
-      files.length +
-      ": " +
-      file.name;
+      "Mengunggah " + (i + 1) + " dari " + files.length +
+      ": " + entry.name;
 
     try {
-
-      const base64 = await fileToBase64(file);
+      const base64 = await fileToBase64(entry.file);
 
       await api("uploadMedia", {
-        filename: file.name,
-        mimeType: file.type,
+        filename: entry.name,
+        mimeType: entry.file.type,
         base64
       });
 
       success++;
-
     } catch (error) {
-
       failed++;
       console.error(error);
-
-      toast(file.name + ": " + error.message);
-
+      toast(entry.name + ": " + error.message);
     }
 
     $("progressBar").style.width =
       Math.round(((i + 1) / files.length) * 100) + "%";
-
   }
 
+  selectedFiles.forEach(entry => URL.revokeObjectURL(entry.previewUrl));
   selectedFiles = [];
 
   renderPreviews();
 
   $("uploadStatus").textContent =
-    "Selesai. Berhasil: " +
-    success +
-    " · Gagal: " +
-    failed;
+    "Selesai. Berhasil: " + success + " · Gagal: " + failed;
 
+  busy = false;
   $("uploadBtn").disabled = false;
 
   await loadMedia();
-
   toast("Proses upload selesai.");
 }
 
-// ========================================
+// ==================================================
 // LOAD MEDIA
-// ========================================
+// ==================================================
 
 async function loadMedia() {
-
   $("mediaGrid").innerHTML =
     '<div class="loading">Memuat media...</div>';
 
   try {
-
     const result = await api("listMedia");
-
     mediaFiles = result.files || [];
-
     renderMedia();
-
   } catch (error) {
-
     $("mediaGrid").innerHTML = "";
-
-    const empty = document.createElement("div");
-    empty.className = "empty";
-    empty.textContent =
-      "Gagal memuat media: " + error.message;
-
+    const empty = makeElement(
+      "div",
+      "empty",
+      "Gagal memuat media: " + error.message
+    );
     $("mediaGrid").appendChild(empty);
-
   }
 }
 
-// ========================================
-// RENDER MEDIA
-// ========================================
+// ==================================================
+// MEDIA LIBRARY: PENSIL + RENAME DI GITHUB
+// ==================================================
 
 function renderMedia() {
-
   const query = $("searchInput").value.toLowerCase();
 
   const filtered = mediaFiles.filter(file =>
@@ -875,160 +835,95 @@ function renderMedia() {
   $("mediaGrid").innerHTML = "";
 
   if (!filtered.length) {
-
-    const empty = document.createElement("div");
-    empty.className = "empty";
-
-    empty.textContent = mediaFiles.length
-      ? "Tidak ada gambar yang cocok."
-      : "Belum ada gambar. Silakan upload gambar pertama.";
+    const empty = makeElement(
+      "div",
+      "empty",
+      mediaFiles.length
+        ? "Tidak ada gambar yang cocok."
+        : "Belum ada gambar. Silakan upload gambar pertama."
+    );
 
     $("mediaGrid").appendChild(empty);
-
     return;
   }
 
   filtered.forEach(file => {
+    const card = makeElement("div", "media-card");
 
-    const card = document.createElement("div");
-    card.className = "media-card";
-
-    // IMAGE
-
-    const imageBox = document.createElement("div");
-    imageBox.className = "media-image";
-
-    const img = document.createElement("img");
+    const imageBox = makeElement("div", "media-image");
+    const img = makeElement("img");
     img.src = file.url;
     img.alt = file.name;
     img.loading = "lazy";
-
     imageBox.appendChild(img);
 
-    // INFO
+    const info = makeElement("div", "media-info");
 
-    const info = document.createElement("div");
-    info.className = "media-info";
+    const filenameRow = makeElement("div", "filename-row");
 
-    // FILENAME ROW
+    const filename = makeElement("div", "filename", file.name);
+    filename.title = file.name;
 
-    const filenameRow = document.createElement("div");
-    filenameRow.className = "filename-row";
+    const pencil = makeElement("button", "pencil-btn", "✎");
+    pencil.type = "button";
+    pencil.title = "Ubah nama file";
+    pencil.setAttribute("aria-label", "Ubah nama " + file.name);
+    pencil.onclick = () => editLibraryName(file, info);
 
-    const name = document.createElement("div");
-    name.className = "filename";
-    name.textContent = file.name;
-    name.title = file.name;
+    filenameRow.append(filename, pencil);
 
-    // PENCIL BUTTON
+    const size = makeElement(
+      "div",
+      "filesize",
+      formatSize(file.size || 0)
+    );
 
-    const edit = document.createElement("button");
-    edit.className = "edit-name-btn";
-    edit.type = "button";
-    edit.textContent = "✎";
-    edit.title = "Ubah nama file";
+    const actions = makeElement("div", "media-actions");
 
-    edit.onclick = () => {
-      openRenameEditor(file, info);
-    };
-
-    filenameRow.append(name, edit);
-
-    // SIZE
-
-    const size = document.createElement("div");
-    size.className = "filesize";
-    size.textContent = formatSize(file.size || 0);
-
-    // ACTIONS
-
-    const actions = document.createElement("div");
-    actions.className = "media-actions";
-
-    const copy = document.createElement("button");
-    copy.className = "btn btn-light";
-    copy.textContent = "Salin URL";
-
+    const copy = makeElement("button", "btn btn-light", "Salin URL");
     copy.onclick = async () => {
-
       try {
-
         await navigator.clipboard.writeText(file.url);
-
         toast("URL gambar berhasil disalin.");
-
       } catch {
-
         toast("Browser tidak mengizinkan salin otomatis.");
-
       }
-
     };
 
-    const del = document.createElement("button");
-    del.className = "btn btn-danger";
-    del.textContent = "Hapus";
-
+    const del = makeElement("button", "btn btn-danger", "Hapus");
     del.onclick = () => openDelete(file);
 
     actions.append(copy, del);
-
     info.append(filenameRow, size, actions);
-
     card.append(imageBox, info);
 
     $("mediaGrid").appendChild(card);
-
   });
-
 }
 
-// ========================================
-// RENAME EDITOR
-// ========================================
+function editLibraryName(file, info) {
+  if (info.querySelector(".filename-edit")) return;
 
-function openRenameEditor(file, info) {
+  const form = makeElement("div", "filename-edit");
 
-  if (renameInProgress) return;
-
-  const existing = info.querySelector(".rename-form");
-
-  if (existing) {
-    existing.remove();
-    return;
-  }
-
-  const form = document.createElement("div");
-  form.className = "rename-form";
-
-  const input = document.createElement("input");
-  input.className = "rename-input";
+  const input = makeElement("input");
   input.type = "text";
   input.value = file.name;
   input.maxLength = 100;
-  input.autocomplete = "off";
 
-  const actions = document.createElement("div");
-  actions.className = "rename-actions";
+  const buttons = makeElement("div", "edit-buttons");
 
-  const save = document.createElement("button");
-  save.className = "btn btn-primary";
-  save.textContent = "Simpan";
+  const save = makeElement("button", "btn btn-primary", "Simpan");
+  const cancel = makeElement("button", "btn btn-light", "Batal");
 
-  const cancel = document.createElement("button");
-  cancel.className = "btn btn-light";
-  cancel.textContent = "Batal";
-
-  cancel.onclick = () => {
-    form.remove();
-  };
+  cancel.onclick = () => form.remove();
 
   save.onclick = async () => {
-
     const newName = input.value.trim();
+    const error = validNewName(newName, file.name);
 
-    if (!newName) {
-      toast("Nama file tidak boleh kosong.");
+    if (error) {
+      toast(error);
       input.focus();
       return;
     }
@@ -1038,60 +933,24 @@ function openRenameEditor(file, info) {
       return;
     }
 
-    if (
-      newName.includes("/") ||
-      newName.includes("\\") ||
-      newName.includes("..")
-    ) {
-      toast("Nama file tidak boleh mengandung path.");
-      input.focus();
-      return;
-    }
-
-    const oldExtension = file.name.split(".").pop().toLowerCase();
-    const newExtension = newName.split(".").pop().toLowerCase();
-
-    if (oldExtension !== newExtension) {
-      toast("Ekstensi file tidak boleh diubah.");
-      input.focus();
-      return;
-    }
-
     save.disabled = true;
     cancel.disabled = true;
-    renameInProgress = true;
-
     save.textContent = "Menyimpan...";
 
     try {
-
       const result = await api("renameMedia", {
         filename: file.name,
         newName
       });
 
-      form.remove();
-
-      toast(
-        result.message || "Nama file berhasil diubah."
-      );
-
+      toast(result.message || "Nama file berhasil diubah.");
       await loadMedia();
-
     } catch (error) {
-
       toast(error.message);
-
       save.disabled = false;
       cancel.disabled = false;
       save.textContent = "Simpan";
-
-    } finally {
-
-      renameInProgress = false;
-
     }
-
   };
 
   input.addEventListener("keydown", event => {
@@ -1099,73 +958,55 @@ function openRenameEditor(file, info) {
     if (event.key === "Escape") cancel.click();
   });
 
-  actions.append(save, cancel);
-
-  form.append(input, actions);
-
+  buttons.append(save, cancel);
+  form.append(input, buttons);
   info.appendChild(form);
 
   input.focus();
   input.select();
-
 }
 
-// ========================================
+// ==================================================
 // DELETE MEDIA
-// ========================================
+// ==================================================
 
 function openDelete(file) {
-
   pendingDelete = file;
 
   $("deleteMessage").textContent =
-    "File " +
-    file.name +
+    "File " + file.name +
     " akan dihapus dari repository GitHub. Tindakan ini tidak dapat dibatalkan.";
 
   $("deleteModal").style.display = "flex";
-
 }
 
 async function confirmDelete() {
-
   if (!pendingDelete) return;
 
   $("confirmDelete").disabled = true;
 
   try {
-
     await api("deleteMedia", {
       filename: pendingDelete.name
     });
 
     toast("Gambar berhasil dihapus.");
-
     $("deleteModal").style.display = "none";
-
     pendingDelete = null;
 
     await loadMedia();
-
   } catch (error) {
-
     toast(error.message);
-
   } finally {
-
     $("confirmDelete").disabled = false;
-
   }
-
 }
 
-// ========================================
-// EVENT LISTENERS
-// ========================================
+// ==================================================
+// EVENTS
+// ==================================================
 
-$("dropzone").onclick = () => {
-  $("fileInput").click();
-};
+$("dropzone").onclick = () => $("fileInput").click();
 
 $("fileInput").onchange = event => {
   addFiles(event.target.files);
@@ -1188,9 +1029,7 @@ $("dropzone").ondrop = event => {
 };
 
 $("uploadBtn").onclick = uploadSelected;
-
 $("refreshBtn").onclick = loadMedia;
-
 $("searchInput").oninput = renderMedia;
 
 $("cancelDelete").onclick = () => {
@@ -1201,31 +1040,25 @@ $("cancelDelete").onclick = () => {
 $("confirmDelete").onclick = confirmDelete;
 
 $("deleteModal").onclick = event => {
-
   if (event.target === $("deleteModal")) {
     $("deleteModal").style.display = "none";
     pendingDelete = null;
   }
-
 };
 
 $("logoutBtn").onclick = () => {
-
   sessionStorage.removeItem("radjaspin_auth_token");
   sessionStorage.removeItem("radjaspin_auth_username");
-
   location.replace("/buktijepe/login/");
-
 };
 
-// ========================================
+// ==================================================
 // INITIALIZE
-// ========================================
+// ==================================================
 
 checkApi();
 loadMedia();
 
 </script>
-
 </body>
 </html>

@@ -52,6 +52,22 @@
 @media(max-width:420px){.posts{grid-template-columns:1fr}.post-card-body{min-height:180px}.post-card h3{font-size:16px;min-height:0}.post-card p{font-size:12px;min-height:0}.post-meta{font-size:10px}.read-more{font-size:11px}}
 @media(max-width:600px){.header-inner{padding:15px 18px}.nav{display:flex;position:static;overflow-x:auto;flex-wrap:nowrap;width:100%;padding:9px 0 2px;gap:17px;border:0}.nav a{font-size:11px}.posts{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.post-image{aspect-ratio:16/9}.post-card-body{padding:11px;min-height:190px}.post-card h3{font-size:14px;min-height:38px}.post-card p{font-size:11px;min-height:34px}.post-meta{font-size:9px}.read-more{font-size:10px}.sidebar{grid-template-columns:1fr}.section-head{margin-top:25px}}
 
+  
+.nav a.active{color:var(--accent);font-weight:800}
+.route-contact{padding-top:28px;padding-bottom:50px}
+.contact-page-card{max-width:760px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:18px;padding:26px;box-shadow:0 10px 30px #18233a08}
+.contact-page-heading{display:flex;align-items:center;gap:14px;padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:18px}
+.contact-page-heading .about-mark{flex:none}
+.contact-page-heading h2{font-size:19px;margin:0 0 5px}
+.contact-page-heading p{font-size:12px;color:var(--muted);margin:0;line-height:1.6}
+.contact-page-list{display:grid;grid-template-columns:1fr;gap:11px}
+.contact-page-list .contact-link{padding:14px;border-radius:12px}
+.contact-page-list .contact-link-icon{width:43px;height:43px}
+.contact-page-list .contact-link-copy strong{font-size:14px}
+.contact-page-list .contact-link-copy small{font-size:11px}
+.contact-page-list .contact-link-arrow{font-size:21px}
+@media(max-width:600px){.contact-page-card{padding:17px}.route-contact{padding-top:20px}}
+
   </style>
 </head>
 <body>
@@ -59,12 +75,12 @@
     <div class="header-inner">
       <a class="brand" href="#home"><span class="brand-mark">R</span>RADJASPIN</a>
       <nav class="nav" id="mainNav">
-<a class="active" href="./">BERANDA</a>
-<a href="#kategori-slot">SLOT GAME</a>
-<a href="#kategori-live">LIVE GAME</a>
-<a href="#kategori-fishing">FISHING GAME</a>
-<a href="#kategori-sport">SPORT GAME</a>
-<a href="#kontak">CONTACT RESMI RADJASPIN</a>
+<a data-route="home" class="active" href="./">BERANDA</a>
+<a data-route="slot-game" href="?kategori=slot-game">SLOT GAME</a>
+<a data-route="live-game" href="?kategori=live-game">LIVE GAME</a>
+<a data-route="fishing-game" href="?kategori=fishing-game">FISHING GAME</a>
+<a data-route="sport-game" href="?kategori=sport-game">SPORT GAME</a>
+<a data-route="contact" href="?halaman=contact">CONTACT RESMI RADJASPIN</a>
 </nav>
       <div class="header-actions"></div>
     </div>
@@ -72,7 +88,7 @@
 
   <main id="home">
 <section class="container" id="artikel">
-      <div class="section-head"><div><h2 id="postsHeading">Artikel terbaru</h2><p>Artikel dan informasi terbaru RADJASPIN.</p></div></div>
+      <div class="section-head"><div><h2 id="postsHeading">Artikel terbaru</h2><p id="postsSubheading">Artikel dan informasi terbaru RADJASPIN.</p></div></div>
       <div class="content-grid">
         <div class="posts" id="publishedPosts">
           <div class="loading-posts">Memuat artikel RADJASPIN...</div>
@@ -86,6 +102,14 @@
       </div>
     </section>
 </main>
+
+  <section class="container route-contact" id="contactPage" hidden>
+    <div class="section-head"><div><h2>Contact Resmi RADJASPIN</h2><p>Silakan pilih salah satu kanal resmi berikut sesuai kebutuhan kamu.</p></div></div>
+    <div class="contact-page-card">
+      <div class="contact-page-heading"><div class="about-mark">R</div><div><h2>Hubungi RADJASPIN</h2><p>Gunakan tautan resmi di bawah ini agar kamu terhubung ke kanal yang tepat.</p></div></div>
+      <div class="contact-page-list" id="contactPageList"><div class="contact-empty">Memuat kanal kontak resmi...</div></div>
+    </div>
+  </section>
 
   <section class="container article-detail-view" id="articleDetail" hidden>
     <div class="detail-back"><a href="./">← Kembali ke semua artikel</a></div>
@@ -124,10 +148,12 @@
       const data=settings?.settings||settings?.data||settings||{};
       const enabled=data.enabled||{};
       const rows=CONTACTS.filter(c=>enabled[c.key]!==false && data[c.linkKey] && /^https?:\/\//i.test(String(data[c.linkKey])));
-      $("publicContacts").innerHTML=rows.length?rows.map(c=>{
+      const markup=rows.length?rows.map(c=>{
         const label=data[c.nameKey]||c.label;
         return `<a class="contact-link" href="${esc(data[c.linkKey])}" target="_blank" rel="noopener noreferrer"><span class="contact-link-icon">${c.icon}</span><span class="contact-link-copy"><strong>${esc(label)}</strong><small>${esc(c.hint)}</small></span><span class="contact-link-arrow">›</span></a>`;
       }).join(""):'<div class="contact-empty">Kontak resmi belum tersedia. Silakan cek kembali nanti.</div>';
+      $("publicContacts").innerHTML=markup;
+      $("contactPageList").innerHTML=markup;
     }
     async function loadPublicContacts(){
       try{
@@ -145,13 +171,9 @@
       $("categoryCounts").innerHTML=CATEGORIES.map((cat,i)=>{
         const count=publishedPosts.filter(p=>(p.category||"").toUpperCase()===cat).length;
         const id=["kategori-slot","kategori-live","kategori-fishing","kategori-sport"][i];
-        return `<li id="${id}"><a href="#artikel" data-category="${esc(cat)}">${esc(cat)}</a><span>${count}</span></li>`;
+        const route=["slot-game","live-game","fishing-game","sport-game"][i];
+        return `<li id="${id}"><a href="?kategori=${route}">${esc(cat)}</a><span>${count}</span></li>`;
       }).join("");
-      $("categoryCounts").querySelectorAll("[data-category]").forEach(a=>a.addEventListener("click",e=>{
-        e.preventDefault();activeCategory=a.dataset.category;renderPosts();
-        $("postsHeading").textContent=activeCategory;
-        $("artikel").scrollIntoView({behavior:"smooth"});
-      }));
     }
     function renderPosts(){
       const rows=activeCategory?publishedPosts.filter(p=>(p.category||"").toUpperCase()===activeCategory):publishedPosts;
@@ -179,6 +201,30 @@
         .then(r=>r.json()).then(result=>{if(result?.success){p.views=Number(result.views)||((Number(p.views)||0)+1);$("detailMeta").textContent=$("detailMeta").textContent.replace(/\d+ views$/,p.views+" views");renderPopular()}})
         .catch(err=>console.warn("Gagal mencatat view:",err));
     }
+    function routePage(){
+      const params=new URLSearchParams(location.search);
+      const slugValue=params.get("slug");
+      const page=params.get("halaman")||"";
+      const category=params.get("kategori")||"";
+      const categoryMap={"slot-game":"SLOT GAME","live-game":"LIVE GAME","fishing-game":"FISHING GAME","sport-game":"SPORT GAME"};
+      const active=categoryMap[category]||"";
+      document.querySelector("main").hidden=!!slugValue||page==="contact";
+      $("articleDetail").hidden=true;
+      $("contactPage").hidden=page!=="contact";
+      activeCategory=active;
+      document.querySelectorAll("#mainNav [data-route]").forEach(a=>a.classList.toggle("active",
+        a.dataset.route===(page==="contact"?"contact":active?category:"home")));
+      if(page==="contact"){document.title="Contact Resmi | RADJASPIN";return}
+      if(active){
+        $("postsHeading").textContent=active;
+        $("postsSubheading")?.replaceChildren(document.createTextNode("Artikel berdasarkan kategori "+active+"."));
+      }else{
+        $("postsHeading").textContent="Artikel terbaru";
+        $("postsSubheading")?.replaceChildren(document.createTextNode("Artikel dan informasi terbaru RADJASPIN."));
+      }
+      if(!slugValue){document.title=(active||"Beranda")+" | RADJASPIN";renderPosts()}
+    }
+
     async function loadPosts(){
       try{
         const response=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"publicListPosts"})});
@@ -186,13 +232,14 @@
         const all=Array.isArray(result.posts)?result.posts:(Array.isArray(result.data)?result.data:(Array.isArray(result.data?.posts)?result.data.posts:[]));
         publishedPosts=all.filter(p=>String(p.status||"").toLowerCase()==="published")
           .sort((a,b)=>new Date(b.published_at||b.updated_at||b.created_at||0)-new Date(a.published_at||a.updated_at||a.created_at||0));
-        renderCategories();renderPosts();renderPopular();
+        renderCategories();renderPopular();routePage();
         const requested=new URLSearchParams(location.search).get("slug");
-        if(requested){const p=publishedPosts.find(x=>slug(x)===requested);if(p)showArticle(p);else{document.querySelector("main").hidden=true;$("articleDetail").hidden=false;$("detailTitle").textContent="Artikel tidak ditemukan";$("detailMeta").textContent="Artikel mungkin sudah dihapus atau belum diterbitkan.";$("detailImage").hidden=true;$("detailContent").textContent="Silakan kembali ke halaman utama."}}
+        if(requested){const p=publishedPosts.find(x=>slug(x)===requested);if(p)showArticle(p);else{document.querySelector("main").hidden=true;$("contactPage").hidden=true;$("articleDetail").hidden=false;$("detailTitle").textContent="Artikel tidak ditemukan";$("detailMeta").textContent="Artikel mungkin sudah dihapus atau belum diterbitkan.";$("detailImage").hidden=true;$("detailContent").textContent="Silakan kembali ke halaman utama."}}
       }catch(err){$("publishedPosts").innerHTML='<div class="no-posts">Artikel belum dapat dimuat. Silakan coba muat ulang halaman.</div>';console.error("RADJASPIN CMS:",err)}
     }
     loadPosts();
     loadPublicContacts();
+    window.addEventListener("popstate",routePage);
   })();
   </script>
 </body>

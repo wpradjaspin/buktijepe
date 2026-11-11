@@ -5,103 +5,388 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Media Manager - RADJASPIN CMS</title>
+
 <style>
-:root {
+:root{
   --navy:#172033;
-  --navy2:#202c43;
   --purple:#7255dc;
   --bg:#f5f6fa;
   --text:#20283a;
   --muted:#8991a3;
   --border:#e8eaf0;
-  --white:#fff;
   --green:#16a36a;
   --red:#dc4d5b;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);font-family:Inter,Arial,sans-serif;color:var(--text)}
+body{
+  margin:0;
+  background:var(--bg);
+  font-family:Inter,Arial,sans-serif;
+  color:var(--text);
+}
 .layout{display:flex;min-height:100vh}
-.sidebar{width:245px;background:var(--navy);color:#fff;padding:25px 17px;flex-shrink:0}
-.brand{font-size:21px;font-weight:800;letter-spacing:.5px;padding:5px 12px 32px}
+.sidebar{
+  width:245px;
+  background:var(--navy);
+  color:#fff;
+  padding:25px 17px;
+  flex-shrink:0;
+}
+.brand{
+  font-size:21px;
+  font-weight:800;
+  letter-spacing:.5px;
+  padding:5px 12px 32px;
+}
 .brand span{color:#a895ff}
-.nav-label{font-size:10px;color:#8e9ab1;letter-spacing:1.5px;padding:12px}
-.nav a{display:flex;gap:12px;align-items:center;color:#b9c2d2;text-decoration:none;padding:12px;border-radius:9px;margin:4px 0;font-size:13px}
-.nav a:hover,.nav a.active{background:#303c56;color:#fff}
+.nav-label{
+  font-size:10px;
+  color:#8e9ab1;
+  letter-spacing:1.5px;
+  padding:12px;
+}
+.nav a{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  color:#b9c2d2;
+  text-decoration:none;
+  padding:12px;
+  border-radius:9px;
+  margin:4px 0;
+  font-size:13px;
+}
+.nav a:hover,.nav a.active{
+  background:#303c56;
+  color:#fff;
+}
 .nav a.active{border-left:3px solid #a28aff}
-.sidebar-bottom{margin-top:35px;border-top:1px solid #354057;padding-top:15px}
-.logout{width:100%;border:0;background:#303c56;color:#fff;padding:12px;border-radius:9px;cursor:pointer}
+.sidebar-bottom{
+  margin-top:35px;
+  border-top:1px solid #354057;
+  padding-top:15px;
+}
+.logout{
+  width:100%;
+  border:0;
+  background:#303c56;
+  color:#fff;
+  padding:12px;
+  border-radius:9px;
+  cursor:pointer;
+}
 .main{flex:1;min-width:0}
-.topbar{height:70px;background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 30px}
+.topbar{
+  height:70px;
+  background:#fff;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 30px;
+}
 .topbar small{color:var(--muted)}
 .user{font-size:13px;font-weight:600}
-.content{padding:30px;max-width:1400px;margin:auto}
-.heading{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;margin-bottom:25px}
+.content{
+  padding:30px;
+  max-width:1400px;
+  margin:auto;
+}
+.heading{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  flex-wrap:wrap;
+  margin-bottom:25px;
+}
 h1{font-size:25px;margin:0 0 7px}
 .subtitle{font-size:13px;color:var(--muted)}
-.card{background:#fff;border:1px solid var(--border);border-radius:13px;padding:22px;margin-bottom:22px}
+.card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:13px;
+  padding:22px;
+  margin-bottom:22px;
+}
 .card-title{font-size:15px;font-weight:700;margin-bottom:6px}
-.card-desc{font-size:12px;color:var(--muted);margin-bottom:18px}
-.dropzone{border:2px dashed #d9dce7;border-radius:12px;padding:35px 20px;text-align:center;background:#fafaff;cursor:pointer;transition:.2s}
-.dropzone:hover,.dropzone.drag{border-color:var(--purple);background:#f6f3ff}
+.card-desc{
+  font-size:12px;
+  color:var(--muted);
+  margin-bottom:18px;
+}
+.dropzone{
+  border:2px dashed #d9dce7;
+  border-radius:12px;
+  padding:35px 20px;
+  text-align:center;
+  background:#fafaff;
+  cursor:pointer;
+  transition:.2s;
+}
+.dropzone:hover,.dropzone.drag{
+  border-color:var(--purple);
+  background:#f6f3ff;
+}
 .upload-icon{font-size:32px;margin-bottom:10px}
-.dropzone strong{display:block;font-size:14px;margin-bottom:7px}
-.dropzone p{font-size:12px;color:var(--muted);margin:0}
-.btn{border:0;border-radius:8px;padding:10px 15px;font-size:12px;font-weight:700;cursor:pointer}
+.dropzone strong{
+  display:block;
+  font-size:14px;
+  margin-bottom:7px;
+}
+.dropzone p{
+  font-size:12px;
+  color:var(--muted);
+  margin:0;
+}
+.btn{
+  border:0;
+  border-radius:8px;
+  padding:10px 15px;
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+}
 .btn-primary{background:var(--purple);color:white}
 .btn-light{background:#f0efff;color:#6047c4}
 .btn-danger{background:#fff0f1;color:var(--red)}
 .btn:disabled{opacity:.5;cursor:not-allowed}
-.preview-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:13px;margin-top:18px}
-.preview-item{border:1px solid var(--border);border-radius:10px;padding:9px;min-width:0}
-.preview-item img{width:100%;height:105px;object-fit:contain;background:#f4f5f8;border-radius:7px}
-.preview-item p{font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.preview-list{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+  gap:13px;
+  margin-top:18px;
+}
+.preview-item{
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:9px;
+  min-width:0;
+}
+.preview-item img{
+  width:100%;
+  height:105px;
+  object-fit:contain;
+  background:#f4f5f8;
+  border-radius:7px;
+}
+.preview-item p{
+  font-size:11px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
 .preview-item button{width:100%}
-.progress{height:5px;background:#eee;border-radius:5px;overflow:hidden;margin-top:10px}
-.progress div{height:100%;width:0;background:var(--purple);transition:width .2s}
-.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:17px}
-.search{border:1px solid var(--border);border-radius:8px;padding:10px 12px;outline:none;min-width:220px;font-size:12px}
+.progress{
+  height:5px;
+  background:#eee;
+  border-radius:5px;
+  overflow:hidden;
+  margin-top:10px;
+}
+.progress div{
+  height:100%;
+  width:0;
+  background:var(--purple);
+  transition:width .2s;
+}
+.toolbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:17px;
+}
+.search{
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:10px 12px;
+  outline:none;
+  min-width:220px;
+  font-size:12px;
+}
 .search:focus{border-color:var(--purple)}
-.media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:16px}
-.media-card{background:#fff;border:1px solid var(--border);border-radius:11px;overflow:hidden;min-width:0}
-.media-image{height:155px;background:#f4f5f8;display:flex;align-items:center;justify-content:center}
-.media-image img{width:100%;height:100%;object-fit:contain}
+.media-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+  gap:16px;
+}
+.media-card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:11px;
+  overflow:hidden;
+  min-width:0;
+}
+.media-image{
+  height:155px;
+  background:#f4f5f8;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.media-image img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
 .media-info{padding:12px}
-.filename{font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.filesize{font-size:10px;color:var(--muted);margin-top:5px}
-.media-actions{display:flex;gap:7px;margin-top:12px}
-.media-actions button{flex:1;padding:8px 5px;font-size:10px}
-.empty{text-align:center;padding:45px 15px;color:var(--muted);font-size:13px;grid-column:1/-1}
-.status{font-size:11px;padding:7px 11px;border-radius:20px;background:#eaf8f1;color:var(--green)}
+.filename-row{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  min-width:0;
+}
+.filename{
+  font-size:12px;
+  font-weight:700;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  flex:1;
+  min-width:0;
+}
+.edit-name-btn{
+  width:27px;
+  height:27px;
+  flex-shrink:0;
+  border:0;
+  border-radius:6px;
+  background:#f0efff;
+  color:#7255dc;
+  cursor:pointer;
+  font-size:15px;
+}
+.edit-name-btn:hover{background:#e4dfff}
+.rename-form{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  margin-top:9px;
+}
+.rename-input{
+  width:100%;
+  border:1px solid #d9d4f5;
+  border-radius:7px;
+  padding:9px;
+  outline:none;
+  font-size:12px;
+}
+.rename-input:focus{border-color:var(--purple)}
+.rename-actions{display:flex;gap:6px}
+.rename-actions button{flex:1;padding:8px 5px}
+.filesize{
+  font-size:10px;
+  color:var(--muted);
+  margin-top:6px;
+}
+.media-actions{
+  display:flex;
+  gap:7px;
+  margin-top:12px;
+}
+.media-actions button{
+  flex:1;
+  padding:8px 5px;
+  font-size:10px;
+}
+.empty{
+  text-align:center;
+  padding:45px 15px;
+  color:var(--muted);
+  font-size:13px;
+  grid-column:1/-1;
+}
+.status{
+  font-size:11px;
+  padding:7px 11px;
+  border-radius:20px;
+  background:#eaf8f1;
+  color:var(--green);
+}
 .status.error{background:#fff0f1;color:var(--red)}
-.toast{position:fixed;right:22px;bottom:22px;background:#20283a;color:#fff;padding:13px 18px;border-radius:9px;font-size:12px;box-shadow:0 5px 25px #0002;display:none;z-index:30}
-.modal-backdrop{position:fixed;inset:0;background:#10182788;display:none;align-items:center;justify-content:center;padding:20px;z-index:20}
-.modal{background:white;border-radius:13px;padding:23px;width:100%;max-width:390px}
+.toast{
+  position:fixed;
+  right:22px;
+  bottom:22px;
+  background:#20283a;
+  color:#fff;
+  padding:13px 18px;
+  border-radius:9px;
+  font-size:12px;
+  box-shadow:0 5px 25px #0002;
+  display:none;
+  z-index:30;
+}
+.modal-backdrop{
+  position:fixed;
+  inset:0;
+  background:#10182788;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:20;
+}
+.modal{
+  background:white;
+  border-radius:13px;
+  padding:23px;
+  width:100%;
+  max-width:390px;
+}
 .modal h3{margin:0 0 9px;font-size:17px}
-.modal p{font-size:13px;color:#697386;line-height:1.6}
-.modal-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:20px}
-.loading{color:var(--muted);font-size:13px;padding:30px;text-align:center}
+.modal p{
+  font-size:13px;
+  color:#697386;
+  line-height:1.6;
+}
+.modal-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:9px;
+  margin-top:20px;
+}
+.loading{
+  color:var(--muted);
+  font-size:13px;
+  padding:30px;
+  text-align:center;
+}
 @media(max-width:760px){
- .sidebar{width:65px;padding:20px 8px}
- .brand{font-size:0;padding:8px 5px 25px}
- .brand:after{content:"R";font-size:23px}
- .nav-label{display:none}
- .nav a{font-size:0;justify-content:center;padding:13px 5px}
- .nav a span{font-size:18px}
- .sidebar-bottom{padding-top:12px}
- .logout{font-size:0;padding:12px 3px}
- .logout:after{content:"↪";font-size:18px}
- .content{padding:20px 14px}
- .topbar{padding:0 15px}
- .card{padding:15px}
- .media-grid{grid-template-columns:repeat(auto-fill,minmax(145px,1fr))}
+  .sidebar{width:65px;padding:20px 8px}
+  .brand{font-size:0;padding:8px 5px 25px}
+  .brand:after{content:"R";font-size:23px}
+  .nav-label{display:none}
+  .nav a{
+    font-size:0;
+    justify-content:center;
+    padding:13px 5px;
+  }
+  .nav a span{font-size:18px}
+  .sidebar-bottom{padding-top:12px}
+  .logout{font-size:0;padding:12px 3px}
+  .logout:after{content:"↪";font-size:18px}
+  .content{padding:20px 14px}
+  .topbar{padding:0 15px}
+  .card{padding:15px}
+  .media-grid{
+    grid-template-columns:repeat(auto-fill,minmax(145px,1fr));
+  }
 }
 </style>
 </head>
+
 <body>
+
 <div class="layout">
+
   <aside class="sidebar">
     <div class="brand">RADJA<span>SPIN</span></div>
+
     <div class="nav-label">MENU UTAMA</div>
+
     <nav class="nav">
       <a href="/buktijepe/admin/"><span>▦</span> Dashboard</a>
       <a href="/buktijepe/admin/posts/"><span>▤</span> Artikel</a>
@@ -109,143 +394,269 @@ h1{font-size:25px;margin:0 0 7px}
       <a class="active" href="/buktijepe/admin/media/"><span>▣</span> Media</a>
       <a href="/buktijepe/admin/settings/"><span>⚙</span> Pengaturan</a>
     </nav>
+
     <div class="sidebar-bottom">
       <button class="logout" id="logoutBtn">Logout</button>
     </div>
   </aside>
 
   <main class="main">
+
     <header class="topbar">
       <small>RADJASPIN CMS / Media</small>
       <div class="user" id="username">Admin</div>
     </header>
 
     <div class="content">
+
       <div class="heading">
         <div>
           <h1>Media Manager</h1>
-          <div class="subtitle">Kelola gambar dan file media website kamu.</div>
+          <div class="subtitle">
+            Kelola gambar dan file media website kamu.
+          </div>
         </div>
         <div class="status" id="apiStatus">Menghubungkan API...</div>
       </div>
 
+      <!-- UPLOAD -->
+
       <section class="card">
+
         <div class="card-title">Upload Media</div>
-        <div class="card-desc">Pilih gambar JPG, PNG, WebP, atau GIF. Maksimal 5 MB per file.</div>
+
+        <div class="card-desc">
+          Pilih gambar JPG, PNG, WebP, atau GIF. Maksimal 5 MB per file.
+        </div>
 
         <div class="dropzone" id="dropzone">
           <div class="upload-icon">☁️</div>
           <strong>Tarik gambar ke sini atau klik untuk memilih</strong>
           <p>Format JPG, PNG, WebP, GIF · Maksimal 5 MB per gambar</p>
-          <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,image/gif" multiple hidden>
+
+          <input
+            type="file"
+            id="fileInput"
+            accept="image/jpeg,image/png,image/webp,image/gif"
+            multiple
+            hidden
+          >
         </div>
 
         <div class="preview-list" id="previewList"></div>
-        <div id="uploadProgress" class="progress" style="display:none"><div id="progressBar"></div></div>
-        <div id="uploadStatus" class="subtitle" style="margin-top:10px"></div>
-        <button class="btn btn-primary" id="uploadBtn" style="margin-top:15px" disabled>Upload gambar terpilih</button>
+
+        <div
+          id="uploadProgress"
+          class="progress"
+          style="display:none"
+        >
+          <div id="progressBar"></div>
+        </div>
+
+        <div
+          id="uploadStatus"
+          class="subtitle"
+          style="margin-top:10px"
+        ></div>
+
+        <button
+          class="btn btn-primary"
+          id="uploadBtn"
+          style="margin-top:15px"
+          disabled
+        >
+          Upload gambar terpilih
+        </button>
+
       </section>
 
+      <!-- MEDIA LIBRARY -->
+
       <section class="card">
+
         <div class="toolbar">
+
           <div>
             <div class="card-title">Perpustakaan Media</div>
-            <div class="card-desc" style="margin:5px 0 0">Gambar yang tersimpan di repository GitHub.</div>
+            <div class="card-desc" style="margin:5px 0 0">
+              Gambar yang tersimpan di repository GitHub.
+            </div>
           </div>
+
           <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-            <input class="search" id="searchInput" placeholder="Cari nama gambar...">
-            <button class="btn btn-light" id="refreshBtn">↻ Refresh</button>
+            <input
+              class="search"
+              id="searchInput"
+              placeholder="Cari nama gambar..."
+            >
+
+            <button class="btn btn-light" id="refreshBtn">
+              ↻ Refresh
+            </button>
           </div>
+
         </div>
+
         <div class="media-grid" id="mediaGrid">
           <div class="loading">Memuat media...</div>
         </div>
+
       </section>
+
     </div>
   </main>
 </div>
 
 <div class="toast" id="toast"></div>
 
+<!-- DELETE MODAL -->
+
 <div class="modal-backdrop" id="deleteModal">
   <div class="modal">
     <h3>Hapus gambar?</h3>
-    <p id="deleteMessage">Gambar akan dihapus dari repository GitHub.</p>
+    <p id="deleteMessage">
+      Gambar akan dihapus dari repository GitHub.
+    </p>
+
     <div class="modal-actions">
-      <button class="btn btn-light" id="cancelDelete">Batal</button>
-      <button class="btn btn-danger" id="confirmDelete">Ya, hapus</button>
+      <button class="btn btn-light" id="cancelDelete">
+        Batal
+      </button>
+
+      <button class="btn btn-danger" id="confirmDelete">
+        Ya, hapus
+      </button>
     </div>
   </div>
 </div>
 
 <script>
-const API_URL = "https://radjaspin-api.simeryoay.workers.dev/";
-const token = sessionStorage.getItem("radjaspin_auth_token");
+
+// ========================================
+// CONFIGURATION
+// ========================================
+
+const API_URL =
+  "https://radjaspin-api.simeryoay.workers.dev/";
+
+const token = sessionStorage.getItem(
+  "radjaspin_auth_token"
+);
 
 if (!token) {
   location.replace("/buktijepe/login/");
 }
 
-document.getElementById("username").textContent =
+const $ = id => document.getElementById(id);
+
+$("username").textContent =
   sessionStorage.getItem("radjaspin_auth_username") || "Admin";
 
-const $ = id => document.getElementById(id);
 let selectedFiles = [];
 let mediaFiles = [];
 let pendingDelete = null;
+let renameInProgress = false;
+
+// ========================================
+// TOAST
+// ========================================
 
 function toast(message) {
   $("toast").textContent = message;
   $("toast").style.display = "block";
+
   clearTimeout(toast.timer);
-  toast.timer = setTimeout(() => $("toast").style.display = "none", 3000);
+
+  toast.timer = setTimeout(() => {
+    $("toast").style.display = "none";
+  }, 3500);
 }
 
+// ========================================
+// API REQUEST
+// ========================================
+
 async function api(action, extra = {}) {
+
   const response = await fetch(API_URL, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ action, token, ...extra })
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      action,
+      token,
+      ...extra
+    })
   });
 
   const result = await response.json();
 
   if (!response.ok || !result.success) {
-    throw new Error(result.message || "Permintaan gagal.");
+    throw new Error(
+      result.message || "Permintaan gagal."
+    );
   }
+
   return result;
 }
+
+// ========================================
+// CHECK API
+// ========================================
 
 async function checkApi() {
   try {
     const response = await fetch(API_URL);
     const result = await response.json();
-    if (!response.ok || !result.success) throw new Error();
+
+    if (!response.ok || !result.success) {
+      throw new Error("API error");
+    }
+
     $("apiStatus").textContent = "API Terhubung";
     $("apiStatus").className = "status";
+
   } catch {
     $("apiStatus").textContent = "API Bermasalah";
     $("apiStatus").className = "status error";
   }
 }
 
+// ========================================
+// FORMAT SIZE
+// ========================================
+
 function formatSize(bytes) {
   if (bytes < 1024) return bytes + " B";
-  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
+
+  if (bytes < 1024 * 1024) {
+    return (bytes / 1024).toFixed(1) + " KB";
+  }
+
   return (bytes / 1024 / 1024).toFixed(2) + " MB";
 }
 
+// ========================================
+// PREVIEW UPLOAD
+// ========================================
+
 function renderPreviews() {
+
   $("previewList").innerHTML = "";
 
   selectedFiles.forEach((file, index) => {
+
     const url = URL.createObjectURL(file);
+
     const item = document.createElement("div");
     item.className = "preview-item";
 
     const img = document.createElement("img");
     img.src = url;
     img.alt = "Preview";
+
+    img.onload = () => URL.revokeObjectURL(url);
 
     const name = document.createElement("p");
     name.textContent = file.name;
@@ -256,115 +667,207 @@ function renderPreviews() {
     const remove = document.createElement("button");
     remove.className = "btn btn-danger";
     remove.textContent = "Hapus pilihan";
+
     remove.onclick = () => {
       selectedFiles.splice(index, 1);
       renderPreviews();
     };
 
     item.append(img, name, size, remove);
+
     $("previewList").appendChild(item);
+
   });
 
-  $("uploadBtn").disabled = selectedFiles.length === 0;
+  $("uploadBtn").disabled =
+    selectedFiles.length === 0;
 }
 
+// ========================================
+// SELECT FILES
+// ========================================
+
 function addFiles(files) {
-  const allowed = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+
+  const allowed = [
+    "image/jpeg",
+    "image/png",
+    "image/webp",
+    "image/gif"
+  ];
+
   let added = 0;
 
   for (const file of files) {
+
     if (!allowed.includes(file.type)) {
       toast("Format tidak didukung: " + file.name);
       continue;
     }
+
     if (file.size > 5 * 1024 * 1024) {
       toast(file.name + " melebihi batas 5 MB.");
       continue;
     }
-    if (selectedFiles.some(f => f.name === file.name && f.size === file.size)) {
+
+    if (
+      selectedFiles.some(f =>
+        f.name === file.name &&
+        f.size === file.size
+      )
+    ) {
       continue;
     }
+
     selectedFiles.push(file);
     added++;
+
   }
 
   renderPreviews();
-  if (added) toast(added + " gambar ditambahkan.");
+
+  if (added) {
+    toast(added + " gambar ditambahkan.");
+  }
 }
 
+// ========================================
+// FILE TO BASE64
+// ========================================
+
 function fileToBase64(file) {
+
   return new Promise((resolve, reject) => {
+
     const reader = new FileReader();
+
     reader.onload = () => {
       const result = String(reader.result);
-      resolve(result.substring(result.indexOf(",") + 1));
+
+      resolve(
+        result.substring(result.indexOf(",") + 1)
+      );
     };
-    reader.onerror = () => reject(new Error("Gagal membaca file."));
+
+    reader.onerror = () => {
+      reject(new Error("Gagal membaca file."));
+    };
+
     reader.readAsDataURL(file);
+
   });
 }
 
+// ========================================
+// UPLOAD FILES
+// ========================================
+
 async function uploadSelected() {
+
   if (!selectedFiles.length) return;
 
   const files = [...selectedFiles];
+
   $("uploadBtn").disabled = true;
   $("uploadProgress").style.display = "block";
-  $("uploadStatus").textContent = "Menyiapkan upload...";
 
   let success = 0;
   let failed = 0;
 
   for (let i = 0; i < files.length; i++) {
+
     const file = files[i];
+
     $("uploadStatus").textContent =
-      "Mengunggah " + (i + 1) + " dari " + files.length + ": " + file.name;
+      "Mengunggah " +
+      (i + 1) +
+      " dari " +
+      files.length +
+      ": " +
+      file.name;
 
     try {
+
       const base64 = await fileToBase64(file);
+
       await api("uploadMedia", {
+        filename: file.name,
         mimeType: file.type,
         base64
       });
+
       success++;
+
     } catch (error) {
+
       failed++;
       console.error(error);
+
       toast(file.name + ": " + error.message);
+
     }
 
     $("progressBar").style.width =
       Math.round(((i + 1) / files.length) * 100) + "%";
+
   }
 
   selectedFiles = [];
+
   renderPreviews();
+
   $("uploadStatus").textContent =
-    "Selesai. Berhasil: " + success + " · Gagal: " + failed;
+    "Selesai. Berhasil: " +
+    success +
+    " · Gagal: " +
+    failed;
 
   $("uploadBtn").disabled = false;
+
   await loadMedia();
+
   toast("Proses upload selesai.");
 }
 
+// ========================================
+// LOAD MEDIA
+// ========================================
+
 async function loadMedia() {
-  $("mediaGrid").innerHTML = '<div class="loading">Memuat media...</div>';
+
+  $("mediaGrid").innerHTML =
+    '<div class="loading">Memuat media...</div>';
 
   try {
+
     const result = await api("listMedia");
+
     mediaFiles = result.files || [];
+
     renderMedia();
+
   } catch (error) {
+
     $("mediaGrid").innerHTML = "";
+
     const empty = document.createElement("div");
     empty.className = "empty";
-    empty.textContent = "Gagal memuat media: " + error.message;
+    empty.textContent =
+      "Gagal memuat media: " + error.message;
+
     $("mediaGrid").appendChild(empty);
+
   }
 }
 
+// ========================================
+// RENDER MEDIA
+// ========================================
+
 function renderMedia() {
+
   const query = $("searchInput").value.toLowerCase();
+
   const filtered = mediaFiles.filter(file =>
     file.name.toLowerCase().includes(query)
   );
@@ -372,18 +875,25 @@ function renderMedia() {
   $("mediaGrid").innerHTML = "";
 
   if (!filtered.length) {
+
     const empty = document.createElement("div");
     empty.className = "empty";
+
     empty.textContent = mediaFiles.length
       ? "Tidak ada gambar yang cocok."
       : "Belum ada gambar. Silakan upload gambar pertama.";
+
     $("mediaGrid").appendChild(empty);
+
     return;
   }
 
   filtered.forEach(file => {
+
     const card = document.createElement("div");
     card.className = "media-card";
+
+    // IMAGE
 
     const imageBox = document.createElement("div");
     imageBox.className = "media-image";
@@ -392,19 +902,45 @@ function renderMedia() {
     img.src = file.url;
     img.alt = file.name;
     img.loading = "lazy";
+
     imageBox.appendChild(img);
+
+    // INFO
 
     const info = document.createElement("div");
     info.className = "media-info";
+
+    // FILENAME ROW
+
+    const filenameRow = document.createElement("div");
+    filenameRow.className = "filename-row";
 
     const name = document.createElement("div");
     name.className = "filename";
     name.textContent = file.name;
     name.title = file.name;
 
+    // PENCIL BUTTON
+
+    const edit = document.createElement("button");
+    edit.className = "edit-name-btn";
+    edit.type = "button";
+    edit.textContent = "✎";
+    edit.title = "Ubah nama file";
+
+    edit.onclick = () => {
+      openRenameEditor(file, info);
+    };
+
+    filenameRow.append(name, edit);
+
+    // SIZE
+
     const size = document.createElement("div");
     size.className = "filesize";
     size.textContent = formatSize(file.size || 0);
+
+    // ACTIONS
 
     const actions = document.createElement("div");
     actions.className = "media-actions";
@@ -412,53 +948,224 @@ function renderMedia() {
     const copy = document.createElement("button");
     copy.className = "btn btn-light";
     copy.textContent = "Salin URL";
+
     copy.onclick = async () => {
+
       try {
+
         await navigator.clipboard.writeText(file.url);
+
         toast("URL gambar berhasil disalin.");
+
       } catch {
+
         toast("Browser tidak mengizinkan salin otomatis.");
+
       }
+
     };
 
     const del = document.createElement("button");
     del.className = "btn btn-danger";
     del.textContent = "Hapus";
+
     del.onclick = () => openDelete(file);
 
     actions.append(copy, del);
-    info.append(name, size, actions);
+
+    info.append(filenameRow, size, actions);
+
     card.append(imageBox, info);
+
     $("mediaGrid").appendChild(card);
+
   });
+
 }
 
+// ========================================
+// RENAME EDITOR
+// ========================================
+
+function openRenameEditor(file, info) {
+
+  if (renameInProgress) return;
+
+  const existing = info.querySelector(".rename-form");
+
+  if (existing) {
+    existing.remove();
+    return;
+  }
+
+  const form = document.createElement("div");
+  form.className = "rename-form";
+
+  const input = document.createElement("input");
+  input.className = "rename-input";
+  input.type = "text";
+  input.value = file.name;
+  input.maxLength = 100;
+  input.autocomplete = "off";
+
+  const actions = document.createElement("div");
+  actions.className = "rename-actions";
+
+  const save = document.createElement("button");
+  save.className = "btn btn-primary";
+  save.textContent = "Simpan";
+
+  const cancel = document.createElement("button");
+  cancel.className = "btn btn-light";
+  cancel.textContent = "Batal";
+
+  cancel.onclick = () => {
+    form.remove();
+  };
+
+  save.onclick = async () => {
+
+    const newName = input.value.trim();
+
+    if (!newName) {
+      toast("Nama file tidak boleh kosong.");
+      input.focus();
+      return;
+    }
+
+    if (newName === file.name) {
+      form.remove();
+      return;
+    }
+
+    if (
+      newName.includes("/") ||
+      newName.includes("\\") ||
+      newName.includes("..")
+    ) {
+      toast("Nama file tidak boleh mengandung path.");
+      input.focus();
+      return;
+    }
+
+    const oldExtension = file.name.split(".").pop().toLowerCase();
+    const newExtension = newName.split(".").pop().toLowerCase();
+
+    if (oldExtension !== newExtension) {
+      toast("Ekstensi file tidak boleh diubah.");
+      input.focus();
+      return;
+    }
+
+    save.disabled = true;
+    cancel.disabled = true;
+    renameInProgress = true;
+
+    save.textContent = "Menyimpan...";
+
+    try {
+
+      const result = await api("renameMedia", {
+        filename: file.name,
+        newName
+      });
+
+      form.remove();
+
+      toast(
+        result.message || "Nama file berhasil diubah."
+      );
+
+      await loadMedia();
+
+    } catch (error) {
+
+      toast(error.message);
+
+      save.disabled = false;
+      cancel.disabled = false;
+      save.textContent = "Simpan";
+
+    } finally {
+
+      renameInProgress = false;
+
+    }
+
+  };
+
+  input.addEventListener("keydown", event => {
+    if (event.key === "Enter") save.click();
+    if (event.key === "Escape") cancel.click();
+  });
+
+  actions.append(save, cancel);
+
+  form.append(input, actions);
+
+  info.appendChild(form);
+
+  input.focus();
+  input.select();
+
+}
+
+// ========================================
+// DELETE MEDIA
+// ========================================
+
 function openDelete(file) {
+
   pendingDelete = file;
+
   $("deleteMessage").textContent =
-    "File " + file.name + " akan dihapus dari repository GitHub. Tindakan ini tidak dapat dibatalkan.";
+    "File " +
+    file.name +
+    " akan dihapus dari repository GitHub. Tindakan ini tidak dapat dibatalkan.";
+
   $("deleteModal").style.display = "flex";
+
 }
 
 async function confirmDelete() {
+
   if (!pendingDelete) return;
 
   $("confirmDelete").disabled = true;
 
   try {
-    await api("deleteMedia", { filename: pendingDelete.name });
+
+    await api("deleteMedia", {
+      filename: pendingDelete.name
+    });
+
     toast("Gambar berhasil dihapus.");
+
     $("deleteModal").style.display = "none";
+
     pendingDelete = null;
+
     await loadMedia();
+
   } catch (error) {
+
     toast(error.message);
+
   } finally {
+
     $("confirmDelete").disabled = false;
+
   }
+
 }
 
-$("dropzone").onclick = () => $("fileInput").click();
+// ========================================
+// EVENT LISTENERS
+// ========================================
+
+$("dropzone").onclick = () => {
+  $("fileInput").click();
+};
 
 $("fileInput").onchange = event => {
   addFiles(event.target.files);
@@ -481,29 +1188,44 @@ $("dropzone").ondrop = event => {
 };
 
 $("uploadBtn").onclick = uploadSelected;
+
 $("refreshBtn").onclick = loadMedia;
+
 $("searchInput").oninput = renderMedia;
+
 $("cancelDelete").onclick = () => {
   $("deleteModal").style.display = "none";
   pendingDelete = null;
 };
+
 $("confirmDelete").onclick = confirmDelete;
 
 $("deleteModal").onclick = event => {
+
   if (event.target === $("deleteModal")) {
     $("deleteModal").style.display = "none";
     pendingDelete = null;
   }
+
 };
 
 $("logoutBtn").onclick = () => {
+
   sessionStorage.removeItem("radjaspin_auth_token");
   sessionStorage.removeItem("radjaspin_auth_username");
+
   location.replace("/buktijepe/login/");
+
 };
+
+// ========================================
+// INITIALIZE
+// ========================================
 
 checkApi();
 loadMedia();
+
 </script>
+
 </body>
 </html>

@@ -3,378 +3,137 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Artikel | RADJASPIN CMS</title>
 <style>
 :root{
-  --navy:#11152b;
-  --navy2:#191f3d;
-  --purple:#7257e8;
-  --purple-light:#f0edff;
-  --bg:#f5f6fa;
-  --white:#fff;
-  --text:#20243a;
-  --muted:#8990a5;
-  --border:#e9eaf0;
-  --green:#159c68;
-  --red:#e45454;
+  --navy:#11152b;--purple:#7257e8;--bg:#f5f6fa;
+  --text:#20243a;--muted:#8990a5;--border:#e9eaf0;
+  --green:#159c68;--red:#e45454;--white:#fff
 }
 *{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  background:var(--bg);
-  color:var(--text);
-}
-button,input,textarea,select{font:inherit}
+body{margin:0;font-family:Inter,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
+button,input,select{font:inherit}
 button{cursor:pointer}
-.layout{display:flex;min-height:100vh}
-
-/* SIDEBAR */
-.sidebar{
-  width:245px;
-  background:var(--navy);
-  color:white;
-  position:fixed;
-  inset:0 auto 0 0;
-  display:flex;
-  flex-direction:column;
-  z-index:20;
-  padding:25px 16px;
-}
-.brand{
-  display:flex;
-  align-items:center;
-  gap:11px;
-  padding:0 10px 30px;
-}
-.brand-mark{
-  width:39px;height:39px;
-  border-radius:12px;
-  background:linear-gradient(135deg,#9c82ff,#6244d9);
-  display:grid;place-items:center;
-  font-weight:900;font-size:20px;
-}
+.hidden{display:none!important}
+.layout{min-height:100vh}
+.sidebar{position:fixed;inset:0 auto 0 0;width:245px;background:var(--navy);color:white;padding:25px 16px;display:flex;flex-direction:column;z-index:20}
+.brand{display:flex;align-items:center;gap:11px;padding:0 10px 30px}
+.brand-mark{width:39px;height:39px;border-radius:12px;background:linear-gradient(135deg,#9c82ff,#6244d9);display:grid;place-items:center;font-size:20px;font-weight:900}
 .brand-name{font-size:17px;font-weight:800;letter-spacing:.5px}
 .brand-sub{font-size:10px;color:#9298b6;margin-top:3px}
-.nav-label{
-  font-size:10px;
-  color:#777e9e;
-  font-weight:700;
-  letter-spacing:1.3px;
-  padding:12px 12px;
-}
-.nav-link{
-  display:flex;
-  align-items:center;
-  gap:13px;
-  padding:12px 14px;
-  margin:3px 0;
-  border-radius:9px;
-  text-decoration:none;
-  color:#aeb3cb;
-  font-size:13px;
-  transition:.2s;
-}
+.nav-label{font-size:10px;color:#777e9e;font-weight:700;letter-spacing:1.3px;padding:12px}
+.nav-link{display:flex;align-items:center;gap:13px;padding:12px 14px;margin:3px 0;border-radius:9px;text-decoration:none;color:#aeb3cb;font-size:13px}
 .nav-link:hover{background:#ffffff0d;color:white}
-.nav-link.active{
-  background:#7358e9;
-  color:white;
-  box-shadow:0 5px 15px #0002;
-}
+.nav-link.active{background:var(--purple);color:white}
 .nav-icon{width:19px;text-align:center;font-size:17px}
 .sidebar-bottom{margin-top:auto}
-.user-box{
-  display:flex;align-items:center;gap:10px;
-  padding:14px 9px;
-  border-top:1px solid #ffffff16;
-  margin-top:15px;
-}
-.avatar{
-  width:35px;height:35px;border-radius:50%;
-  display:grid;place-items:center;
-  background:#7257e8;font-size:12px;font-weight:700;
-}
+.user-box{display:flex;align-items:center;gap:10px;padding:14px 9px;border-top:1px solid #ffffff16;margin-top:15px}
+.avatar,.top-avatar{width:35px;height:35px;border-radius:50%;display:grid;place-items:center;background:var(--purple);color:white;font-size:12px;font-weight:800}
 .user-name{font-size:12px;font-weight:700}
 .user-role{font-size:10px;color:#9399b5;margin-top:3px}
-
-/* MAIN */
-.main{
-  margin-left:245px;
-  width:calc(100% - 245px);
-  min-width:0;
-}
-.topbar{
-  height:69px;background:white;
-  border-bottom:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 32px;
-}
+.main{margin-left:245px;min-height:100vh}
+.topbar{height:69px;background:white;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 32px}
 .breadcrumb{font-size:12px;color:var(--muted)}
 .breadcrumb strong{color:var(--text)}
 .top-right{display:flex;align-items:center;gap:15px}
-.api-status{
-  display:flex;align-items:center;gap:7px;
-  padding:7px 11px;border-radius:30px;
-  background:#eaf8f1;color:var(--green);
-  font-size:11px;font-weight:700;
-}
+.api-status{display:flex;align-items:center;gap:7px;padding:7px 11px;border-radius:30px;background:#fff8e9;color:#9a6b1f;font-size:11px;font-weight:700}
 .dot{width:7px;height:7px;border-radius:50%;background:currentColor}
-.top-avatar{
-  width:34px;height:34px;border-radius:50%;
-  background:#eeeaff;color:#7257e8;
-  display:grid;place-items:center;font-size:12px;font-weight:800;
-}
+.top-avatar{background:#eeeaff;color:var(--purple)}
 .content{padding:29px 32px 60px;max-width:1500px;margin:auto}
-.page-heading{
-  display:flex;justify-content:space-between;
-  align-items:center;gap:15px;margin-bottom:23px;
-}
+.page-heading{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:23px}
 .page-heading h1{font-size:24px;margin:0 0 7px}
 .page-heading p{font-size:12px;color:var(--muted);margin:0}
-.btn{
-  border:0;border-radius:8px;padding:11px 17px;
-  font-size:12px;font-weight:700;
-  display:inline-flex;align-items:center;justify-content:center;gap:8px;
-}
+.btn{border:0;border-radius:8px;padding:11px 17px;font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:8px}
 .btn-primary{background:var(--purple);color:white}
 .btn-primary:hover{background:#6045d2}
 .btn-light{background:white;border:1px solid var(--border);color:#555b70}
 .btn-danger{background:#fff0f0;color:var(--red)}
 .btn:disabled{opacity:.5;cursor:not-allowed}
-
-/* EDITOR */
-.editor-layout{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) 290px;
-  gap:20px;align-items:start;
-}
-.panel{
-  background:white;border:1px solid var(--border);
-  border-radius:11px;overflow:hidden;
-}
+.panel{background:white;border:1px solid var(--border);border-radius:11px;overflow:hidden}
 .panel-body{padding:20px}
-.panel-title{
-  font-size:13px;font-weight:800;
-  padding:17px 19px;border-bottom:1px solid var(--border);
-}
+.panel-title{font-size:13px;font-weight:800;padding:17px 19px;border-bottom:1px solid var(--border)}
+.editor-layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:20px;align-items:start}
 .field{margin-bottom:19px}
-.field label{
-  display:block;font-size:11px;font-weight:700;
-  margin-bottom:8px;color:#555b70;
-}
-.field input,.field textarea,.field select{
-  width:100%;border:1px solid #e4e6ed;
-  border-radius:7px;padding:11px 12px;
-  font-size:12px;outline:none;color:var(--text);
-  background:white;
-}
-.field input:focus,.field textarea:focus,
-.field select:focus{border-color:var(--purple)}
-.title-input{
-  font-size:22px!important;font-weight:700;
-  padding:15px!important;
-}
-.slug-box{
-  display:flex;align-items:center;gap:8px;
-  font-size:11px;color:var(--muted);
-  margin-top:9px;flex-wrap:wrap;
-}
-.slug-box input{
-  border:0;background:#f7f7fa;
-  padding:5px 8px;width:auto;flex:1;
-  min-width:100px;border-radius:5px;
-}
-.editor-toolbar{
-  display:flex;align-items:center;flex-wrap:wrap;
-  gap:4px;padding:9px;
-  border:1px solid #e4e6ed;
-  border-bottom:0;border-radius:8px 8px 0 0;
-  background:#fafafd;
-}
-.tool{
-  width:31px;height:30px;border:0;
-  border-radius:5px;background:transparent;
-  color:#4f5367;font-weight:700;font-size:13px;
-}
+.field label{display:block;font-size:11px;font-weight:700;margin-bottom:8px;color:#555b70}
+.field input,.field select{width:100%;border:1px solid #e4e6ed;border-radius:7px;padding:11px 12px;font-size:12px;outline:none;color:var(--text);background:white}
+.field input:focus,.field select:focus{border-color:var(--purple)}
+.title-input{font-size:22px!important;font-weight:700;padding:15px!important}
+.slug-box{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted);margin-top:9px}
+.slug-box input{border:0;background:#f7f7fa;padding:7px 8px;flex:1;min-width:0;border-radius:5px}
+.editor-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:4px;padding:9px;border:1px solid #e4e6ed;border-bottom:0;border-radius:8px 8px 0 0;background:#fafafd}
+.tool{width:31px;height:30px;border:0;border-radius:5px;background:transparent;color:#4f5367;font-weight:700;font-size:13px}
 .tool:hover{background:#eae7ff;color:var(--purple)}
-.tool-separator{
-  height:20px;width:1px;background:#ddd;
-  margin:0 5px;
-}
-.editor-area{
-  min-height:390px;
-  padding:18px;
-  border:1px solid #e4e6ed;
-  border-radius:0 0 8px 8px;
-  outline:none;font-size:14px;
-  line-height:1.8;color:#30354a;
-  overflow-wrap:anywhere;
-}
+.tool-separator{height:20px;width:1px;background:#ddd;margin:0 5px}
+.editor-area{min-height:390px;padding:18px;border:1px solid #e4e6ed;border-radius:0 0 8px 8px;outline:none;font-size:14px;line-height:1.8;color:#30354a;overflow-wrap:anywhere}
 .editor-area:focus{border-color:var(--purple)}
-.editor-area:empty:before{
-  content:"Mulai tulis artikel RADJASPIN di sini...";
-  color:#a5a8b5;
-  pointer-events:none;
-}
+.editor-area:empty:before{content:"Mulai tulis artikel RADJASPIN di sini...";color:#a5a8b5;pointer-events:none}
 .editor-area img{max-width:100%;height:auto;border-radius:8px}
 .editor-area h2,.editor-area h3{line-height:1.35}
 .editor-area a{color:var(--purple)}
-.editor-help{
-  font-size:10px;color:var(--muted);
-  margin-top:9px;
-}
+.editor-help,.info-text{font-size:10px;color:var(--muted);line-height:1.6;margin-top:9px}
 .side-panel{display:flex;flex-direction:column;gap:16px}
-.status-row{
-  display:flex;justify-content:space-between;
-  align-items:center;gap:10px;
-  font-size:11px;margin-bottom:14px;
-}
-.status-pill{
-  padding:5px 9px;border-radius:20px;
-  font-size:10px;font-weight:700;
-  background:#f0edff;color:var(--purple);
-}
+.status-row{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:11px;margin-bottom:14px}
+.status-pill{padding:5px 9px;border-radius:20px;font-size:10px;font-weight:700;background:#f0edff;color:var(--purple)}
 .status-pill.published{background:#eaf8f1;color:var(--green)}
 .status-pill.draft{background:#fff5e5;color:#c58727}
 .publish-actions{display:grid;gap:9px}
 .publish-actions button{width:100%}
-.thumbnail-box{
-  width:100%;aspect-ratio:16/9;
-  background:#f6f6fa;border:1px dashed #d8d9e2;
-  border-radius:8px;display:grid;place-items:center;
-  overflow:hidden;color:var(--muted);
-  font-size:11px;cursor:pointer;
-}
+.thumbnail-box{width:100%;aspect-ratio:16/9;background:#f6f6fa;border:1px dashed #d8d9e2;border-radius:8px;display:grid;place-items:center;overflow:hidden;color:var(--muted);font-size:11px;cursor:pointer}
 .thumbnail-box img{width:100%;height:100%;object-fit:cover}
-.thumbnail-url{margin-top:10px}
-.thumbnail-url input{font-size:10px}
-.info-text{font-size:10px;color:var(--muted);line-height:1.6}
-.connection-card{
-  display:flex;align-items:center;gap:10px;
-  padding:12px;background:#f8f9fc;border-radius:8px;
-}
-.connection-icon{
-  width:32px;height:32px;border-radius:8px;
-  background:#e9f8f0;color:var(--green);
-  display:grid;place-items:center;
-}
+.connection-card{display:flex;align-items:center;gap:10px;padding:12px;background:#f8f9fc;border-radius:8px}
+.connection-icon{width:32px;height:32px;border-radius:8px;background:#e9f8f0;color:var(--green);display:grid;place-items:center}
 .connection-card strong{font-size:11px;display:block}
 .connection-card small{font-size:10px;color:var(--muted)}
-.notice{
-  padding:12px 14px;border-radius:8px;
-  font-size:11px;line-height:1.6;margin-bottom:18px;
-  background:#fff8e9;color:#9a6b1f;
-  border:1px solid #f5e5c4;
-}
+.notice{padding:12px 14px;border-radius:8px;font-size:11px;line-height:1.6;margin-bottom:18px;background:#fff8e9;color:#9a6b1f;border:1px solid #f5e5c4}
 .notice.error{background:#fff0f0;color:#b53d3d;border-color:#f3d0d0}
 .notice.success{background:#eaf8f1;color:#16805a;border-color:#ccebdc}
-.hidden{display:none!important}
-
-/* LIST */
-.list-toolbar{
-  display:flex;justify-content:space-between;
-  gap:12px;flex-wrap:wrap;margin-bottom:15px;
-}
-.search-input{
-  border:1px solid var(--border);border-radius:7px;
-  padding:10px 12px;background:white;
-  font-size:11px;min-width:220px;outline:none;
-}
-.filter-select{
-  border:1px solid var(--border);border-radius:7px;
-  padding:10px;background:white;font-size:11px;
-}
+.list-toolbar{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:15px}
+.search-input,.filter-select{border:1px solid var(--border);border-radius:7px;padding:10px 12px;background:white;font-size:11px;outline:none}
+.search-input{min-width:220px}
 .table-wrap{overflow-x:auto}
 table{border-collapse:collapse;width:100%;min-width:650px}
-th{
-  text-align:left;padding:13px 15px;
-  font-size:10px;color:var(--muted);
-  background:#fafafd;font-weight:700;
-}
-td{
-  padding:14px 15px;border-top:1px solid var(--border);
-  font-size:11px;
-}
-.post-title{font-weight:700;color:var(--text)}
+th{text-align:left;padding:13px 15px;font-size:10px;color:var(--muted);background:#fafafd;font-weight:700}
+td{padding:14px 15px;border-top:1px solid var(--border);font-size:11px}
+.post-title{font-weight:700}
 .post-sub{font-size:10px;color:var(--muted);margin-top:4px}
 .empty-state{text-align:center;padding:45px 15px;color:var(--muted)}
-.empty-state .empty-icon{font-size:32px;margin-bottom:12px}
 .empty-state strong{display:block;color:var(--text);font-size:13px;margin-bottom:6px}
 .row-actions{display:flex;gap:6px}
-.icon-btn{
-  border:1px solid var(--border);background:white;
-  width:29px;height:29px;border-radius:6px;
-  color:#687087;font-size:12px;
-}
+.icon-btn{border:1px solid var(--border);background:white;width:29px;height:29px;border-radius:6px;color:#687087}
 .icon-btn:hover{border-color:var(--purple);color:var(--purple)}
 .view-switch{display:flex;gap:8px}
-.view-switch button{padding:9px 13px}
-.mobile-menu{display:none}
-
-/* MODAL */
-.modal-backdrop{
-  position:fixed;inset:0;background:#11152b88;
-  z-index:100;display:none;align-items:center;
-  justify-content:center;padding:20px;
-}
+.modal-backdrop{position:fixed;inset:0;background:#11152b88;z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
 .modal-backdrop.show{display:flex}
-.modal{
-  background:white;width:100%;max-width:420px;
-  border-radius:12px;padding:23px;
-  box-shadow:0 20px 70px #0003;
-}
+.modal{background:white;width:100%;max-width:420px;border-radius:12px;padding:23px;box-shadow:0 20px 70px #0003}
 .modal h3{margin:0 0 9px;font-size:16px}
 .modal p{font-size:12px;color:var(--muted);line-height:1.6}
 .modal-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:20px}
-.toast{
-  position:fixed;bottom:25px;right:25px;
-  background:#20243a;color:white;padding:13px 18px;
-  border-radius:8px;font-size:12px;
-  box-shadow:0 8px 30px #0002;
-  z-index:200;opacity:0;transform:translateY(10px);
-  pointer-events:none;transition:.25s;
-}
+.toast{position:fixed;bottom:25px;right:25px;background:#20243a;color:white;padding:13px 18px;border-radius:8px;font-size:12px;box-shadow:0 8px 30px #0002;z-index:200;opacity:0;transform:translateY(10px);pointer-events:none;transition:.25s}
 .toast.show{opacity:1;transform:translateY(0)}
 .footer-note{font-size:10px;color:var(--muted);margin-top:25px;text-align:center}
-
-@media(max-width:1050px){
-  .editor-layout{grid-template-columns:1fr 260px}
-  .content{padding:24px 20px}
-}
+@media(max-width:1050px){.editor-layout{grid-template-columns:1fr 260px}.content{padding:24px 20px}}
 @media(max-width:800px){
-  .sidebar{width:68px;padding:20px 9px}
-  .brand{justify-content:center;padding:0 0 25px}
-  .brand-name,.brand-sub,.nav-label,.nav-link span:not(.nav-icon),
-  .sidebar-bottom .user-info{display:none}
-  .nav-link{justify-content:center;padding:13px 5px}
-  .nav-icon{font-size:19px}
-  .user-box{justify-content:center;padding:14px 0}
-  .main{margin-left:68px;width:calc(100% - 68px)}
-  .editor-layout{grid-template-columns:1fr}
-  .side-panel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
-  .topbar{padding:0 18px}
+.sidebar{width:68px;padding:20px 9px}.brand{justify-content:center;padding:0 0 25px}
+.brand-name,.brand-sub,.nav-label,.nav-link span:not(.nav-icon),.sidebar-bottom .user-info{display:none}
+.nav-link{justify-content:center;padding:13px 5px}.nav-icon{font-size:19px}
+.user-box{justify-content:center;padding:14px 0}
+.main{margin-left:68px}.editor-layout{grid-template-columns:1fr}
+.side-panel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.topbar{padding:0 18px}
 }
 @media(max-width:560px){
-  .content{padding:20px 13px 40px}
-  .topbar{height:58px;padding:0 13px}
-  .page-heading{align-items:flex-start;flex-direction:column}
-  .page-heading h1{font-size:21px}
-  .side-panel{grid-template-columns:1fr}
-  .editor-area{min-height:300px}
-  .title-input{font-size:19px!important}
-  .search-input{min-width:0;width:100%}
-  .list-toolbar{display:grid}
-  .api-status{font-size:0;padding:9px}
-  .api-status .dot{width:8px;height:8px}
+.content{padding:20px 13px 40px}.topbar{height:58px;padding:0 13px}
+.page-heading{align-items:flex-start;flex-direction:column}.page-heading h1{font-size:21px}
+.side-panel{grid-template-columns:1fr}.editor-area{min-height:300px}
+.title-input{font-size:19px!important}.search-input{min-width:0;width:100%}
+.list-toolbar{display:grid}.api-status{font-size:0;padding:9px}
 }
 </style>
 </head>
 <body>
-
 <div class="layout">
 
-<!-- SIDEBAR -->
 <aside class="sidebar">
   <div class="brand">
     <div class="brand-mark">R</div>
@@ -383,222 +142,161 @@ td{
       <div class="brand-sub">CONTENT MANAGEMENT</div>
     </div>
   </div>
-
   <div class="nav-label">MENU UTAMA</div>
-  <a class="nav-link" href="/buktijepe/admin/">
-    <span class="nav-icon">▦</span><span>Dashboard</span>
-  </a>
-  <a class="nav-link active" href="/buktijepe/admin/posts/">
-    <span class="nav-icon">▤</span><span>Artikel</span>
-  </a>
-  <a class="nav-link" href="/buktijepe/admin/pages/">
-    <span class="nav-icon">▧</span><span>Halaman</span>
-  </a>
-  <a class="nav-link" href="/buktijepe/admin/media/">
-    <span class="nav-icon">▧</span><span>Media</span>
-  </a>
-  <a class="nav-link" href="/buktijepe/admin/settings/">
-    <span class="nav-icon">⚙</span><span>Pengaturan</span>
-  </a>
-
+  <a class="nav-link" href="/buktijepe/admin/"><span class="nav-icon">▦</span><span>Dashboard</span></a>
+  <a class="nav-link active" href="/buktijepe/admin/posts/"><span class="nav-icon">▤</span><span>Artikel</span></a>
+  <a class="nav-link" href="/buktijepe/admin/pages/"><span class="nav-icon">▧</span><span>Halaman</span></a>
+  <a class="nav-link" href="/buktijepe/admin/media/"><span class="nav-icon">▧</span><span>Media</span></a>
+  <a class="nav-link" href="/buktijepe/admin/settings/"><span class="nav-icon">⚙</span><span>Pengaturan</span></a>
   <div class="sidebar-bottom">
-    <a class="nav-link" href="/buktijepe/">
-      <span class="nav-icon">↗</span><span>Lihat Website</span>
-    </a>
+    <a class="nav-link" href="/buktijepe/"><span class="nav-icon">↗</span><span>Lihat Website</span></a>
     <div class="user-box">
       <div class="avatar">SA</div>
-      <div class="user-info">
-        <div class="user-name">Super Admin</div>
-        <div class="user-role">Administrator</div>
-      </div>
+      <div class="user-info"><div class="user-name">Super Admin</div><div class="user-role">Administrator</div></div>
     </div>
-    <a class="nav-link" href="#" id="logoutBtn">
-      <span class="nav-icon">⇥</span><span>Keluar</span>
-    </a>
+    <a class="nav-link" href="#" id="logoutBtn"><span class="nav-icon">⇥</span><span>Keluar</span></a>
   </div>
 </aside>
 
-<!-- MAIN -->
 <main class="main">
-  <header class="topbar">
-    <div class="breadcrumb">Admin / <strong>Artikel</strong></div>
-    <div class="top-right">
-      <div class="api-status" id="apiStatus">
-        <span class="dot"></span><span id="apiStatusText">Memeriksa API...</span>
-      </div>
-      <div class="top-avatar">SA</div>
+<header class="topbar">
+  <div class="breadcrumb">Admin / <strong>Artikel</strong></div>
+  <div class="top-right">
+    <div class="api-status" id="apiStatus"><span class="dot"></span><span id="apiStatusText">Memeriksa API...</span></div>
+    <div class="top-avatar">SA</div>
+  </div>
+</header>
+
+<div class="content">
+  <div class="page-heading">
+    <div><h1>Artikel</h1><p>Kelola dan tulis konten untuk website RADJASPIN.</p></div>
+    <div class="view-switch">
+      <button class="btn btn-light" id="listBtn">Daftar Artikel</button>
+      <button class="btn btn-primary" id="newBtn">＋ Buat Artikel</button>
     </div>
-  </header>
+  </div>
 
-  <div class="content">
+  <div id="notice" class="notice hidden"></div>
 
-    <div class="page-heading">
-      <div>
-        <h1>Artikel</h1>
-        <p>Kelola dan tulis konten untuk website RADJASPIN.</p>
+  <section id="listView" class="panel">
+    <div class="panel-body">
+      <div class="list-toolbar">
+        <input id="searchPosts" class="search-input" placeholder="Cari judul artikel...">
+        <select id="filterStatus" class="filter-select">
+          <option value="">Semua status</option>
+          <option value="draft">Draft</option>
+          <option value="published">Published</option>
+        </select>
       </div>
-      <div class="view-switch">
-        <button class="btn btn-light" id="listBtn">Daftar Artikel</button>
-        <button class="btn btn-primary" id="newBtn">＋ Buat Artikel</button>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>ARTIKEL</th><th>KATEGORI</th><th>STATUS</th><th>TERAKHIR DIUBAH</th><th>AKSI</th></tr></thead>
+          <tbody id="postsTable"></tbody>
+        </table>
+      </div>
+      <div class="empty-state" id="emptyState">
+        <div style="font-size:32px;margin-bottom:12px">▤</div>
+        <strong>Belum ada artikel</strong>
+        <span>Buat artikel pertamamu untuk memulai.</span>
       </div>
     </div>
+  </section>
 
-    <div id="notice" class="notice hidden"></div>
-
-    <!-- LIST VIEW -->
-    <section id="listView" class="panel">
-      <div class="panel-body">
-        <div class="list-toolbar">
-          <input id="searchPosts" class="search-input" placeholder="Cari judul artikel...">
-          <select id="filterStatus" class="filter-select">
-            <option value="">Semua status</option>
-            <option value="draft">Draft</option>
-            <option value="published">Published</option>
-          </select>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>ARTIKEL</th>
-                <th>KATEGORI</th>
-                <th>STATUS</th>
-                <th>TERAKHIR DIUBAH</th>
-                <th>AKSI</th>
-              </tr>
-            </thead>
-            <tbody id="postsTable"></tbody>
-          </table>
-        </div>
-        <div class="empty-state" id="emptyState">
-          <div class="empty-icon">▤</div>
-          <strong>Belum ada artikel</strong>
-          <span>Buat artikel pertamamu untuk memulai.</span>
+  <section id="editorView" class="hidden">
+    <div class="editor-layout">
+      <div class="panel">
+        <div class="panel-body">
+          <div class="field">
+            <label>JUDUL ARTIKEL</label>
+            <input id="postTitle" class="title-input" placeholder="Masukkan judul artikel...">
+            <div class="slug-box"><span>URL:</span><span>/</span><input id="postSlug" placeholder="judul-artikel"></div>
+          </div>
+          <div class="field">
+            <label>ISI ARTIKEL</label>
+            <div class="editor-toolbar">
+              <button class="tool" data-cmd="bold" title="Bold"><b>B</b></button>
+              <button class="tool" data-cmd="italic" title="Italic"><i>I</i></button>
+              <button class="tool" data-cmd="underline" title="Underline"><u>U</u></button>
+              <span class="tool-separator"></span>
+              <button class="tool" data-block="h2">H2</button>
+              <button class="tool" data-block="h3">H3</button>
+              <button class="tool" data-block="p">¶</button>
+              <span class="tool-separator"></span>
+              <button class="tool" data-cmd="insertUnorderedList">☷</button>
+              <button class="tool" data-cmd="insertOrderedList">1.</button>
+              <button class="tool" data-cmd="justifyLeft">≡</button>
+              <button class="tool" data-cmd="justifyCenter">☰</button>
+              <span class="tool-separator"></span>
+              <button class="tool" id="linkBtn" title="Tambah link">↗</button>
+              <button class="tool" id="imageBtn" title="Tambah gambar">▧</button>
+              <button class="tool" data-cmd="removeFormat">Tx</button>
+            </div>
+            <div id="editor" class="editor-area" contenteditable="true"></div>
+            <div class="editor-help">Gunakan toolbar untuk mengatur format tulisan, heading, daftar, tautan, dan gambar.</div>
+          </div>
         </div>
       </div>
-    </section>
 
-    <!-- EDITOR VIEW -->
-    <section id="editorView" class="hidden">
-      <div class="editor-layout">
+      <div class="side-panel">
+        <div class="panel">
+          <div class="panel-title">Publikasi</div>
+          <div class="panel-body">
+            <div class="status-row"><span>Status</span><span class="status-pill draft" id="statusPill">Draft</span></div>
+            <div class="status-row"><span>Visibilitas</span><strong>Publik</strong></div>
+            <div class="publish-actions">
+              <button class="btn btn-light" id="saveDraftBtn">Simpan Draft</button>
+              <button class="btn btn-primary" id="publishBtn">Terbitkan Artikel</button>
+              <button class="btn btn-danger hidden" id="deleteBtn">Hapus Artikel</button>
+              <button class="btn btn-light" id="cancelBtn">Kembali</button>
+            </div>
+          </div>
+        </div>
 
         <div class="panel">
+          <div class="panel-title">Kategori</div>
           <div class="panel-body">
-            <div class="field">
-              <label>JUDUL ARTIKEL</label>
-              <input id="postTitle" class="title-input" placeholder="Masukkan judul artikel...">
-              <div class="slug-box">
-                <span>URL:</span>
-                <span>/</span>
-                <input id="postSlug" placeholder="judul-artikel">
-              </div>
-            </div>
-
-            <div class="field">
-              <label>ISI ARTIKEL</label>
-              <div class="editor-toolbar">
-                <button class="tool" data-cmd="bold" title="Bold"><b>B</b></button>
-                <button class="tool" data-cmd="italic" title="Italic"><i>I</i></button>
-                <button class="tool" data-cmd="underline" title="Underline"><u>U</u></button>
-                <span class="tool-separator"></span>
-                <button class="tool" data-block="h2" title="Heading 2">H2</button>
-                <button class="tool" data-block="h3" title="Heading 3">H3</button>
-                <button class="tool" data-block="p" title="Paragraf">¶</button>
-                <span class="tool-separator"></span>
-                <button class="tool" data-cmd="insertUnorderedList" title="Bullet list">☷</button>
-                <button class="tool" data-cmd="insertOrderedList" title="Number list">1.</button>
-                <button class="tool" data-cmd="justifyLeft" title="Rata kiri">≡</button>
-                <button class="tool" data-cmd="justifyCenter" title="Rata tengah">☰</button>
-                <span class="tool-separator"></span>
-                <button class="tool" id="linkBtn" title="Tambah link">↗</button>
-                <button class="tool" id="imageBtn" title="Tambah gambar">▧</button>
-                <button class="tool" data-cmd="removeFormat" title="Hapus format">Tx</button>
-              </div>
-              <div id="editor" class="editor-area" contenteditable="true"></div>
-              <div class="editor-help">
-                Gunakan toolbar untuk mengatur format tulisan, heading, daftar, tautan, dan gambar.
-              </div>
+            <div class="field" style="margin:0">
+              <label>PILIH KATEGORI</label>
+              <select id="postCategory">
+                <option value="">Tanpa kategori</option>
+                <option>Berita</option><option>Artikel</option>
+                <option>Informasi</option><option>Tutorial</option><option>Pengumuman</option>
+              </select>
             </div>
           </div>
         </div>
 
-        <div class="side-panel">
-
-          <div class="panel">
-            <div class="panel-title">Publikasi</div>
-            <div class="panel-body">
-              <div class="status-row">
-                <span>Status</span>
-                <span class="status-pill draft" id="statusPill">Draft</span>
-              </div>
-              <div class="status-row">
-                <span>Visibilitas</span><strong>Publik</strong>
-              </div>
-              <div class="publish-actions">
-                <button class="btn btn-light" id="saveDraftBtn">Simpan Draft</button>
-                <button class="btn btn-primary" id="publishBtn">Terbitkan Artikel</button>
-                <button class="btn btn-danger hidden" id="deleteBtn">Hapus Artikel</button>
-                <button class="btn btn-light" id="cancelBtn">Kembali</button>
-              </div>
+        <div class="panel">
+          <div class="panel-title">Thumbnail Artikel</div>
+          <div class="panel-body">
+            <label class="thumbnail-box" for="thumbnailFile" id="thumbnailPreview"><span>＋ Pilih gambar thumbnail</span></label>
+            <input type="file" id="thumbnailFile" accept="image/*" class="hidden">
+            <div class="field" style="margin:10px 0 0">
+              <label>ATAU URL GAMBAR</label>
+              <input id="thumbnailUrl" placeholder="https://...">
             </div>
+            <p class="info-text">Untuk tahap awal, thumbnail menggunakan URL gambar. Upload media akan dibuat berikutnya.</p>
           </div>
+        </div>
 
-          <div class="panel">
-            <div class="panel-title">Kategori</div>
-            <div class="panel-body">
-              <div class="field" style="margin:0">
-                <label>PILIH KATEGORI</label>
-                <select id="postCategory">
-                  <option value="">Tanpa kategori</option>
-                  <option value="Berita">Berita</option>
-                  <option value="Artikel">Artikel</option>
-                  <option value="Informasi">Informasi</option>
-                  <option value="Tutorial">Tutorial</option>
-                  <option value="Pengumuman">Pengumuman</option>
-                </select>
-              </div>
+        <div class="panel">
+          <div class="panel-title">Koneksi Database</div>
+          <div class="panel-body">
+            <div class="connection-card">
+              <div class="connection-icon">✓</div>
+              <div><strong id="connectionTitle">Memeriksa...</strong><small id="connectionDesc">Google Apps Script</small></div>
             </div>
+            <p class="info-text">Database: RADJASPIN CMS<br>Tab: Posts</p>
           </div>
-
-          <div class="panel">
-            <div class="panel-title">Thumbnail Artikel</div>
-            <div class="panel-body">
-              <label class="thumbnail-box" for="thumbnailFile" id="thumbnailPreview">
-                <span>＋ Pilih gambar thumbnail</span>
-              </label>
-              <input type="file" id="thumbnailFile" accept="image/*" class="hidden">
-              <div class="field thumbnail-url" style="margin-bottom:0">
-                <label>ATAU URL GAMBAR</label>
-                <input id="thumbnailUrl" placeholder="https://...">
-              </div>
-              <p class="info-text">Untuk tahap awal, thumbnail menggunakan URL gambar. Upload file ke penyimpanan media akan kita bangun berikutnya.</p>
-            </div>
-          </div>
-
-          <div class="panel">
-            <div class="panel-title">Koneksi Database</div>
-            <div class="panel-body">
-              <div class="connection-card">
-                <div class="connection-icon">✓</div>
-                <div>
-                  <strong id="connectionTitle">Memeriksa...</strong>
-                  <small id="connectionDesc">Google Apps Script</small>
-                </div>
-              </div>
-              <p class="info-text">Database: RADJASPIN CMS<br>Tab: Posts</p>
-            </div>
-          </div>
-
         </div>
       </div>
-    </section>
-
-    <div class="footer-note">RADJASPIN CMS · Content Management System</div>
-  </div>
+    </div>
+  </section>
+  <div class="footer-note">RADJASPIN CMS · Content Management System</div>
+</div>
 </main>
 </div>
 
-<!-- CONFIRM MODAL -->
 <div class="modal-backdrop" id="confirmModal">
   <div class="modal">
     <h3 id="modalTitle">Konfirmasi</h3>
@@ -609,41 +307,31 @@ td{
     </div>
   </div>
 </div>
-
 <div class="toast" id="toast"></div>
 
 <script>
 "use strict";
 
-/* KONFIGURASI RADJASPIN */
-const CONFIG = {
-  API_URL: "https://script.google.com/macros/s/AKfycby2-64KuCKeOWtVn6y5_VV6fqSM8GgsyWTuZ2NnKOlqFiquJppoXWWkB-nZM5xvMc9l/exec",
-  LOGIN_URL: "/buktijepe/login/",
-  DASHBOARD_URL: "/buktijepe/admin/"
+/* KONFIGURASI */
+const CONFIG={
+  API_URL:"https://script.google.com/macros/s/AKfycby2-64KuCKeOWtVn6y5_VV6fqSM8GgsyWTuZ2NnKOlqFiquJppoXWWkB-nZM5xvMc9l/exec",
+  LOGIN_URL:"/buktijepe/login/"
 };
 
-/*
-  Backend saat ini baru menyediakan endpoint pemeriksaan koneksi.
-  Operasi CRUD artikel akan diaktifkan setelah GAS diperbarui.
-*/
+const $=id=>document.getElementById(id);
+let posts=[];
+let currentPostId=null;
+let currentStatus="draft";
+let autoSlug=true;
+let modalAction=null;
+let apiConnected=false;
 
-const $ = id => document.getElementById(id);
-
-let currentPostId = null;
-let currentStatus = "draft";
-let posts = [];
-let autoSlug = true;
-let modalAction = null;
-
-/* LOGIN DEMO GUARD
-   Ini hanya pemeriksaan sesi demo browser, bukan autentikasi aman.
-   Akan diganti dengan token backend pada tahap autentikasi.
-*/
-if(sessionStorage.getItem("radjaspin_demo_login") !== "true"){
+/* LOGIN DEMO GUARD */
+if(sessionStorage.getItem("radjaspin_demo_login")!=="true"){
   window.location.replace(CONFIG.LOGIN_URL);
 }
 
-/* TOAST */
+/* NOTIFIKASI */
 function toast(message){
   const el=$("toast");
   el.textContent=message;
@@ -652,77 +340,81 @@ function toast(message){
   window.toastTimer=setTimeout(()=>el.classList.remove("show"),3000);
 }
 
-/* API CONNECTION: JSONP */
+function showNotice(message,type="warning"){
+  const el=$("notice");
+  el.textContent=message;
+  el.className="notice";
+  if(type==="error")el.classList.add("error");
+  if(type==="success")el.classList.add("success");
+  el.classList.remove("hidden");
+}
+
+/* PEMERIKSAAN KONEKSI GAS */
 function checkAPI(){
+  const callbackName="radjaspinPing_"+Date.now();
+  const script=document.createElement("script");
+  let finished=false;
+  let timer;
+
   $("apiStatusText").textContent="Memeriksa API...";
   $("connectionTitle").textContent="Memeriksa koneksi";
-  const callbackName="radjaspinCallback_"+Date.now();
+  $("connectionDesc").textContent="Menghubungi Google Apps Script...";
+  $("apiStatus").style.background="#fff8e9";
+  $("apiStatus").style.color="#9a6b1f";
 
-  const timeout=setTimeout(()=>{
-    cleanup();
-    setAPIStatus(false,"Tidak dapat memeriksa API");
-  },12000);
-
-  function cleanup(){
-    clearTimeout(timeout);
+  function finish(ok,message){
+    if(finished)return;
+    finished=true;
+    clearTimeout(timer);
     delete window[callbackName];
-    if(script.parentNode)script.remove();
+    script.remove();
+
+    apiConnected=ok;
+    $("apiStatus").style.background=ok?"#eaf8f1":"#fff0f0";
+    $("apiStatus").style.color=ok?"#159c68":"#d34b4b";
+    $("apiStatusText").textContent=ok?"API Connected":"API Offline";
+    $("connectionTitle").textContent=ok?"Database terhubung":"Koneksi gagal";
+    $("connectionDesc").textContent=message;
+
+    console.log("[RADJASPIN API]",ok?"CONNECTED":"OFFLINE",message);
   }
 
   window[callbackName]=data=>{
-    cleanup();
-    const ok=!!(data && data.success && data.status==="connected");
-    setAPIStatus(ok,ok?"Terhubung":"API bermasalah");
+    const ok=!!(data&&data.success===true&&data.status==="connected");
+    finish(ok,ok?"Google Apps Script berhasil terhubung.":(data?.message||"Respons API tidak valid."));
   };
 
-  const script=document.createElement("script");
-  script.src=CONFIG.API_URL+
-    "?callback="+encodeURIComponent(callbackName)+
-    "&_="+Date.now();
-  script.onerror=()=>{
-    cleanup();
-    setAPIStatus(false,"Gagal menghubungi API");
-  };
+  timer=setTimeout(()=>finish(false,"Waktu koneksi habis."),20000);
+
+  script.async=true;
+  script.onerror=()=>finish(false,"Browser gagal memuat Google Apps Script.");
+  script.src=CONFIG.API_URL+"?callback="+encodeURIComponent(callbackName)+"&_="+Date.now();
   document.head.appendChild(script);
 }
 
-function setAPIStatus(ok,message){
-  $("apiStatus").style.background=ok?"#eaf8f1":"#fff0f0";
-  $("apiStatus").style.color=ok?"#159c68":"#d34b4b";
-  $("apiStatusText").textContent=ok?"API Connected":"API Offline";
-  $("connectionTitle").textContent=ok?"Database terhubung":"Koneksi gagal";
-  $("connectionDesc").textContent=message;
-}
-
-/* VIEW SWITCH */
+/* NAVIGASI */
 function showView(view){
   $("listView").classList.toggle("hidden",view!=="list");
   $("editorView").classList.toggle("hidden",view!=="editor");
-  $("listBtn").classList.toggle("btn-primary",view==="list");
-  $("listBtn").classList.toggle("btn-light",view!=="list");
+  $("listBtn").className="btn "+(view==="list"?"btn-primary":"btn-light");
   $("newBtn").classList.toggle("hidden",view==="editor");
 }
-
 $("listBtn").onclick=()=>showView("list");
-$("newBtn").onclick=()=>newPost();
+$("newBtn").onclick=newPost;
 $("cancelBtn").onclick=()=>showView("list");
 
-/* SLUG */
+/* SLUG OTOMATIS */
 function makeSlug(value){
-  return value.toString().toLowerCase().trim()
-    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
-    .replace(/[^a-z0-9]+/g,"-")
-    .replace(/^-|-$/g,"");
+  return value.toLowerCase().trim().normalize("NFD")
+    .replace(/[\u0300-\u036f]/g,"")
+    .replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 }
-
 $("postTitle").addEventListener("input",()=>{
-  if(autoSlug){
-    $("postSlug").value=makeSlug($("postTitle").value);
-  }
+  if(autoSlug)$("postSlug").value=makeSlug($("postTitle").value);
 });
 $("postSlug").addEventListener("input",()=>autoSlug=false);
 
-/* EDITOR TOOLBAR */
+/* VISUAL EDITOR */
 document.querySelectorAll("[data-cmd]").forEach(button=>{
   button.addEventListener("mousedown",e=>e.preventDefault());
   button.addEventListener("click",()=>{
@@ -730,7 +422,6 @@ document.querySelectorAll("[data-cmd]").forEach(button=>{
     document.execCommand(button.dataset.cmd,false,null);
   });
 });
-
 document.querySelectorAll("[data-block]").forEach(button=>{
   button.addEventListener("mousedown",e=>e.preventDefault());
   button.addEventListener("click",()=>{
@@ -739,57 +430,62 @@ document.querySelectorAll("[data-block]").forEach(button=>{
   });
 });
 
-$("linkBtn").onclick=()=>{
-  const url=prompt("Masukkan URL tautan:");
-  if(url){
-    $("editor").focus();
-    document.execCommand("createLink",false,url);
+function insertEditorLink(){
+  const url=window.prompt("Masukkan URL tautan:");
+  if(!url)return;
+  if(!/^https?:\/\//i.test(url)){
+    toast("URL harus diawali http:// atau https://");
+    return;
   }
-};
-
-$("imageBtn").onclick=()=>{
-  const url=prompt("Masukkan URL gambar:");
-  if(url){
-    $("editor").focus();
-    document.execCommand("insertImage",false,url);
-  }
-};
-
-/* THUMBNAIL */
-$("thumbnailUrl").addEventListener("input",()=>{
-  renderThumbnail($("thumbnailUrl").value);
-});
-
-function renderThumbnail(url){
-  const preview=$("thumbnailPreview");
-  if(url){
-    preview.innerHTML="";
-    const img=document.createElement("img");
-    img.src=url;
-    img.alt="Thumbnail";
-    img.onerror=()=>{
-      preview.innerHTML="<span>Gambar tidak dapat dimuat</span>";
-    };
-    preview.appendChild(img);
-  }else{
-    preview.innerHTML="<span>＋ Pilih gambar thumbnail</span>";
-  }
+  $("editor").focus();
+  document.execCommand("createLink",false,url);
 }
 
-/* FILE PREVIEW ONLY - NOT UPLOADED */
+function insertEditorImage(){
+  const url=window.prompt("Masukkan URL gambar:");
+  if(!url)return;
+  if(!/^https?:\/\//i.test(url)){
+    toast("URL harus diawali http:// atau https://");
+    return;
+  }
+  $("editor").focus();
+  document.execCommand("insertImage",false,url);
+}
+$("linkBtn").onclick=insertEditorLink;
+$("imageBtn").onclick=insertEditorImage;
+
+/* THUMBNAIL */
+function renderThumbnail(url){
+  const preview=$("thumbnailPreview");
+  preview.replaceChildren();
+
+  if(!url){
+    preview.textContent="＋ Pilih gambar thumbnail";
+    return;
+  }
+
+  const img=document.createElement("img");
+  img.src=url;
+  img.alt="Thumbnail artikel";
+  img.onerror=()=>preview.textContent="Gambar tidak dapat dimuat";
+  preview.appendChild(img);
+}
+$("thumbnailUrl").addEventListener("input",e=>renderThumbnail(e.target.value));
+
 $("thumbnailFile").addEventListener("change",e=>{
   const file=e.target.files[0];
   if(!file)return;
   const localURL=URL.createObjectURL(file);
   renderThumbnail(localURL);
-  toast("Preview gambar lokal saja. Upload media belum diaktifkan.");
+  toast("Ini hanya preview lokal. Upload media belum tersedia.");
 });
 
-/* NEW POST */
+/* EDITOR BARU */
 function newPost(){
   currentPostId=null;
   currentStatus="draft";
   autoSlug=true;
+
   $("postTitle").value="";
   $("postSlug").value="";
   $("editor").innerHTML="";
@@ -797,37 +493,44 @@ function newPost(){
   $("thumbnailUrl").value="";
   $("thumbnailFile").value="";
   renderThumbnail("");
-  $("statusPill").textContent="Draft";
-  $("statusPill").className="status-pill draft";
+
+  updateStatusUI();
   $("deleteBtn").classList.add("hidden");
+  $("notice").classList.add("hidden");
   showView("editor");
   $("postTitle").focus();
 }
 
-/* EDIT POST */
+/* STATUS ARTIKEL */
+function updateStatusUI(){
+  $("statusPill").textContent=currentStatus==="published"?"Published":"Draft";
+  $("statusPill").className="status-pill "+currentStatus;
+}
+
+/* EDIT ARTIKEL DEMO */
 function editPost(id){
-  const post=posts.find(p=>p.post_id===id);
+  const post=posts.find(item=>item.post_id===id);
   if(!post)return;
+
   currentPostId=id;
   currentStatus=post.status||"draft";
   autoSlug=false;
+
   $("postTitle").value=post.title||"";
   $("postSlug").value=post.slug||"";
   $("editor").innerHTML=post.content||"";
   $("postCategory").value=post.category||"";
   $("thumbnailUrl").value=post.thumbnail||"";
   renderThumbnail(post.thumbnail||"");
+
   updateStatusUI();
   $("deleteBtn").classList.remove("hidden");
   showView("editor");
 }
 
-function updateStatusUI(){
-  $("statusPill").textContent=currentStatus==="published"?"Published":"Draft";
-  $("statusPill").className="status-pill "+currentStatus;
-}
-
-/* SAVE / PUBLISH */
+/* SIMPAN ARTIKEL
+   Operasi CRUD frontend akan disambungkan pada tahap berikutnya.
+*/
 function savePost(status){
   const title=$("postTitle").value.trim();
   const content=$("editor").innerHTML.trim();
@@ -842,94 +545,98 @@ function savePost(status){
     $("editor").focus();
     return;
   }
+  if(!apiConnected){
+    toast("API belum terhubung. Periksa koneksi dahulu.");
+    return;
+  }
 
-  /*
-    Jangan mengklaim penyimpanan berhasil.
-    GAS yang saat ini terpasang hanya menyediakan ping.
-    CRUD akan diaktifkan setelah backend diperbarui.
-  */
-  showNotice(
-    "Editor sudah siap, tetapi penyimpanan artikel belum diaktifkan. GAS saat ini baru menyediakan pemeriksaan koneksi. Langkah berikutnya adalah menambahkan API Create, Read, Update, dan Delete.",
-    "warning"
-  );
-  toast("Menunggu aktivasi API artikel di GAS.");
+  showNotice("Koneksi GAS berhasil. Tombol penyimpanan artikel akan diaktifkan setelah integrasi CRUD frontend selesai.","warning");
 }
-
 $("saveDraftBtn").onclick=()=>savePost("draft");
 $("publishBtn").onclick=()=>savePost("published");
 
-/* DELETE */
-$("deleteBtn").onclick=()=>{
-  openConfirm(
-    "Hapus artikel?",
-    "Artikel ini akan dihapus setelah API penghapusan diaktifkan.",
-    ()=>toast("API penghapusan belum diaktifkan.")
-  );
-};
-
+/* MODAL KONFIRMASI */
 function openConfirm(title,message,action){
   $("modalTitle").textContent=title;
   $("modalMessage").textContent=message;
   modalAction=action;
   $("confirmModal").classList.add("show");
 }
-$("modalCancel").onclick=()=> $("confirmModal").classList.remove("show");
+$("modalCancel").onclick=()=>$("confirmModal").classList.remove("show");
 $("modalConfirm").onclick=()=>{
   $("confirmModal").classList.remove("show");
   if(modalAction)modalAction();
 };
 
-/* LIST */
+/* HAPUS ARTIKEL */
+function deletePost(id){
+  openConfirm("Hapus artikel?","Fitur hapus akan aktif setelah integrasi CRUD selesai.",()=>{
+    toast("Integrasi API hapus belum diaktifkan.");
+  });
+}
+$("deleteBtn").onclick=()=>currentPostId&&deletePost(currentPostId);
+
+/* DAFTAR ARTIKEL */
 function renderPosts(){
   const query=$("searchPosts").value.toLowerCase();
   const filter=$("filterStatus").value;
-  const filtered=posts.filter(p=>
-    (p.title||"").toLowerCase().includes(query) &&
-    (!filter||p.status===filter)
+  const filtered=posts.filter(post=>
+    (post.title||"").toLowerCase().includes(query)&&
+    (!filter||post.status===filter)
   );
 
-  $("postsTable").innerHTML="";
+  const table=$("postsTable");
+  table.replaceChildren();
   $("emptyState").style.display=filtered.length?"none":"block";
 
   filtered.forEach(post=>{
-    const tr=document.createElement("tr");
-    const status=post.status==="published"?"Published":"Draft";
-    tr.innerHTML=`
-      <td>
-        <div class="post-title"></div>
-        <div class="post-sub"></div>
-      </td>
-      <td></td>
-      <td><span class="status-pill ${post.status==="published"?"published":"draft"}">${status}</span></td>
-      <td></td>
-      <td>
-        <div class="row-actions">
-          <button class="icon-btn edit-action" title="Edit">✎</button>
-          <button class="icon-btn delete-action" title="Hapus">×</button>
-        </div>
-      </td>`;
-    tr.querySelector(".post-title").textContent=post.title||"Tanpa judul";
-    tr.querySelector(".post-sub").textContent="/"+(post.slug||"");
-    tr.children[1].textContent=post.category||"-";
-    tr.children[3].textContent=post.updated_at||post.created_at||"-";
-    tr.querySelector(".edit-action").onclick=()=>editPost(post.post_id);
-    tr.querySelector(".delete-action").onclick=()=>{
-      openConfirm("Hapus artikel?","Penghapusan akan tersedia setelah API CRUD aktif.",()=>toast("API penghapusan belum aktif."));
-    };
-    $("postsTable").appendChild(tr);
+    const row=document.createElement("tr");
+    const titleCell=document.createElement("td");
+    const title=document.createElement("div");
+    const slug=document.createElement("div");
+
+    title.className="post-title";
+    title.textContent=post.title||"Tanpa judul";
+    slug.className="post-sub";
+    slug.textContent="/"+(post.slug||"");
+    titleCell.append(title,slug);
+
+    const category=document.createElement("td");
+    category.textContent=post.category||"-";
+
+    const statusCell=document.createElement("td");
+    const pill=document.createElement("span");
+    pill.className="status-pill "+(post.status==="published"?"published":"draft");
+    pill.textContent=post.status==="published"?"Published":"Draft";
+    statusCell.appendChild(pill);
+
+    const date=document.createElement("td");
+    date.textContent=post.updated_at||post.created_at||"-";
+
+    const actions=document.createElement("td");
+    const actionBox=document.createElement("div");
+    actionBox.className="row-actions";
+
+    const edit=document.createElement("button");
+    edit.className="icon-btn";
+    edit.textContent="✎";
+    edit.title="Edit";
+    edit.onclick=()=>editPost(post.post_id);
+
+    const remove=document.createElement("button");
+    remove.className="icon-btn";
+    remove.textContent="×";
+    remove.title="Hapus";
+    remove.onclick=()=>deletePost(post.post_id);
+
+    actionBox.append(edit,remove);
+    actions.appendChild(actionBox);
+    row.append(titleCell,category,statusCell,date,actions);
+    table.appendChild(row);
   });
 }
 $("searchPosts").addEventListener("input",renderPosts);
 $("filterStatus").addEventListener("change",renderPosts);
-
-/* NOTICE */
-function showNotice(message,type){
-  const el=$("notice");
-  el.textContent=message;
-  el.className="notice"+(type==="error"?" error":type==="success"?" success":"");
-  el.classList.remove("hidden");
-  el.scrollIntoView({behavior:"smooth",block:"nearest"});
-}
 
 /* LOGOUT */
 $("logoutBtn").onclick=e=>{
@@ -940,9 +647,9 @@ $("logoutBtn").onclick=e=>{
   });
 };
 
-/* INITIALIZE */
+/* MULAI */
 renderPosts();
-checkAPI();
+window.addEventListener("load",checkAPI);
 </script>
 </body>
 </html>

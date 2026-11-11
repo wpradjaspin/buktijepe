@@ -99,6 +99,27 @@ td{padding:14px 15px;border-top:1px solid var(--border);font-size:11px}
 .title-input{font-size:19px!important}.search-input{min-width:0;width:100%}
 .list-toolbar{display:grid}.api-status{font-size:0;padding:9px}
 }
+
+/* MEDIA PICKER */
+.media-picker-btn{width:100%;margin-top:10px}
+.media-picker-backdrop{position:fixed;inset:0;background:#11152b99;z-index:150;display:none;align-items:center;justify-content:center;padding:18px}
+.media-picker-backdrop.show{display:flex}
+.media-picker-modal{background:white;width:100%;max-width:850px;max-height:88vh;border-radius:13px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 70px #0004}
+.media-picker-head{padding:18px 21px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.media-picker-head h3{margin:0;font-size:16px}
+.media-picker-tools{padding:14px 20px;border-bottom:1px solid var(--border)}
+.media-picker-tools input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:7px;font-size:12px;outline:none}
+.media-picker-tools input:focus{border-color:var(--purple)}
+.media-picker-grid{padding:18px;overflow:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:13px}
+.media-picker-item{border:1px solid var(--border);border-radius:9px;padding:8px;cursor:pointer;background:white;text-align:left;min-width:0}
+.media-picker-item:hover{border-color:var(--purple);background:#faf9ff}
+.media-picker-item.selected{border:2px solid var(--purple);background:#f5f2ff;padding:7px}
+.media-picker-item img{width:100%;height:105px;object-fit:contain;background:#f5f6fa;border-radius:6px}
+.media-picker-name{font-size:11px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:8px}
+.media-picker-foot{padding:13px 18px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:10px}
+.media-picker-empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:35px 10px;font-size:12px}
+@media(max-width:560px){.media-picker-modal{max-height:92vh}.media-picker-grid{grid-template-columns:repeat(2,minmax(0,1fr));padding:12px}.media-picker-head,.media-picker-foot{padding:13px}}
+
 </style>
 </head>
 <body>
@@ -237,13 +258,13 @@ td{padding:14px 15px;border-top:1px solid var(--border);font-size:11px}
         <div class="panel">
           <div class="panel-title">Thumbnail Artikel</div>
           <div class="panel-body">
-            <label class="thumbnail-box" for="thumbnailFile" id="thumbnailPreview"><span>＋ Pilih gambar thumbnail</span></label>
-            <input type="file" id="thumbnailFile" accept="image/*" class="hidden">
+            <div class="thumbnail-box" id="thumbnailPreview"><span>＋ Belum ada thumbnail</span></div>
+            <button type="button" class="btn btn-primary media-picker-btn" id="openMediaPicker">▧ Buka Media</button>
             <div class="field" style="margin:10px 0 0">
-              <label for="thumbnailUrl">ATAU URL GAMBAR</label>
+              <label for="thumbnailUrl">ATAU MASUKKAN URL GAMBAR</label>
               <input id="thumbnailUrl" placeholder="https://...">
             </div>
-            <p class="info-text">Saat ini thumbnail menggunakan URL gambar. Upload media akan dibuat terpisah.</p>
+            <p class="info-text">Pilih gambar yang sudah tersimpan di Media Manager, atau masukkan URL gambar secara manual.</p>
           </div>
         </div>
 
@@ -275,6 +296,26 @@ td{padding:14px 15px;border-top:1px solid var(--border);font-size:11px}
     </div>
   </div>
 </div>
+
+<div class="media-picker-backdrop" id="mediaPickerBackdrop" role="dialog" aria-modal="true" aria-labelledby="mediaPickerTitle">
+  <div class="media-picker-modal">
+    <div class="media-picker-head">
+      <h3 id="mediaPickerTitle">Pilih dari Media</h3>
+      <button type="button" class="btn btn-light" id="closeMediaPicker">Tutup</button>
+    </div>
+    <div class="media-picker-tools">
+      <input type="search" id="mediaPickerSearch" placeholder="Cari nama gambar...">
+    </div>
+    <div class="media-picker-grid" id="mediaPickerGrid">
+      <div class="media-picker-empty">Memuat perpustakaan media...</div>
+    </div>
+    <div class="media-picker-foot">
+      <span id="mediaPickerCount" class="info-text">Pilih salah satu gambar.</span>
+      <button type="button" class="btn btn-primary" id="useSelectedMedia" disabled>Gunakan Gambar</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -470,12 +511,110 @@ function renderThumbnail(url) {
   preview.appendChild(img);
 }
 $("thumbnailUrl").addEventListener("input", event => renderThumbnail(event.target.value));
-$("thumbnailFile").addEventListener("change", event => {
-  const file = event.target.files[0];
-  if (!file) return;
-  const localURL = URL.createObjectURL(file);
-  renderThumbnail(localURL);
-  toast("Preview lokal saja. Upload gambar belum tersedia.");
+
+
+
+/* MEDIA PICKER: PILIH GAMBAR DARI MEDIA MANAGER */
+let mediaPickerFiles = [];
+let selectedMediaFile = null;
+
+function closeMediaPicker() {
+  $("mediaPickerBackdrop").classList.remove("show");
+  selectedMediaFile = null;
+  $("useSelectedMedia").disabled = true;
+}
+
+function renderMediaPicker() {
+  const grid = $("mediaPickerGrid");
+  const query = $("mediaPickerSearch").value.trim().toLowerCase();
+  const filtered = mediaPickerFiles.filter(file =>
+    String(file.name || "").toLowerCase().includes(query)
+  );
+
+  grid.replaceChildren();
+
+  if (!filtered.length) {
+    const empty = document.createElement("div");
+    empty.className = "media-picker-empty";
+    empty.textContent = mediaPickerFiles.length
+      ? "Tidak ada gambar yang cocok dengan pencarian."
+      : "Belum ada gambar di Media Manager.";
+    grid.appendChild(empty);
+    $("mediaPickerCount").textContent = "0 gambar";
+    return;
+  }
+
+  filtered.forEach(file => {
+    const item = document.createElement("button");
+    item.type = "button";
+    item.className = "media-picker-item";
+    item.classList.toggle("selected", selectedMediaFile === file);
+
+    const img = document.createElement("img");
+    img.src = file.url;
+    img.alt = file.name || "Media";
+    img.loading = "lazy";
+
+    const name = document.createElement("div");
+    name.className = "media-picker-name";
+    name.textContent = file.name || "Tanpa nama";
+    name.title = file.name || "";
+
+    item.append(img, name);
+    item.addEventListener("click", () => {
+      selectedMediaFile = file;
+      renderMediaPicker();
+      $("useSelectedMedia").disabled = false;
+      $("mediaPickerCount").textContent = "Dipilih: " + file.name;
+    });
+    grid.appendChild(item);
+  });
+
+  $("mediaPickerCount").textContent =
+    filtered.length + " gambar tersedia" +
+    (selectedMediaFile ? " · Dipilih: " + selectedMediaFile.name : "");
+}
+
+async function openMediaPicker() {
+  $("mediaPickerBackdrop").classList.add("show");
+  $("mediaPickerGrid").innerHTML =
+    '<div class="media-picker-empty">Memuat perpustakaan media...</div>';
+  $("mediaPickerSearch").value = "";
+  $("useSelectedMedia").disabled = true;
+  selectedMediaFile = null;
+
+  try {
+    const result = await apiRequest("listMedia");
+    mediaPickerFiles = Array.isArray(result.files) ? result.files : [];
+    renderMediaPicker();
+  } catch (error) {
+    $("mediaPickerGrid").replaceChildren();
+    const message = document.createElement("div");
+    message.className = "media-picker-empty";
+    message.textContent = "Gagal memuat media: " + error.message;
+    $("mediaPickerGrid").appendChild(message);
+    $("mediaPickerCount").textContent = "Periksa koneksi Media Manager.";
+  }
+}
+
+$("openMediaPicker").addEventListener("click", openMediaPicker);
+$("closeMediaPicker").addEventListener("click", closeMediaPicker);
+$("mediaPickerSearch").addEventListener("input", renderMediaPicker);
+
+$("mediaPickerBackdrop").addEventListener("click", event => {
+  if (event.target === $("mediaPickerBackdrop")) closeMediaPicker();
+});
+
+$("useSelectedMedia").addEventListener("click", () => {
+  if (!selectedMediaFile || !selectedMediaFile.url) {
+    toast("Pilih gambar terlebih dahulu.");
+    return;
+  }
+
+  $("thumbnailUrl").value = selectedMediaFile.url;
+  renderThumbnail(selectedMediaFile.url);
+  closeMediaPicker();
+  toast("Thumbnail artikel berhasil dipilih.");
 });
 
 /* EDITOR BARU */
@@ -489,7 +628,6 @@ function newPost() {
   $("editor").innerHTML = "";
   $("postCategory").value = "";
   $("thumbnailUrl").value = "";
-  $("thumbnailFile").value = "";
   renderThumbnail("");
 
   updateStatusUI();

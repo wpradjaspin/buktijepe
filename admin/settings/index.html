@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pengaturan | RADJASPIN CMS</title>
+<style>
+:root{--purple:#6854d9;--purple-dark:#5140bb;--ink:#202238;--muted:#85879a;--border:#e9e9f0;--bg:#f7f7fb;--white:#fff;--green:#20a779;--shadow:0 18px 55px rgba(34,30,75,.14)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:14px}
+.layout{min-height:100vh}.sidebar{width:245px;background:#fff;border-right:1px solid var(--border);position:fixed;inset:0 auto 0 0;padding:25px 15px;display:flex;flex-direction:column;z-index:5}
+.brand{display:flex;align-items:center;gap:11px;padding:0 10px 30px}.brand-mark{width:37px;height:37px;border-radius:11px;background:linear-gradient(135deg,#7665e8,#5140bb);color:#fff;display:grid;place-items:center;font-weight:800;font-size:20px}.brand-name{font-size:14px;font-weight:800;letter-spacing:1.1px}.brand-sub{font-size:9px;color:#9999aa;letter-spacing:1.2px;margin-top:3px}
+.nav-label{font-size:10px;color:#a1a2b1;font-weight:700;letter-spacing:1px;padding:0 12px 11px}.nav-link{height:43px;display:flex;align-items:center;gap:12px;padding:0 12px;margin:3px 0;border-radius:8px;text-decoration:none;color:#77798d;font-size:13px;font-weight:600}.nav-link:hover{background:#f7f5ff;color:var(--purple)}.nav-link.active{background:#f0edff;color:var(--purple)}.nav-icon{width:19px;text-align:center;font-size:17px}.sidebar-bottom{margin-top:auto}.user-box{display:flex;align-items:center;gap:10px;padding:15px 10px;border-top:1px solid var(--border);margin-top:12px}.avatar,.top-avatar{width:34px;height:34px;border-radius:50%;background:#eeeaff;color:var(--purple);display:grid;place-items:center;font-size:11px;font-weight:800}.user-name{font-size:12px;font-weight:700}.user-role{font-size:10px;color:var(--muted);margin-top:3px}
+.main{margin-left:245px;min-height:100vh}.topbar{height:66px;background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 32px}.breadcrumb{font-size:12px;color:#9697a7}.breadcrumb strong{color:#393a50}.top-right{display:flex;align-items:center;gap:15px}.api-status{font-size:11px;color:#77798d;display:flex;align-items:center;gap:7px}.dot{width:7px;height:7px;border-radius:50%;background:var(--green)}
+.content{max-width:1120px;margin:auto;padding:34px 32px 60px}.page-heading{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:27px}.page-heading h1{font-size:25px;margin:0 0 7px;letter-spacing:-.5px}.page-heading p{margin:0;color:var(--muted);font-size:13px}
+.section-label{font-size:10px;font-weight:800;letter-spacing:1.1px;color:#999bad;margin:0 0 12px 2px}.settings-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.setting-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;align-items:center;gap:15px;min-height:112px;transition:.18s}.setting-card:hover{border-color:#d7d0ff;box-shadow:0 8px 24px rgba(50,40,120,.06);transform:translateY(-1px)}.setting-icon{width:46px;height:46px;border-radius:12px;background:#f0edff;color:var(--purple);display:grid;place-items:center;flex:none}.setting-icon svg{width:22px;height:22px}.setting-copy{min-width:0;flex:1}.setting-copy h3{font-size:14px;margin:0 0 5px}.setting-copy p{font-size:11px;color:var(--muted);margin:0;line-height:1.5}.arrow{color:#a2a2b1;font-size:20px}.soon{font-size:9px;color:#8c8da0;background:#f2f2f6;padding:5px 8px;border-radius:20px;font-weight:700}
+.info-note{margin-top:20px;padding:14px 16px;border:1px dashed #dedbea;border-radius:9px;color:#85869a;font-size:11px;line-height:1.6;background:#fbfaff}
+.overlay{position:fixed;inset:0;background:rgba(22,20,43,.48);display:none;align-items:center;justify-content:center;padding:18px;z-index:20}.overlay.show{display:flex}.modal{width:min(590px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:15px;box-shadow:var(--shadow);animation:appear .18s ease}@keyframes appear{from{opacity:0;transform:translateY(9px) scale(.99)}to{opacity:1;transform:none}}
+.modal-head{padding:21px 23px 17px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:15px}.modal-head h2{font-size:17px;margin:0 0 5px}.modal-head p{font-size:11px;color:var(--muted);margin:0}.close{border:0;background:#f4f4f8;width:30px;height:30px;border-radius:8px;font-size:19px;color:#777;cursor:pointer}.modal-body{padding:20px 23px}.contact-row{display:grid;grid-template-columns:38px 1fr;gap:12px;margin-bottom:17px}.contact-icon{width:36px;height:36px;border-radius:10px;background:#f1efff;color:var(--purple);display:grid;place-items:center}.contact-icon svg{width:19px;height:19px}.fields{min-width:0}.fields label{display:block;font-size:11px;font-weight:700;color:#55566b;margin:0 0 6px}.fields input{width:100%;height:39px;border:1px solid #e3e3eb;border-radius:7px;padding:0 11px;font:inherit;font-size:12px;outline:none;margin-bottom:9px}.fields input:focus{border-color:#8b7be9;box-shadow:0 0 0 3px #f0edff}.fields input::placeholder{color:#b2b3bf}.modal-foot{padding:15px 23px 20px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:10px}.hint{font-size:10px;color:#9999a8}.actions{display:flex;gap:8px}.btn{border:0;border-radius:7px;padding:10px 15px;font-size:11px;font-weight:700;cursor:pointer}.btn-light{background:#f1f1f6;color:#66677a}.btn-primary{background:var(--purple);color:#fff}.btn-primary:hover{background:var(--purple-dark)}.toast{position:fixed;right:22px;bottom:22px;background:#24243a;color:white;padding:12px 16px;border-radius:9px;font-size:12px;box-shadow:var(--shadow);opacity:0;transform:translateY(8px);transition:.2s;z-index:40;pointer-events:none}.toast.show{opacity:1;transform:none}
+@media(max-width:800px){.sidebar{width:68px;padding:20px 9px}.brand{justify-content:center;padding:0 0 25px}.brand-name,.brand-sub,.nav-label,.nav-link span:not(.nav-icon),.sidebar-bottom .user-info{display:none}.nav-link{justify-content:center;padding:13px 5px}.nav-icon{font-size:19px}.user-box{justify-content:center;padding:14px 0}.main{margin-left:68px}.topbar{padding:0 18px}.content{padding:25px 20px 45px}}
+@media(max-width:560px){.topbar{height:58px;padding:0 13px}.content{padding:22px 13px 40px}.page-heading h1{font-size:21px}.settings-grid{grid-template-columns:1fr;gap:11px}.setting-card{min-height:96px;padding:16px}.api-status{font-size:0}.modal-head,.modal-body{padding-left:17px;padding-right:17px}.modal-foot{padding:14px 17px 17px;align-items:flex-start;flex-direction:column}.actions{width:100%;justify-content:flex-end}.hint{line-height:1.5}}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <div class="brand"><div class="brand-mark">R</div><div><div class="brand-name">RADJASPIN</div><div class="brand-sub">CONTENT MANAGEMENT</div></div></div>
+  <div class="nav-label">MENU UTAMA</div>
+  <a class="nav-link" href="/buktijepe/admin/"><span class="nav-icon">▦</span><span>Dashboard</span></a>
+  <a class="nav-link" href="/buktijepe/admin/posts/"><span class="nav-icon">▤</span><span>Artikel</span></a>
+  <a class="nav-link" href="/buktijepe/admin/pages/"><span class="nav-icon">▧</span><span>Halaman</span></a>
+  <a class="nav-link" href="/buktijepe/admin/media/"><span class="nav-icon">▧</span><span>Media</span></a>
+  <a class="nav-link active" href="/buktijepe/admin/settings/"><span class="nav-icon">⚙</span><span>Pengaturan</span></a>
+  <div class="sidebar-bottom">
+    <a class="nav-link" href="/buktijepe/"><span class="nav-icon">↗</span><span>Lihat Website</span></a>
+    <div class="user-box"><div class="avatar">SA</div><div class="user-info"><div class="user-name" id="adminName">Super Admin</div><div class="user-role">Administrator</div></div></div>
+    <a class="nav-link" href="#" id="logoutBtn"><span class="nav-icon">⇥</span><span>Keluar</span></a>
+  </div>
+</aside>
+<main class="main">
+<header class="topbar"><div class="breadcrumb">Admin / <strong>Pengaturan</strong></div><div class="top-right"><div class="api-status"><span class="dot"></span><span>Panel Admin</span></div><div class="top-avatar">SA</div></div></header>
+<div class="content">
+  <div class="page-heading"><div><h1>Pengaturan</h1><p>Atur konfigurasi dan informasi website RADJASPIN dari satu tempat.</p></div></div>
+  <div class="section-label">PENGATURAN WEBSITE</div>
+  <div class="settings-grid">
+    <button class="setting-card" id="editContact" type="button" style="text-align:left;cursor:pointer">
+      <span class="setting-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8A8.5 8.5 0 0 1 8.7 3.9a8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5Z"/><path d="M8 10h8M8 14h5"/></svg></span>
+      <span class="setting-copy"><h3>Edit Contact Resmi</h3><p>Kelola WhatsApp, Telegram, Facebook, dan link grup resmi.</p></span><span class="arrow">›</span>
+    </button>
+    <div class="setting-card" style="opacity:.72"><span class="setting-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.7 2.9-.2-.1a1.7 1.7 0 0 0-1.8.1l-.2.1h-3.4l-.1-.2a1.7 1.7 0 0 0-1.5-1l-.2-.1-2.9-1.7.1-.2a1.7 1.7 0 0 0-.1-1.8l-.1-.2v-3.4l.2-.1a1.7 1.7 0 0 0 1-1.5l.1-.2 1.7-2.9.2.1a1.7 1.7 0 0 0 1.8-.1l.2-.1h3.4l.1.2a1.7 1.7 0 0 0 1.5 1l.2.1 2.9 1.7-.1.2a1.7 1.7 0 0 0 .1 1.8l.1.2v3.4Z"/></svg></span><span class="setting-copy"><h3>Pengaturan Umum</h3><p>Konfigurasi website lainnya.</p></span><span class="soon">SEGERA</span></div>
+    <div class="setting-card" style="opacity:.72"><span class="setting-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg></span><span class="setting-copy"><h3>Informasi Website</h3><p>Identitas dan informasi RADJASPIN.</p></span><span class="soon">SEGERA</span></div>
+  </div>
+  <div class="info-note">Menu Pengaturan akan menjadi tempat untuk fitur konfigurasi lainnya. Untuk tahap ini, bagian yang dapat dibuka adalah <strong>Edit Contact Resmi</strong>.</div>
+</div>
+</main>
+</div>
+
+<div class="overlay" id="contactOverlay" aria-hidden="true">
+  <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-head"><div><h2 id="modalTitle">Edit Contact Resmi</h2><p>Masukkan nama akun dan tautan resmi yang akan ditampilkan di website.</p></div><button class="close" id="closeModal" aria-label="Tutup">&times;</button></div>
+    <form id="contactForm">
+      <div class="modal-body">
+        <div class="contact-row"><div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8A8.5 8.5 0 0 1 8.7 3.9a8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5Z"/></svg></div><div class="fields"><label for="waName">WhatsApp</label><input id="waName" placeholder="Nama / nomor WhatsApp"><input id="waLink" type="url" placeholder="https://wa.me/..." aria-label="Link WhatsApp"></div></div>
+        <div class="contact-row"><div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg></div><div class="fields"><label for="tgName">Telegram</label><input id="tgName" placeholder="Nama akun Telegram"><input id="tgLink" type="url" placeholder="https://t.me/..." aria-label="Link Telegram"></div></div>
+        <div class="contact-row"><div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></div><div class="fields"><label for="fbName">Facebook</label><input id="fbName" placeholder="Nama halaman Facebook"><input id="fbLink" type="url" placeholder="https://facebook.com/..." aria-label="Link Facebook"></div></div>
+        <div class="contact-row" style="margin-bottom:0"><div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="fields"><label for="groupName">Grup Resmi</label><input id="groupName" placeholder="Nama grup resmi"><input id="groupLink" type="url" placeholder="https://..." aria-label="Link grup"></div></div>
+      </div>
+      <div class="modal-foot"><span class="hint">Kosongkan kolom jika kontak belum tersedia.</span><div class="actions"><button class="btn btn-light" type="button" id="cancelModal">Batal</button><button class="btn btn-primary" type="submit">Simpan Pengaturan</button></div></div>
+    </form>
+  </section>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script>
+const STORAGE_KEY='radjaspin_contact_settings_v1';
+const fields=['waName','waLink','tgName','tgLink','fbName','fbLink','groupName','groupLink'];
+const overlay=document.getElementById('contactOverlay');
+function openModal(){overlay.classList.add('show');overlay.setAttribute('aria-hidden','false');try{const saved=JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}');fields.forEach(id=>document.getElementById(id).value=saved[id]||'')}catch(e){}}
+function closeModal(){overlay.classList.remove('show');overlay.setAttribute('aria-hidden','true')}
+function toast(message){const el=document.getElementById('toast');el.textContent=message;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2600)}
+document.getElementById('editContact').addEventListener('click',openModal);
+document.getElementById('closeModal').addEventListener('click',closeModal);
+document.getElementById('cancelModal').addEventListener('click',closeModal);
+overlay.addEventListener('click',e=>{if(e.target===overlay)closeModal()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+document.getElementById('contactForm').addEventListener('submit',e=>{
+ e.preventDefault();const data={};fields.forEach(id=>data[id]=document.getElementById(id).value.trim());
+ for(const id of ['waLink','tgLink','fbLink','groupLink']){if(data[id]&&!/^https?:\/\//i.test(data[id])){toast('Link harus diawali http:// atau https://');document.getElementById(id).focus();return}}
+ try{localStorage.setItem(STORAGE_KEY,JSON.stringify(data));closeModal();toast('Pengaturan contact berhasil disimpan di browser ini.')}catch(err){toast('Tidak dapat menyimpan pengaturan di browser.')}
+});
+document.getElementById('logoutBtn').addEventListener('click',e=>{e.preventDefault();try{localStorage.removeItem('radjaspin_admin_session')}catch(err){}location.href='/buktijepe/login/'});
+</script>
+</body>
+</html>

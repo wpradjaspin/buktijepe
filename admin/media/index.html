@@ -7,48 +7,47 @@
 <title>Media Manager - RADJASPIN CMS</title>
 
 <style>
-:root{
+:root {
   --navy:#172033;
   --purple:#7255dc;
   --bg:#f5f6fa;
   --text:#20283a;
   --muted:#8991a3;
   --border:#e8eaf0;
-  --green:#16a36a;
   --red:#dc4d5b;
+  --green:#16a36a;
 }
-*{box-sizing:border-box}
-body{
+* { box-sizing:border-box; }
+body {
   margin:0;
   background:var(--bg);
-  font-family:Inter,Arial,sans-serif;
+  font-family:Arial,Inter,sans-serif;
   color:var(--text);
 }
-.layout{display:flex;min-height:100vh}
-.sidebar{
+.layout { display:flex; min-height:100vh; }
+.sidebar {
   width:245px;
   background:var(--navy);
-  color:#fff;
+  color:white;
   padding:25px 17px;
   flex-shrink:0;
 }
-.brand{
+.brand {
   font-size:21px;
   font-weight:800;
-  letter-spacing:.5px;
   padding:5px 12px 32px;
 }
-.brand span{color:#a895ff}
-.nav-label{
+.brand span { color:#a895ff; }
+.nav-label {
   font-size:10px;
   color:#8e9ab1;
   letter-spacing:1.5px;
   padding:12px;
 }
-.nav a{
+.nav a {
   display:flex;
-  gap:12px;
   align-items:center;
+  gap:12px;
   color:#b9c2d2;
   text-decoration:none;
   padding:12px;
@@ -56,43 +55,43 @@ body{
   margin:4px 0;
   font-size:13px;
 }
-.nav a:hover,.nav a.active{
+.nav a:hover,.nav a.active {
   background:#303c56;
-  color:#fff;
+  color:white;
 }
-.nav a.active{border-left:3px solid #a28aff}
-.sidebar-bottom{
+.nav a.active { border-left:3px solid #a28aff; }
+.sidebar-bottom {
   margin-top:35px;
   border-top:1px solid #354057;
   padding-top:15px;
 }
-.logout{
+.logout {
   width:100%;
   border:0;
   background:#303c56;
-  color:#fff;
+  color:white;
   padding:12px;
   border-radius:9px;
   cursor:pointer;
 }
-.main{flex:1;min-width:0}
-.topbar{
+.main { flex:1; min-width:0; }
+.topbar {
   height:70px;
-  background:#fff;
+  background:white;
   border-bottom:1px solid var(--border);
   display:flex;
   align-items:center;
   justify-content:space-between;
   padding:0 30px;
 }
-.topbar small{color:var(--muted)}
-.user{font-size:13px;font-weight:600}
-.content{
+.topbar small { color:var(--muted); }
+.user { font-size:13px; font-weight:600; }
+.content {
   padding:30px;
   max-width:1400px;
   margin:auto;
 }
-.heading{
+.heading {
   display:flex;
   justify-content:space-between;
   align-items:center;
@@ -100,46 +99,45 @@ body{
   flex-wrap:wrap;
   margin-bottom:25px;
 }
-h1{font-size:25px;margin:0 0 7px}
-.subtitle{font-size:13px;color:var(--muted)}
-.card{
-  background:#fff;
+h1 { font-size:25px; margin:0 0 7px; }
+.subtitle { font-size:13px; color:var(--muted); }
+.card {
+  background:white;
   border:1px solid var(--border);
   border-radius:13px;
   padding:22px;
   margin-bottom:22px;
 }
-.card-title{font-size:15px;font-weight:700;margin-bottom:6px}
-.card-desc{
+.card-title { font-size:15px; font-weight:700; margin-bottom:6px; }
+.card-desc {
   font-size:12px;
   color:var(--muted);
   margin-bottom:18px;
 }
-.dropzone{
+.dropzone {
   border:2px dashed #d9dce7;
   border-radius:12px;
   padding:35px 20px;
   text-align:center;
   background:#fafaff;
   cursor:pointer;
-  transition:.2s;
 }
-.dropzone:hover,.dropzone.drag{
+.dropzone:hover,.dropzone.drag {
   border-color:var(--purple);
   background:#f6f3ff;
 }
-.upload-icon{font-size:32px;margin-bottom:10px}
-.dropzone strong{
+.upload-icon { font-size:32px; margin-bottom:10px; }
+.dropzone strong {
   display:block;
   font-size:14px;
   margin-bottom:7px;
 }
-.dropzone p{
+.dropzone p {
   font-size:12px;
   color:var(--muted);
   margin:0;
 }
-.btn{
+.btn {
   border:0;
   border-radius:8px;
   padding:10px 15px;
@@ -147,44 +145,33 @@ h1{font-size:25px;margin:0 0 7px}
   font-weight:700;
   cursor:pointer;
 }
-.btn-primary{background:var(--purple);color:white}
-.btn-light{background:#f0efff;color:#6047c4}
-.btn-danger{background:#fff0f1;color:var(--red)}
-.btn:disabled{opacity:.5;cursor:not-allowed}
-.preview-list{
+.btn-primary { background:var(--purple); color:white; }
+.btn-light { background:#f0efff; color:#6047c4; }
+.btn-danger { background:#fff0f1; color:var(--red); }
+.btn:disabled { opacity:.5; cursor:not-allowed; }
+
+.preview-list {
   display:grid;
   grid-template-columns:repeat(auto-fill,minmax(170px,1fr));
   gap:13px;
   margin-top:18px;
 }
-.preview-item{
+.preview-item {
   border:1px solid var(--border);
   border-radius:10px;
   padding:10px;
   min-width:0;
   background:white;
 }
-.preview-item img{
+.preview-item img {
   width:100%;
   height:120px;
   object-fit:contain;
   background:#f4f5f8;
   border-radius:7px;
 }
-.progress{
-  height:5px;
-  background:#eee;
-  border-radius:5px;
-  overflow:hidden;
-  margin-top:10px;
-}
-.progress div{
-  height:100%;
-  width:0;
-  background:var(--purple);
-  transition:width .2s;
-}
-.toolbar{
+
+.toolbar {
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -192,7 +179,7 @@ h1{font-size:25px;margin:0 0 7px}
   flex-wrap:wrap;
   margin-bottom:17px;
 }
-.search{
+.search {
   border:1px solid var(--border);
   border-radius:8px;
   padding:10px 12px;
@@ -200,41 +187,43 @@ h1{font-size:25px;margin:0 0 7px}
   min-width:220px;
   font-size:12px;
 }
-.search:focus{border-color:var(--purple)}
-.media-grid{
+.search:focus { border-color:var(--purple); }
+
+.media-grid {
   display:grid;
   grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
   gap:16px;
 }
-.media-card{
-  background:#fff;
+.media-card {
+  background:white;
   border:1px solid var(--border);
   border-radius:11px;
   overflow:hidden;
   min-width:0;
 }
-.media-image{
+.media-image {
   height:155px;
   background:#f4f5f8;
   display:flex;
   align-items:center;
   justify-content:center;
 }
-.media-image img{
+.media-image img {
   width:100%;
   height:100%;
   object-fit:contain;
 }
-.media-info{padding:12px}
+.media-info { padding:12px; }
 
-/* NAMA FILE DAN TOMBOL PENSIL */
-.filename-row{
-  display:flex;
-  align-items:center;
+/* BARIS NAMA FILE */
+.filename-row {
+  display:flex !important;
+  align-items:center !important;
   gap:8px;
   width:100%;
+  min-width:0;
 }
-.filename{
+.filename {
   font-size:12px;
   font-weight:700;
   white-space:nowrap;
@@ -243,8 +232,12 @@ h1{font-size:25px;margin:0 0 7px}
   flex:1;
   min-width:0;
 }
-.pencil-btn{
-  display:inline-flex;
+
+/* TOMBOL PENSIL */
+.pencil-btn {
+  display:inline-flex !important;
+  visibility:visible !important;
+  opacity:1 !important;
   align-items:center;
   justify-content:center;
   flex:0 0 32px;
@@ -258,22 +251,19 @@ h1{font-size:25px;margin:0 0 7px}
   cursor:pointer;
   font-size:19px;
   line-height:1;
-  font-weight:bold;
-  visibility:visible;
-  opacity:1;
 }
-.pencil-btn:hover{
-  background:#7255dc;
+.pencil-btn:hover {
+  background:var(--purple);
   color:white;
-  border-color:#7255dc;
 }
-.filename-edit{
+
+.filename-edit {
   display:flex;
   flex-direction:column;
   gap:8px;
   margin-top:10px;
 }
-.filename-edit input{
+.filename-edit input {
   width:100%;
   min-width:0;
   padding:9px 10px;
@@ -282,54 +272,65 @@ h1{font-size:25px;margin:0 0 7px}
   outline:none;
   font-size:12px;
 }
-.filename-edit input:focus{
+.filename-edit input:focus {
   border-color:var(--purple);
   box-shadow:0 0 0 2px #7255dc20;
 }
-.edit-buttons{
-  display:flex;
-  gap:7px;
-}
-.edit-buttons button{
+.edit-buttons { display:flex; gap:7px; }
+.edit-buttons button {
   flex:1;
   padding:8px 5px;
 }
-.filesize{
+
+.filesize {
   font-size:10px;
   color:var(--muted);
   margin-top:6px;
 }
-.media-actions{
+.media-actions {
   display:flex;
   gap:7px;
   margin-top:12px;
 }
-.media-actions button{
+.media-actions button {
   flex:1;
   padding:8px 5px;
   font-size:10px;
 }
-.empty{
+.progress {
+  height:5px;
+  background:#eee;
+  border-radius:5px;
+  overflow:hidden;
+  margin-top:10px;
+}
+.progress div {
+  height:100%;
+  width:0;
+  background:var(--purple);
+  transition:width .2s;
+}
+.empty {
   text-align:center;
   padding:45px 15px;
   color:var(--muted);
   font-size:13px;
   grid-column:1/-1;
 }
-.status{
+.status {
   font-size:11px;
   padding:7px 11px;
   border-radius:20px;
   background:#eaf8f1;
   color:var(--green);
 }
-.status.error{background:#fff0f1;color:var(--red)}
-.toast{
+.status.error { background:#fff0f1; color:var(--red); }
+.toast {
   position:fixed;
   right:22px;
   bottom:22px;
   background:#20283a;
-  color:#fff;
+  color:white;
   padding:13px 18px;
   border-radius:9px;
   font-size:12px;
@@ -337,7 +338,7 @@ h1{font-size:25px;margin:0 0 7px}
   display:none;
   z-index:30;
 }
-.modal-backdrop{
+.modal-backdrop {
   position:fixed;
   inset:0;
   background:#10182788;
@@ -347,49 +348,50 @@ h1{font-size:25px;margin:0 0 7px}
   padding:20px;
   z-index:20;
 }
-.modal{
+.modal {
   background:white;
   border-radius:13px;
   padding:23px;
   width:100%;
   max-width:390px;
 }
-.modal h3{margin:0 0 9px;font-size:17px}
-.modal p{
+.modal h3 { margin:0 0 9px; font-size:17px; }
+.modal p {
   font-size:13px;
   color:#697386;
   line-height:1.6;
 }
-.modal-actions{
+.modal-actions {
   display:flex;
   justify-content:flex-end;
   gap:9px;
   margin-top:20px;
 }
-.loading{
+.loading {
   color:var(--muted);
   font-size:13px;
   padding:30px;
   text-align:center;
 }
-@media(max-width:760px){
-  .sidebar{width:65px;padding:20px 8px}
-  .brand{font-size:0;padding:8px 5px 25px}
-  .brand:after{content:"R";font-size:23px}
-  .nav-label{display:none}
-  .nav a{
+
+@media(max-width:760px) {
+  .sidebar { width:65px; padding:20px 8px; }
+  .brand { font-size:0; padding:8px 5px 25px; }
+  .brand:after { content:"R"; font-size:23px; }
+  .nav-label { display:none; }
+  .nav a {
     font-size:0;
     justify-content:center;
     padding:13px 5px;
   }
-  .nav a span{font-size:18px}
-  .sidebar-bottom{padding-top:12px}
-  .logout{font-size:0;padding:12px 3px}
-  .logout:after{content:"↪";font-size:18px}
-  .content{padding:20px 14px}
-  .topbar{padding:0 15px}
-  .card{padding:15px}
-  .media-grid{
+  .nav a span { font-size:18px; }
+  .sidebar-bottom { padding-top:12px; }
+  .logout { font-size:0; padding:12px 3px; }
+  .logout:after { content:"↪"; font-size:18px; }
+  .content { padding:20px 14px; }
+  .topbar { padding:0 15px; }
+  .card { padding:15px; }
+  .media-grid {
     grid-template-columns:repeat(auto-fill,minmax(145px,1fr));
   }
 }
@@ -397,12 +399,11 @@ h1{font-size:25px;margin:0 0 7px}
 </head>
 
 <body>
-
 <div class="layout">
+
   <aside class="sidebar">
     <div class="brand">RADJA<span>SPIN</span></div>
     <div class="nav-label">MENU UTAMA</div>
-
     <nav class="nav">
       <a href="/buktijepe/admin/"><span>▦</span> Dashboard</a>
       <a href="/buktijepe/admin/posts/"><span>▤</span> Artikel</a>
@@ -410,7 +411,6 @@ h1{font-size:25px;margin:0 0 7px}
       <a class="active" href="/buktijepe/admin/media/"><span>▣</span> Media</a>
       <a href="/buktijepe/admin/settings/"><span>⚙</span> Pengaturan</a>
     </nav>
-
     <div class="sidebar-bottom">
       <button class="logout" id="logoutBtn">Logout</button>
     </div>
@@ -423,6 +423,7 @@ h1{font-size:25px;margin:0 0 7px}
     </header>
 
     <div class="content">
+
       <div class="heading">
         <div>
           <h1>Media Manager</h1>
@@ -451,7 +452,6 @@ h1{font-size:25px;margin:0 0 7px}
         <div id="uploadProgress" class="progress" style="display:none">
           <div id="progressBar"></div>
         </div>
-
         <div id="uploadStatus" class="subtitle" style="margin-top:10px"></div>
 
         <button class="btn btn-primary" id="uploadBtn"
@@ -468,7 +468,6 @@ h1{font-size:25px;margin:0 0 7px}
               Gambar yang tersimpan di repository GitHub.
             </div>
           </div>
-
           <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
             <input class="search" id="searchInput"
               placeholder="Cari nama gambar...">
@@ -480,6 +479,7 @@ h1{font-size:25px;margin:0 0 7px}
           <div class="loading">Memuat media...</div>
         </div>
       </section>
+
     </div>
   </main>
 </div>
@@ -517,6 +517,10 @@ let mediaFiles = [];
 let pendingDelete = null;
 let busy = false;
 
+// ========================================
+// HELPERS
+// ========================================
+
 function toast(message) {
   $("toast").textContent = message;
   $("toast").style.display = "block";
@@ -524,6 +528,13 @@ function toast(message) {
   toast.timer = setTimeout(() => {
     $("toast").style.display = "none";
   }, 3500);
+}
+
+function el(tag, className, text) {
+  const node = document.createElement(tag);
+  if (className) node.className = className;
+  if (text !== undefined) node.textContent = text;
+  return node;
 }
 
 async function api(action, extra = {}) {
@@ -542,11 +553,42 @@ async function api(action, extra = {}) {
   return result;
 }
 
+function formatSize(bytes) {
+  if (bytes < 1024) return bytes + " B";
+  if (bytes < 1024 * 1024) {
+    return (bytes / 1024).toFixed(1) + " KB";
+  }
+  return (bytes / 1024 / 1024).toFixed(2) + " MB";
+}
+
+function extension(name) {
+  const dot = name.lastIndexOf(".");
+  return dot >= 0 ? name.slice(dot).toLowerCase() : "";
+}
+
+function validateName(name, original) {
+  if (!name) return "Nama file tidak boleh kosong.";
+  if (name.length > 100) return "Nama file maksimal 100 karakter.";
+  if (/[\/\\]/.test(name) || name.includes("..")) {
+    return "Nama file tidak boleh mengandung path.";
+  }
+  if (!/^[a-zA-Z0-9._ -]+$/.test(name)) {
+    return "Gunakan huruf, angka, spasi, titik, minus, atau garis bawah.";
+  }
+  if (extension(name) !== extension(original)) {
+    return "Ekstensi file tidak boleh diubah.";
+  }
+  return "";
+}
+
+// ========================================
+// API STATUS
+// ========================================
+
 async function checkApi() {
   try {
     const response = await fetch(API_URL);
     const result = await response.json();
-
     if (!response.ok || !result.success) throw new Error();
 
     $("apiStatus").textContent = "API Terhubung";
@@ -557,80 +599,66 @@ async function checkApi() {
   }
 }
 
-function formatSize(bytes) {
-  if (bytes < 1024) return bytes + " B";
-  if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
-  return (bytes / 1024 / 1024).toFixed(2) + " MB";
+// ========================================
+// PENCIL BUTTON
+// ========================================
+
+function createPencil(onClick, title) {
+  const button = el("button", "pencil-btn", "✎");
+  button.type = "button";
+  button.title = title;
+  button.setAttribute("aria-label", title);
+  button.addEventListener("click", onClick);
+  return button;
 }
 
-function makeElement(tag, className, text) {
-  const element = document.createElement(tag);
-  if (className) element.className = className;
-  if (text !== undefined) element.textContent = text;
-  return element;
-}
-
-function getExtension(name) {
-  const index = name.lastIndexOf(".");
-  return index >= 0 ? name.slice(index).toLowerCase() : "";
-}
-
-function validNewName(name, originalName) {
-  if (!name.trim()) return "Nama file tidak boleh kosong.";
-  if (/[\/\\]/.test(name) || name.includes("..")) {
-    return "Nama file tidak boleh mengandung path.";
-  }
-  if (!/^[a-zA-Z0-9._ -]+$/.test(name)) {
-    return "Gunakan huruf, angka, spasi, titik, garis bawah, atau tanda minus.";
-  }
-  if (name.length > 100) return "Nama file maksimal 100 karakter.";
-  if (getExtension(name) !== getExtension(originalName)) {
-    return "Ekstensi file tidak boleh diubah.";
-  }
-  return "";
-}
-
-// ==================================================
-// PREVIEW UPLOAD: PENSIL + EDIT NAMA SEBELUM UPLOAD
-// ==================================================
+// ========================================
+// PREVIEW UPLOAD
+// ========================================
 
 function renderPreviews() {
   const container = $("previewList");
-  container.innerHTML = "";
+  container.replaceChildren();
 
   selectedFiles.forEach((entry, index) => {
-    const item = makeElement("div", "preview-item");
+    const item = el("div", "preview-item");
 
-    const img = makeElement("img");
+    const img = el("img");
     img.src = entry.previewUrl;
     img.alt = entry.name;
 
-    const filenameRow = makeElement("div", "filename-row");
+    const filenameRow = el("div", "filename-row");
     filenameRow.style.marginTop = "9px";
 
-    const filename = makeElement("div", "filename", entry.name);
+    const filename = el("div", "filename", entry.name);
     filename.title = entry.name;
 
-    const pencil = makeElement("button", "pencil-btn", "✎");
-    pencil.type = "button";
-    pencil.title = "Ubah nama sebelum upload";
-    pencil.setAttribute("aria-label", "Ubah nama " + entry.name);
-    pencil.onclick = () => editPreviewName(index);
+    const pencil = createPencil(
+      () => editPreviewName(index),
+      "Ubah nama sebelum upload"
+    );
 
-    filenameRow.append(filename, pencil);
+    // PENTING: nama dan pensil dimasukkan ke baris.
+    filenameRow.appendChild(filename);
+    filenameRow.appendChild(pencil);
 
-    const size = makeElement("div", "filesize", formatSize(entry.file.size));
+    const size = el("div", "filesize", formatSize(entry.file.size));
 
-    const remove = makeElement("button", "btn btn-danger", "Hapus pilihan");
+    const remove = el("button", "btn btn-danger", "Hapus pilihan");
     remove.style.width = "100%";
     remove.style.marginTop = "10px";
-    remove.onclick = () => {
+
+    remove.addEventListener("click", () => {
       URL.revokeObjectURL(entry.previewUrl);
       selectedFiles.splice(index, 1);
       renderPreviews();
-    };
+    });
 
-    item.append(img, filenameRow, size, remove);
+    item.appendChild(img);
+    item.appendChild(filenameRow);
+    item.appendChild(size);
+    item.appendChild(remove);
+
     container.appendChild(item);
   });
 
@@ -640,26 +668,24 @@ function renderPreviews() {
 function editPreviewName(index) {
   const entry = selectedFiles[index];
   const item = $("previewList").children[index];
-  if (!entry || !item) return;
 
-  if (item.querySelector(".filename-edit")) return;
+  if (!entry || !item || item.querySelector(".filename-edit")) return;
 
-  const form = makeElement("div", "filename-edit");
-  const input = makeElement("input");
+  const form = el("div", "filename-edit");
+  const input = el("input");
   input.type = "text";
   input.value = entry.name;
   input.maxLength = 100;
 
-  const buttons = makeElement("div", "edit-buttons");
+  const buttons = el("div", "edit-buttons");
+  const save = el("button", "btn btn-primary", "Simpan");
+  const cancel = el("button", "btn btn-light", "Batal");
 
-  const save = makeElement("button", "btn btn-primary", "Simpan");
-  const cancel = makeElement("button", "btn btn-light", "Batal");
+  cancel.addEventListener("click", renderPreviews);
 
-  cancel.onclick = () => renderPreviews();
-
-  save.onclick = () => {
+  save.addEventListener("click", () => {
     const value = input.value.trim();
-    const error = validNewName(value, entry.name);
+    const error = validateName(value, entry.name);
 
     if (error) {
       toast(error);
@@ -669,16 +695,18 @@ function editPreviewName(index) {
 
     selectedFiles[index].name = value;
     renderPreviews();
-    toast("Nama file preview berhasil diubah.");
-  };
+    toast("Nama preview berhasil diubah.");
+  });
 
   input.addEventListener("keydown", event => {
     if (event.key === "Enter") save.click();
     if (event.key === "Escape") cancel.click();
   });
 
-  buttons.append(save, cancel);
-  form.append(input, buttons);
+  buttons.appendChild(save);
+  buttons.appendChild(cancel);
+  form.appendChild(input);
+  form.appendChild(buttons);
   item.appendChild(form);
 
   input.focus();
@@ -706,34 +734,35 @@ function addFiles(files) {
       continue;
     }
 
-    if (selectedFiles.some(entry =>
-      entry.file.name === file.name &&
-      entry.file.size === file.size
-    )) {
-      continue;
-    }
+    if (selectedFiles.some(item =>
+      item.file.name === file.name &&
+      item.file.size === file.size
+    )) continue;
 
     selectedFiles.push({
       file,
-      name: file.name,
-      previewUrl: URL.createObjectURL(file)
+      name:file.name,
+      previewUrl:URL.createObjectURL(file)
     });
 
     added++;
   }
 
   renderPreviews();
-
   if (added) toast(added + " gambar ditambahkan.");
 }
+
+// ========================================
+// FILE READER
+// ========================================
 
 function fileToBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
 
     reader.onload = () => {
-      const result = String(reader.result);
-      resolve(result.substring(result.indexOf(",") + 1));
+      const value = String(reader.result);
+      resolve(value.substring(value.indexOf(",") + 1));
     };
 
     reader.onerror = () => reject(new Error("Gagal membaca file."));
@@ -741,9 +770,9 @@ function fileToBase64(file) {
   });
 }
 
-// ==================================================
-// UPLOAD: MENGIRIM NAMA FILE YANG SUDAH DIEDIT
-// ==================================================
+// ========================================
+// UPLOAD
+// ========================================
 
 async function uploadSelected() {
   if (!selectedFiles.length || busy) return;
@@ -760,15 +789,15 @@ async function uploadSelected() {
     const entry = files[i];
 
     $("uploadStatus").textContent =
-      "Mengunggah " + (i + 1) + " dari " + files.length +
-      ": " + entry.name;
+      "Mengunggah " + (i + 1) + " dari " +
+      files.length + ": " + entry.name;
 
     try {
       const base64 = await fileToBase64(entry.file);
 
       await api("uploadMedia", {
-        filename: entry.name,
-        mimeType: entry.file.type,
+        filename:entry.name,
+        mimeType:entry.file.type,
         base64
       });
 
@@ -785,7 +814,6 @@ async function uploadSelected() {
 
   selectedFiles.forEach(entry => URL.revokeObjectURL(entry.previewUrl));
   selectedFiles = [];
-
   renderPreviews();
 
   $("uploadStatus").textContent =
@@ -798,9 +826,9 @@ async function uploadSelected() {
   toast("Proses upload selesai.");
 }
 
-// ==================================================
-// LOAD MEDIA
-// ==================================================
+// ========================================
+// MEDIA LIBRARY
+// ========================================
 
 async function loadMedia() {
   $("mediaGrid").innerHTML =
@@ -811,19 +839,11 @@ async function loadMedia() {
     mediaFiles = result.files || [];
     renderMedia();
   } catch (error) {
-    $("mediaGrid").innerHTML = "";
-    const empty = makeElement(
-      "div",
-      "empty",
-      "Gagal memuat media: " + error.message
+    $("mediaGrid").replaceChildren(
+      el("div", "empty", "Gagal memuat media: " + error.message)
     );
-    $("mediaGrid").appendChild(empty);
   }
 }
-
-// ==================================================
-// MEDIA LIBRARY: PENSIL + RENAME DI GITHUB
-// ==================================================
 
 function renderMedia() {
   const query = $("searchInput").value.toLowerCase();
@@ -832,95 +852,97 @@ function renderMedia() {
     file.name.toLowerCase().includes(query)
   );
 
-  $("mediaGrid").innerHTML = "";
+  $("mediaGrid").replaceChildren();
 
   if (!filtered.length) {
-    const empty = makeElement(
-      "div",
-      "empty",
-      mediaFiles.length
-        ? "Tidak ada gambar yang cocok."
-        : "Belum ada gambar. Silakan upload gambar pertama."
+    $("mediaGrid").appendChild(
+      el("div", "empty",
+        mediaFiles.length
+          ? "Tidak ada gambar yang cocok."
+          : "Belum ada gambar. Silakan upload gambar pertama."
+      )
     );
-
-    $("mediaGrid").appendChild(empty);
     return;
   }
 
   filtered.forEach(file => {
-    const card = makeElement("div", "media-card");
+    const card = el("div", "media-card");
+    const imageBox = el("div", "media-image");
 
-    const imageBox = makeElement("div", "media-image");
-    const img = makeElement("img");
+    const img = el("img");
     img.src = file.url;
     img.alt = file.name;
     img.loading = "lazy";
     imageBox.appendChild(img);
 
-    const info = makeElement("div", "media-info");
+    const info = el("div", "media-info");
+    const filenameRow = el("div", "filename-row");
 
-    const filenameRow = makeElement("div", "filename-row");
-
-    const filename = makeElement("div", "filename", file.name);
+    const filename = el("div", "filename", file.name);
     filename.title = file.name;
 
-    const pencil = makeElement("button", "pencil-btn", "✎");
-    pencil.type = "button";
-    pencil.title = "Ubah nama file";
-    pencil.setAttribute("aria-label", "Ubah nama " + file.name);
-    pencil.onclick = () => editLibraryName(file, info);
-
-    filenameRow.append(filename, pencil);
-
-    const size = makeElement(
-      "div",
-      "filesize",
-      formatSize(file.size || 0)
+    const pencil = createPencil(
+      () => editLibraryName(file, info),
+      "Ubah nama file di GitHub"
     );
 
-    const actions = makeElement("div", "media-actions");
+    // PENTING: nama dan pensil dimasukkan ke baris.
+    filenameRow.appendChild(filename);
+    filenameRow.appendChild(pencil);
 
-    const copy = makeElement("button", "btn btn-light", "Salin URL");
-    copy.onclick = async () => {
+    const size = el("div", "filesize", formatSize(file.size || 0));
+
+    const actions = el("div", "media-actions");
+
+    const copy = el("button", "btn btn-light", "Salin URL");
+    copy.addEventListener("click", async () => {
       try {
         await navigator.clipboard.writeText(file.url);
         toast("URL gambar berhasil disalin.");
       } catch {
         toast("Browser tidak mengizinkan salin otomatis.");
       }
-    };
+    });
 
-    const del = makeElement("button", "btn btn-danger", "Hapus");
-    del.onclick = () => openDelete(file);
+    const del = el("button", "btn btn-danger", "Hapus");
+    del.addEventListener("click", () => openDelete(file));
 
-    actions.append(copy, del);
-    info.append(filenameRow, size, actions);
-    card.append(imageBox, info);
+    actions.appendChild(copy);
+    actions.appendChild(del);
+
+    info.appendChild(filenameRow);
+    info.appendChild(size);
+    info.appendChild(actions);
+
+    card.appendChild(imageBox);
+    card.appendChild(info);
 
     $("mediaGrid").appendChild(card);
   });
 }
 
+// ========================================
+// RENAME LIBRARY FILE
+// ========================================
+
 function editLibraryName(file, info) {
   if (info.querySelector(".filename-edit")) return;
 
-  const form = makeElement("div", "filename-edit");
-
-  const input = makeElement("input");
+  const form = el("div", "filename-edit");
+  const input = el("input");
   input.type = "text";
   input.value = file.name;
   input.maxLength = 100;
 
-  const buttons = makeElement("div", "edit-buttons");
+  const buttons = el("div", "edit-buttons");
+  const save = el("button", "btn btn-primary", "Simpan");
+  const cancel = el("button", "btn btn-light", "Batal");
 
-  const save = makeElement("button", "btn btn-primary", "Simpan");
-  const cancel = makeElement("button", "btn btn-light", "Batal");
+  cancel.addEventListener("click", () => form.remove());
 
-  cancel.onclick = () => form.remove();
-
-  save.onclick = async () => {
+  save.addEventListener("click", async () => {
     const newName = input.value.trim();
-    const error = validNewName(newName, file.name);
+    const error = validateName(newName, file.name);
 
     if (error) {
       toast(error);
@@ -939,7 +961,7 @@ function editLibraryName(file, info) {
 
     try {
       const result = await api("renameMedia", {
-        filename: file.name,
+        filename:file.name,
         newName
       });
 
@@ -951,24 +973,26 @@ function editLibraryName(file, info) {
       cancel.disabled = false;
       save.textContent = "Simpan";
     }
-  };
+  });
 
   input.addEventListener("keydown", event => {
     if (event.key === "Enter") save.click();
     if (event.key === "Escape") cancel.click();
   });
 
-  buttons.append(save, cancel);
-  form.append(input, buttons);
+  buttons.appendChild(save);
+  buttons.appendChild(cancel);
+  form.appendChild(input);
+  form.appendChild(buttons);
   info.appendChild(form);
 
   input.focus();
   input.select();
 }
 
-// ==================================================
-// DELETE MEDIA
-// ==================================================
+// ========================================
+// DELETE
+// ========================================
 
 function openDelete(file) {
   pendingDelete = file;
@@ -987,13 +1011,12 @@ async function confirmDelete() {
 
   try {
     await api("deleteMedia", {
-      filename: pendingDelete.name
+      filename:pendingDelete.name
     });
 
     toast("Gambar berhasil dihapus.");
     $("deleteModal").style.display = "none";
     pendingDelete = null;
-
     await loadMedia();
   } catch (error) {
     toast(error.message);
@@ -1002,59 +1025,61 @@ async function confirmDelete() {
   }
 }
 
-// ==================================================
+// ========================================
 // EVENTS
-// ==================================================
+// ========================================
 
-$("dropzone").onclick = () => $("fileInput").click();
+$("dropzone").addEventListener("click", () => {
+  $("fileInput").click();
+});
 
-$("fileInput").onchange = event => {
+$("fileInput").addEventListener("change", event => {
   addFiles(event.target.files);
   event.target.value = "";
-};
+});
 
-$("dropzone").ondragover = event => {
+$("dropzone").addEventListener("dragover", event => {
   event.preventDefault();
   $("dropzone").classList.add("drag");
-};
+});
 
-$("dropzone").ondragleave = () => {
+$("dropzone").addEventListener("dragleave", () => {
   $("dropzone").classList.remove("drag");
-};
+});
 
-$("dropzone").ondrop = event => {
+$("dropzone").addEventListener("drop", event => {
   event.preventDefault();
   $("dropzone").classList.remove("drag");
   addFiles(event.dataTransfer.files);
-};
+});
 
-$("uploadBtn").onclick = uploadSelected;
-$("refreshBtn").onclick = loadMedia;
-$("searchInput").oninput = renderMedia;
+$("uploadBtn").addEventListener("click", uploadSelected);
+$("refreshBtn").addEventListener("click", loadMedia);
+$("searchInput").addEventListener("input", renderMedia);
 
-$("cancelDelete").onclick = () => {
+$("cancelDelete").addEventListener("click", () => {
   $("deleteModal").style.display = "none";
   pendingDelete = null;
-};
+});
 
-$("confirmDelete").onclick = confirmDelete;
+$("confirmDelete").addEventListener("click", confirmDelete);
 
-$("deleteModal").onclick = event => {
+$("deleteModal").addEventListener("click", event => {
   if (event.target === $("deleteModal")) {
     $("deleteModal").style.display = "none";
     pendingDelete = null;
   }
-};
+});
 
-$("logoutBtn").onclick = () => {
+$("logoutBtn").addEventListener("click", () => {
   sessionStorage.removeItem("radjaspin_auth_token");
   sessionStorage.removeItem("radjaspin_auth_username");
   location.replace("/buktijepe/login/");
-};
+});
 
-// ==================================================
+// ========================================
 // INITIALIZE
-// ==================================================
+// ========================================
 
 checkApi();
 loadMedia();

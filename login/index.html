@@ -1,415 +1,303 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#101827">
-  <title>Login Admin — RADJASPIN</title>
-  <style>
-    :root {
-      --navy: #101827;
-      --navy-2: #172338;
-      --ink: #172033;
-      --muted: #778196;
-      --line: #e7eaf0;
-      --purple: #6957e8;
-      --purple-dark: #5141cf;
-      --bg: #f3f5fa;
-      --white: #fff;
-      --green: #16865d;
-      --red: #c94b55;
-    }
-    * { box-sizing: border-box; }
-    html, body { min-height: 100%; }
-    body {
-      margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: var(--ink);
-      background: var(--bg);
-    }
-    button, input { font: inherit; }
-    a { color: inherit; text-decoration: none; }
-
-    .page {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: minmax(360px, 1.02fr) minmax(420px, .98fr);
-    }
-
-    /* Left brand panel */
-    .brand-panel {
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 42px clamp(32px, 5vw, 76px);
-      color: #fff;
-      background:
-        radial-gradient(circle at 16% 18%, rgba(118, 103, 255, .34), transparent 34%),
-        radial-gradient(circle at 88% 78%, rgba(47, 174, 164, .17), transparent 32%),
-        linear-gradient(145deg, #101827 0%, #17243b 55%, #202c4c 100%);
-    }
-    .brand-panel::before, .brand-panel::after {
-      content: "";
-      position: absolute;
-      border: 1px solid rgba(255,255,255,.09);
-      border-radius: 50%;
-      pointer-events: none;
-    }
-    .brand-panel::before { width: 560px; height: 560px; right: -240px; top: 12%; }
-    .brand-panel::after { width: 390px; height: 390px; right: -150px; top: 23%; }
-    .brand-top, .brand-copy, .brand-bottom { position: relative; z-index: 1; }
-    .brand-logo-wrap {
-      display: inline-flex;
-      align-items: center;
-      justify-content: flex-start;
-      width: fit-content;
-      max-width: min(100%, 360px);
-      padding: 0;
-      background: transparent;
-      border: 0;
-      border-radius: 0;
-      box-shadow: none;
-    }
-    .brand-logo {
-      display: block;
-      width: 290px;
-      max-width: 100%;
-      height: 92px;
-      object-fit: contain;
-      object-position: left center;
-      border-radius: 0;
-      background: transparent;
-    }
-    .brand-copy { max-width: 510px; margin: auto 0; padding: 70px 0; }
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      color: #c7c3ff;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-    .eyebrow::before { content: ""; width: 24px; height: 1px; background: #aaa0ff; }
-    .brand-copy h1 {
-      max-width: 480px;
-      margin: 22px 0 18px;
-      font-size: clamp(38px, 4.5vw, 62px);
-      line-height: 1.06;
-      letter-spacing: -2.8px;
-      font-weight: 780;
-    }
-    .brand-copy h1 span { color: #aaa0ff; }
-    .brand-copy p {
-      max-width: 420px;
-      margin: 0;
-      color: #b6c0d1;
-      font-size: 15px;
-      line-height: 1.85;
-    }
-    .brand-points { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 34px; }
-    .brand-point {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 9px 12px;
-      border: 1px solid rgba(255,255,255,.14);
-      border-radius: 999px;
-      color: #dce3f0;
-      background: rgba(255,255,255,.055);
-      font-size: 11px;
-      font-weight: 650;
-    }
-    .brand-point svg { width: 14px; height: 14px; color: #9f96ff; }
-    .brand-bottom {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      color: #8793a8;
-      font-size: 11px;
-    }
-
-    /* Login area */
-    .login-panel {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 48px clamp(26px, 5vw, 78px);
-      background:
-        radial-gradient(circle at 95% 5%, rgba(105,87,232,.07), transparent 26%),
-        #fbfcfe;
-    }
-    .login-card { width: min(100%, 430px); }
-    .mobile-brand { display: none; }
-    .login-kicker {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--purple);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 1.6px;
-      text-transform: uppercase;
-    }
-    .login-kicker .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 4px rgba(22,134,93,.1); }
-    .login-card h2 {
-      margin: 15px 0 9px;
-      color: #182238;
-      font-size: 34px;
-      letter-spacing: -1.4px;
-      line-height: 1.15;
-    }
-    .intro { margin: 0 0 32px; color: var(--muted); font-size: 13px; line-height: 1.7; }
-    .form-field { margin: 19px 0; }
-    .field-head { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 9px; }
-    .field-head label { color: #344057; font-size: 12px; font-weight: 750; }
-    .field-head small { color: #9aa3b2; font-size: 10px; }
-    .input-wrap { position: relative; }
-    .input-icon {
-      position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
-      width: 17px; height: 17px; color: #929bad; pointer-events: none;
-    }
-    .input-wrap input {
-      width: 100%; height: 53px; padding: 0 48px 0 45px;
-      border: 1px solid #e0e5ed; border-radius: 12px; outline: none;
-      background: #fff; color: #1d293d; font-size: 13px;
-      transition: border-color .2s, box-shadow .2s, background .2s;
-    }
-    .input-wrap input::placeholder { color: #b0b7c4; }
-    .input-wrap input:focus { border-color: #8b7df0; box-shadow: 0 0 0 4px rgba(105,87,232,.10); }
-    .input-wrap input.invalid { border-color: #e19aa0; background: #fffafb; }
-    .toggle-pass {
-      position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
-      display: grid; place-items: center; width: 30px; height: 30px;
-      border: 0; border-radius: 8px; background: transparent; color: #8993a5; cursor: pointer;
-    }
-    .toggle-pass:hover { background: #f2f3f8; color: #4e5a70; }
-    .toggle-pass svg { width: 17px; height: 17px; }
-    .form-options { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin: 8px 0 24px; }
-    .remember { display: inline-flex; align-items: center; gap: 8px; color: #697489; font-size: 11px; cursor: pointer; }
-    .remember input { accent-color: var(--purple); width: 14px; height: 14px; }
-    .forgot { color: #8a80df; font-size: 11px; font-weight: 700; cursor: pointer; }
-    .submit-btn {
-      width: 100%; height: 53px; display: flex; align-items: center; justify-content: center; gap: 10px;
-      border: 0; border-radius: 12px; color: #fff; cursor: pointer;
-      background: linear-gradient(105deg, #6b5be8, #5145c9);
-      box-shadow: 0 10px 22px rgba(91,76,211,.22);
-      font-size: 13px; font-weight: 800;
-      transition: transform .2s, box-shadow .2s, opacity .2s;
-    }
-    .submit-btn:hover { transform: translateY(-1px); box-shadow: 0 13px 26px rgba(91,76,211,.28); }
-    .submit-btn:disabled { opacity: .65; cursor: wait; transform: none; }
-    .submit-btn svg { width: 17px; height: 17px; }
-    .message { min-height: 22px; margin: 12px 2px 0; font-size: 11px; line-height: 1.5; }
-    .message.error { color: var(--red); }
-    .message.success { color: var(--green); }
-    .demo-note {
-      margin-top: 23px; padding: 14px 15px; border: 1px dashed #d9d5fa;
-      border-radius: 12px; background: #f8f7ff; color: #77738f;
-      font-size: 10px; line-height: 1.7;
-    }
-    .demo-note strong { color: #5f54c9; }
-    .security-note {
-      display: flex; align-items: flex-start; gap: 9px; margin-top: 28px;
-      color: #9aa3b1; font-size: 10px; line-height: 1.65;
-    }
-    .security-note svg { width: 15px; height: 15px; flex: 0 0 auto; color: #8b96a8; }
-    .login-footer { margin-top: 38px; text-align: center; color: #a0a8b6; font-size: 10px; }
-
-    @media (max-width: 900px) {
-      .page { grid-template-columns: minmax(300px, .85fr) minmax(390px, 1.15fr); }
-      .brand-panel { padding: 32px; }
-      .brand-copy h1 { font-size: 44px; }
-      .login-panel { padding: 38px 30px; }
-    }
-    @media (max-width: 700px) {
-      .page { display: block; min-height: 100vh; }
-      .brand-panel { display: none; }
-      .login-panel { min-height: 100vh; padding: 30px 22px; }
-      .login-card { max-width: 440px; }
-      .mobile-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 42px; }
-      .mobile-brand img { display: block; width: 205px; max-width: 80%; height: 76px; object-fit: contain; object-position: left center; border-radius: 0; background: transparent; padding: 0; border: 0; }
-      .login-card h2 { font-size: 30px; }
-      .login-footer { margin-top: 28px; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101827">
+<title>Login Admin — RADJASPIN</title>
+<style>
+:root{
+  --navy:#101827;--purple:#6957e8;--purple2:#5141cf;
+  --ink:#172033;--muted:#778196;--line:#e7eaf0;
+  --bg:#f3f5fa;--green:#16865d;--red:#c94b55;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;min-height:100vh;font-family:Inter,"Segoe UI",sans-serif;
+  color:var(--ink);background:var(--bg)
+}
+button,input{font:inherit}
+.page{min-height:100vh;display:grid;grid-template-columns:1fr 1fr}
+.brand{
+  padding:42px clamp(30px,5vw,76px);color:white;
+  display:flex;flex-direction:column;justify-content:space-between;
+  background:
+    radial-gradient(circle at 16% 18%,#7667ff55,transparent 34%),
+    radial-gradient(circle at 88% 78%,#2faea42b,transparent 32%),
+    linear-gradient(145deg,#101827,#17243b 55%,#202c4c)
+}
+.logo{width:290px;max-width:100%;height:92px;object-fit:contain;object-position:left}
+.brand-copy{max-width:510px;margin:auto 0;padding:65px 0}
+.eyebrow{color:#c7c3ff;font-size:11px;font-weight:800;letter-spacing:2px}
+.brand h1{font-size:clamp(38px,4.5vw,62px);line-height:1.08;letter-spacing:-2px}
+.brand h1 span{color:#aaa0ff}
+.brand p{color:#b6c0d1;font-size:14px;line-height:1.8}
+.points{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.points span{padding:9px 12px;border:1px solid #ffffff24;border-radius:30px;font-size:11px}
+.brand-footer{display:flex;justify-content:space-between;color:#8793a8;font-size:11px}
+.login-area{
+  display:flex;align-items:center;justify-content:center;padding:40px 25px;
+  background:radial-gradient(circle at 95% 5%,#6957e812,transparent 26%),#fbfcfe
+}
+.card{width:min(100%,430px)}
+.mobile-logo{display:none}
+.kicker{color:var(--purple);font-size:11px;font-weight:800;letter-spacing:1.6px}
+.kicker:before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-right:9px}
+h2{font-size:34px;letter-spacing:-1px;margin:16px 0 9px}
+.intro{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:30px}
+.field{margin:19px 0}
+label{display:block;font-size:12px;font-weight:750;margin-bottom:9px}
+input{
+  width:100%;height:53px;padding:0 14px;border:1px solid #e0e5ed;
+  border-radius:11px;background:white;outline:none;font-size:13px
+}
+input:focus{border-color:#8b7df0;box-shadow:0 0 0 4px #6957e81a}
+.password-wrap{position:relative}
+.password-wrap input{padding-right:75px}
+.toggle{
+  position:absolute;right:8px;top:8px;height:37px;padding:0 10px;
+  border:0;background:#f3f2fc;color:var(--purple);border-radius:8px;
+  cursor:pointer;font-size:11px
+}
+.options{display:flex;justify-content:space-between;align-items:center;margin:8px 0 24px}
+.remember{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted)}
+.remember input{width:14px;height:14px;accent-color:var(--purple)}
+.forgot{font-size:11px;color:var(--purple);font-weight:700}
+.submit{
+  width:100%;height:53px;border:0;border-radius:11px;color:white;
+  background:linear-gradient(105deg,#6b5be8,#5145c9);
+  box-shadow:0 10px 22px #5b4cd338;font-weight:800;cursor:pointer
+}
+.submit:disabled{opacity:.6;cursor:wait}
+.message{min-height:24px;margin:12px 2px 0;font-size:11px;line-height:1.5}
+.message.error{color:var(--red)}
+.message.success{color:var(--green)}
+.security{margin-top:27px;color:#9aa3b1;font-size:10px;line-height:1.7}
+.footer{text-align:center;margin-top:35px;color:#a0a8b6;font-size:10px}
+@media(max-width:700px){
+  .page{display:block}
+  .brand{display:none}
+  .login-area{min-height:100vh;padding:28px 22px}
+  .mobile-logo{display:block;width:205px;height:76px;object-fit:contain;object-position:left;margin-bottom:35px}
+  h2{font-size:30px}
+}
+</style>
 </head>
 <body>
-  <main class="page">
-    <section class="brand-panel" aria-label="Informasi RADJASPUN">
-      <div class="brand-top">
-        <a class="brand-logo-wrap" href="/buktijepe/" aria-label="RADJASPIN - kembali ke website">
-          <img class="brand-logo" src="https://wpradjaspin.github.io/buktijepe/assets/radjaspin-logo.png" alt="Logo RADJASPIN">
-        </a>
+<main class="page">
+
+<section class="brand">
+  <a href="/buktijepe/">
+    <img class="logo"
+      src="https://wpradjaspin.github.io/buktijepe/assets/radjaspin-logo.png"
+      alt="RADJASPIN">
+  </a>
+
+  <div class="brand-copy">
+    <div class="eyebrow">PRIVATE ADMIN PORTAL</div>
+    <h1>Kelola konten.<br><span>Dengan lebih mudah.</span></h1>
+    <p>
+      Selamat datang di ruang pengelolaan RADJASPIN.
+      Masuk untuk mengatur konten dan menjaga website
+      tetap terorganisir dari satu tempat.
+    </p>
+    <div class="points">
+      <span>✓ Akses admin pribadi</span>
+      <span>✓ Manajemen konten</span>
+    </div>
+  </div>
+
+  <div class="brand-footer">
+    <span>© <span class="year"></span> RADJASPIN</span>
+    <span>Private workspace</span>
+  </div>
+</section>
+
+<section class="login-area">
+  <div class="card">
+
+    <a href="/buktijepe/">
+      <img class="mobile-logo"
+        src="https://wpradjaspin.github.io/buktijepe/assets/radjaspin-logo.png"
+        alt="RADJASPIN">
+    </a>
+
+    <div class="kicker">ADMINISTRATOR ACCESS</div>
+    <h2>Selamat datang<br>kembali</h2>
+    <p class="intro">
+      Silakan masuk menggunakan akun administrator
+      untuk melanjutkan ke dashboard RADJASPIN.
+    </p>
+
+    <form id="loginForm">
+      <div class="field">
+        <label for="username">ID Administrator</label>
+        <input id="username" type="text"
+          placeholder="Masukkan ID administrator"
+          autocomplete="username" required>
       </div>
 
-      <div class="brand-copy">
-        <div class="eyebrow">PRIVATE ADMIN PORTAL</div>
-        <h1>Kelola konten.<br><span>Dengan lebih mudah.</span></h1>
-        <p>Selamat datang di ruang pengelolaan RADJASPIN. Masuk untuk mengatur konten dan menjaga website tetap terorganisir dari satu tempat.</p>
-        <div class="brand-points">
-          <div class="brand-point">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></svg>
-            Akses admin pribadi
-          </div>
-          <div class="brand-point">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h6M7 16h8"/></svg>
-            Manajemen konten
-          </div>
-        </div>
-      </div>
-
-      <div class="brand-bottom">
-        <span>© <span id="yearBrand"></span> RADJASPIN</span>
-        <span>Private workspace</span>
-      </div>
-    </section>
-
-    <section class="login-panel">
-      <div class="login-card">
-        <a class="mobile-brand" href="/buktijepe/" aria-label="RADJASPIN - kembali ke website">
-          <img src="https://wpradjaspin.github.io/buktijepe/assets/radjaspin-logo.png" alt="Logo RADJASPIN">
-        </a>
-
-        <div class="login-kicker"><span class="dot"></span> ADMINISTRATOR ACCESS</div>
-        <h2>Selamat datang<br>kembali</h2>
-        <p class="intro">Silakan masuk menggunakan akun administrator untuk melanjutkan ke dashboard RADJASPIN.</p>
-
-        <form id="loginForm" novalidate>
-          <div class="form-field">
-            <div class="field-head">
-              <label for="username">ID Administrator</label>
-              <small>Wajib diisi</small>
-            </div>
-            <div class="input-wrap">
-              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M5 21v-2a7 7 0 0 1 14 0v2"/></svg>
-              <input id="username" name="username" type="text" placeholder="Masukkan ID administrator" autocomplete="username" required>
-            </div>
-          </div>
-
-          <div class="form-field">
-            <div class="field-head">
-              <label for="password">Password</label>
-              <small>Rahasia akun</small>
-            </div>
-            <div class="input-wrap">
-              <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
-              <input id="password" name="password" type="password" placeholder="Masukkan password" autocomplete="current-password" required>
-              <button class="toggle-pass" type="button" id="togglePassword" aria-label="Tampilkan password">
-                <svg id="eyeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
-              </button>
-            </div>
-          </div>
-
-          <div class="form-options">
-            <label class="remember"><input type="checkbox" id="remember"> Ingat ID saya</label>
-            <a class="forgot" href="#" id="forgotLink">Lupa password?</a>
-          </div>
-
-          <button class="submit-btn" type="submit" id="submitBtn">
-            <span>Masuk ke Dashboard</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      <div class="field">
+        <label for="password">Password</label>
+        <div class="password-wrap">
+          <input id="password" type="password"
+            placeholder="Masukkan password"
+            autocomplete="current-password" required>
+          <button class="toggle" type="button" id="togglePassword">
+            Tampilkan
           </button>
-          <div class="message" id="message" role="status" aria-live="polite"></div>
-        </form>
-
-        <div class="demo-note">
-          <strong>Mode demo sementara</strong><br>
-          ID: <strong>admin</strong> &nbsp;·&nbsp; Password: <strong>radjaspin123</strong><br>
-          Kredensial ini hanya untuk uji tampilan. Ganti dan pindahkan autentikasi ke Google Apps Script sebelum website digunakan sungguhan.
         </div>
-
-        <div class="security-note">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 12 2 2 4-4"/></svg>
-          <span>Halaman ini merupakan area khusus administrator. Jangan bagikan informasi login kepada orang lain.</span>
-        </div>
-        <div class="login-footer">© <span id="yearFooter"></span> RADJASPIN. All rights reserved.</div>
       </div>
-    </section>
-  </main>
 
-  <script>
-    // DEMO ONLY — replace with Google Apps Script authentication later.
-    const DEMO_USERNAME = "admin";
-    const DEMO_PASSWORD = "radjaspin123";
-    const ADMIN_URL = "/buktijepe/admin/";
+      <div class="options">
+        <label class="remember">
+          <input type="checkbox" id="remember">
+          Ingat ID saya
+        </label>
+        <a href="#" class="forgot" id="forgotLink">Lupa password?</a>
+      </div>
 
-    const $ = (id) => document.getElementById(id);
-    $("yearBrand").textContent = new Date().getFullYear();
-    $("yearFooter").textContent = new Date().getFullYear();
+      <button class="submit" id="submitBtn" type="submit">
+        Masuk ke Dashboard
+      </button>
 
-    // Restore only the username if the visitor selected "Ingat ID saya".
-    const savedId = localStorage.getItem("radjaspin_saved_admin_id");
-    if (savedId) {
-      $("username").value = savedId;
-      $("remember").checked = true;
+      <div class="message" id="message" role="status"></div>
+    </form>
+
+    <div class="security">
+      🔒 Login diverifikasi oleh RADJASPIN API.
+      Jangan bagikan informasi akun kepada orang lain.
+    </div>
+
+    <div class="footer">
+      © <span class="year"></span> RADJASPIN. All rights reserved.
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+"use strict";
+
+/* KONFIGURASI */
+const CONFIG = {
+  API_URL: "https://radjaspin-api.simeryoay.workers.dev/",
+  ADMIN_URL: "/buktijepe/admin/",
+  TOKEN_KEY: "radjaspin_auth_token",
+  USER_KEY: "radjaspin_auth_username"
+};
+
+const $ = id => document.getElementById(id);
+
+document.querySelectorAll(".year").forEach(el => {
+  el.textContent = new Date().getFullYear();
+});
+
+/* INGAT ID ADMIN */
+const savedId = localStorage.getItem("radjaspin_saved_admin_id");
+
+if (savedId) {
+  $("username").value = savedId;
+  $("remember").checked = true;
+}
+
+/* TAMPILKAN PASSWORD */
+$("togglePassword").addEventListener("click", () => {
+  const input = $("password");
+  const show = input.type === "password";
+  input.type = show ? "text" : "password";
+  $("togglePassword").textContent = show ? "Sembunyikan" : "Tampilkan";
+});
+
+/* LUPA PASSWORD */
+$("forgotLink").addEventListener("click", event => {
+  event.preventDefault();
+  showMessage(
+    "Pemulihan password belum tersedia. Hubungi administrator untuk mengatur ulang password.",
+    "error"
+  );
+});
+
+/* PESAN */
+function showMessage(message, type) {
+  $("message").textContent = message;
+  $("message").className = "message " + (type || "");
+}
+
+/* LOGIN KE GOOGLE APPS SCRIPT MELALUI WORKER */
+$("loginForm").addEventListener("submit", async event => {
+  event.preventDefault();
+
+  const username = $("username").value.trim();
+  const password = $("password").value;
+  const button = $("submitBtn");
+
+  showMessage("", "");
+
+  if (!username || !password) {
+    showMessage("Username dan password wajib diisi.", "error");
+    return;
+  }
+
+  button.disabled = true;
+  button.textContent = "Memeriksa akun...";
+
+  try {
+    const response = await fetch(CONFIG.API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        action: "login",
+        username: username,
+        password: password
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error("Server API merespons dengan HTTP " + response.status);
     }
 
-    $("togglePassword").addEventListener("click", () => {
-      const input = $("password");
-      const show = input.type === "password";
-      input.type = show ? "text" : "password";
-      $("togglePassword").setAttribute("aria-label", show ? "Sembunyikan password" : "Tampilkan password");
-      $("eyeIcon").innerHTML = show
-        ? '<path d="m3 3 18 18"/><path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"/><path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c6.4 0 10 7 10 7a16 16 0 0 1-3.1 3.9M6.2 6.2C3.5 8 2 12 2 12s3.6 7 10 7c1.2 0 2.3-.2 3.3-.6"/>'
-        : '<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>';
-    });
+    const result = await response.json();
 
-    $("forgotLink").addEventListener("click", (event) => {
-      event.preventDefault();
-      $("message").className = "message";
-      $("message").textContent = "Fitur pemulihan password akan tersedia setelah akun dihubungkan ke Google Apps Script.";
-    });
+    if (!result.success || !result.token) {
+      throw new Error(result.message || "Login gagal.");
+    }
 
-    $("loginForm").addEventListener("submit", (event) => {
-      event.preventDefault();
-      const username = $("username").value.trim();
-      const password = $("password").value;
-      const message = $("message");
-      const button = $("submitBtn");
+    if ($("remember").checked) {
+      localStorage.setItem("radjaspin_saved_admin_id", username);
+    } else {
+      localStorage.removeItem("radjaspin_saved_admin_id");
+    }
 
-      $("username").classList.remove("invalid");
-      $("password").classList.remove("invalid");
-      message.className = "message";
-      message.textContent = "";
+    // Simpan token untuk sesi tab/browser saat ini.
+    sessionStorage.setItem(CONFIG.TOKEN_KEY, result.token);
+    sessionStorage.setItem(CONFIG.USER_KEY, result.username || username);
 
-      if (!username || !password) {
-        if (!username) $("username").classList.add("invalid");
-        if (!password) $("password").classList.add("invalid");
-        message.classList.add("error");
-        message.textContent = "ID administrator dan password harus diisi.";
-        return;
-      }
+    // Hapus penanda login demo lama.
+    sessionStorage.removeItem("radjaspin_demo_login");
 
+    showMessage("Login berhasil. Membuka dashboard...", "success");
+
+    button.textContent = "Berhasil";
+    window.location.replace(CONFIG.ADMIN_URL);
+
+  } catch (error) {
+    console.error("[RADJASPIN LOGIN]", error);
+    showMessage(error.message || "Tidak dapat menghubungi server.", "error");
+
+    button.disabled = false;
+    button.textContent = "Masuk ke Dashboard";
+
+  } finally {
+    if (button.textContent === "Berhasil") {
       button.disabled = true;
-      button.querySelector("span").textContent = "Memeriksa akun...";
-
-      // Short delay to make the demo interaction feel like a real sign-in.
-      setTimeout(() => {
-        if (username === DEMO_USERNAME && password === DEMO_PASSWORD) {
-          if ($("remember").checked) localStorage.setItem("radjaspin_saved_admin_id", username);
-          else localStorage.removeItem("radjaspin_saved_admin_id");
-
-          // Demo marker only. This is NOT a secure authenticated session.
-          sessionStorage.setItem("radjaspin_demo_login", "true");
-          message.classList.add("success");
-          message.textContent = "Login demo berhasil. Mengalihkan ke dashboard...";
-          setTimeout(() => { window.location.href = ADMIN_URL; }, 650);
-        } else {
-          message.classList.add("error");
-          message.textContent = "ID atau password tidak sesuai. Silakan coba lagi.";
-          $("password").classList.add("invalid");
-          button.disabled = false;
-          button.querySelector("span").textContent = "Masuk ke Dashboard";
-        }
-      }, 450);
-    });
-  </script>
+    }
+  }
+});
+</script>
 </body>
 </html>

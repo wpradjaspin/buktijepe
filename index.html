@@ -107,6 +107,20 @@
 .about-gif a{width:100%;height:168px;display:flex;align-items:center;justify-content:center;text-decoration:none}
 .about-gif img{display:block;width:100%;max-width:280px;height:160px;object-fit:contain;object-position:center;background:transparent}
 .about-gif a:focus-visible,.brand:focus-visible{outline:2px solid #6854d9;outline-offset:4px;border-radius:8px}
+
+/* Link dalam isi artikel: jelas seperti tautan umum dan tidak meninggalkan artikel */
+.detail-content a{
+  color:#2563eb;
+  text-decoration:underline;
+  text-decoration-thickness:1px;
+  text-underline-offset:3px;
+  font-weight:600;
+  overflow-wrap:anywhere;
+  cursor:pointer;
+}
+.detail-content a:visited{color:#6d45bd}
+.detail-content a:hover{color:#1d4ed8;text-decoration-thickness:2px}
+
 </style>
 </head>
 <body>
@@ -240,7 +254,15 @@
       $("detailCategory").textContent=p.category||"Artikel";$("detailTitle").textContent=p.title||"Tanpa judul";
       $("detailMeta").textContent="RADJASPIN · "+dateText(p.published_at||p.updated_at||p.created_at)+" · "+minutes(p.content)+" menit membaca · "+(Number(p.views)||0)+" views";
       const im=$("detailImage");if(p.thumbnail){im.src=p.thumbnail;im.alt=p.title||"Thumbnail artikel";im.hidden=false}else{im.hidden=true;im.removeAttribute("src")}
-      $("detailContent").innerHTML=p.content||"";document.title=(p.title||"Artikel")+" | RADJASPIN";
+      $("detailContent").innerHTML=p.content||"";
+      $("detailContent").querySelectorAll("a[href]").forEach(link=>{
+        const href=link.getAttribute("href")||"";
+        if(/^https?:\/\//i.test(href)){
+          link.setAttribute("target","_blank");
+          link.setAttribute("rel","noopener noreferrer");
+        }
+      });
+      document.title=(p.title||"Artikel")+" | RADJASPIN";
       fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"publicRecordView",post_id:p.post_id})})
         .then(r=>r.json()).then(result=>{if(result?.success){p.views=Number(result.views)||((Number(p.views)||0)+1);$("detailMeta").textContent=$("detailMeta").textContent.replace(/\d+ views$/,p.views+" views");renderPopular()}})
         .catch(err=>console.warn("Gagal mencatat view:",err));

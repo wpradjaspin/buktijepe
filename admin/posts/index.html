@@ -121,8 +121,8 @@ td{padding:14px 15px;border-top:1px solid var(--border);font-size:11px}
 @media(max-width:560px){.media-picker-modal{max-height:92vh}.media-picker-grid{grid-template-columns:repeat(2,minmax(0,1fr));padding:12px}.media-picker-head,.media-picker-foot{padding:13px}}
 
 
-.link-modal-backdrop{position:fixed;inset:0;z-index:1200;background:rgba(15,18,35,.58);display:none;align-items:center;justify-content:center;padding:18px}
-.link-modal-backdrop.show{display:flex}
+.link-modal-backdrop{position:fixed!important;inset:0!important;z-index:99999!important;background:rgba(15,18,35,.58);display:none;align-items:center;justify-content:center;padding:18px}
+.link-modal-backdrop.show{display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}
 .link-modal{width:min(460px,100%);background:#fff;border:1px solid #e8eaf2;border-radius:16px;box-shadow:0 24px 70px rgba(20,24,45,.24);overflow:hidden}
 .link-modal-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:20px 22px;border-bottom:1px solid #eceef5}
 .link-modal-head h3{font-size:17px;margin:0 0 5px;color:#202238}
@@ -231,7 +231,7 @@ td{padding:14px 15px;border-top:1px solid var(--border);font-size:11px}
               <button class="tool" data-cmd="justifyLeft">≡</button>
               <button class="tool" data-cmd="justifyCenter">☰</button>
               <span class="tool-separator"></span>
-              <button class="tool" id="linkBtn" title="Tambah link">↗</button>
+              <button type="button" class="tool" id="linkBtn" title="Tambah link">↗</button>
               <button class="tool" id="imageBtn" title="Tambah gambar">▧</button>
               <button class="tool" data-cmd="removeFormat">Tx</button>
             </div>
@@ -513,6 +513,10 @@ document.querySelectorAll("[data-block]").forEach(button => {
 
 let savedLinkRange = null;
 function openLinkModal() {
+  if (!$("linkModalBackdrop") || !$("linkModalUrl")) {
+    toast("Jendela tambah link tidak ditemukan. Muat ulang halaman.");
+    return;
+  }
   const selection = window.getSelection();
   if (selection && selection.rangeCount && $("editor").contains(selection.anchorNode)) {
     savedLinkRange = selection.getRangeAt(0).cloneRange();
@@ -558,13 +562,29 @@ function insertEditorLink(event) {
   closeLinkModal();
   toast("Link berhasil ditambahkan.");
 }
-$("linkBtn").onclick = openLinkModal;
+// Delegated event handlers: tetap aktif meskipun toolbar dirender ulang.
+document.addEventListener("pointerdown", event => {
+  if (event.target.closest && event.target.closest("#linkBtn")) {
+    event.preventDefault();
+  }
+}, true);
+document.addEventListener("click", event => {
+  const target = event.target;
+  if (!target || !target.closest) return;
+  if (target.closest("#linkBtn")) {
+    event.preventDefault();
+    event.stopPropagation();
+    openLinkModal();
+    return;
+  }
+  if (target.closest("#linkModalClose") || target.closest("#linkModalCancel")) {
+    event.preventDefault();
+    closeLinkModal();
+    return;
+  }
+  if (target.id === "linkModalBackdrop") closeLinkModal();
+}, true);
 $("linkModalForm").addEventListener("submit", insertEditorLink);
-$("linkModalClose").addEventListener("click", closeLinkModal);
-$("linkModalCancel").addEventListener("click", closeLinkModal);
-$("linkModalBackdrop").addEventListener("click", event => {
-  if (event.target === $("linkModalBackdrop")) closeLinkModal();
-});
 document.addEventListener("keydown", event => {
   if (event.key === "Escape") closeLinkModal();
 });
@@ -575,8 +595,6 @@ function insertEditorImage() {
   $("editor").focus();
   document.execCommand("insertImage", false, url);
 }
-$("linkBtn").addEventListener("mousedown", event => event.preventDefault());
-$("linkBtn").onclick = openLinkModal;
 $("imageBtn").onclick = insertEditorImage;
 
 /* THUMBNAIL */

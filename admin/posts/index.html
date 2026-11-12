@@ -135,6 +135,16 @@ td{padding:14px 15px;border-top:1px solid var(--border);font-size:11px}
 .link-modal-preview{font-size:11px;color:#7d8095;margin-top:9px;line-height:1.5}
 .link-modal-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:22px}
 
+
+#linkModalUrl{box-sizing:border-box}
+.editor-link-popover{position:fixed;z-index:100000;display:none;width:min(340px,calc(100vw - 24px));padding:12px;background:#fff;border:1px solid #e7e8f0;border-radius:12px;box-shadow:0 12px 35px rgba(24,25,45,.2)}
+.editor-link-popover.show{display:block}
+.editor-link-popover-url{font-size:12px;color:#2563eb;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:10px}
+.editor-link-popover-actions{display:flex;gap:8px}
+.editor-link-popover-actions button{border:1px solid #e5e7ef;background:#f8f8fc;border-radius:8px;padding:7px 11px;font-size:11px;font-weight:700;cursor:pointer;color:#5141bd}
+.editor-link-popover-actions button.danger{color:#d14343}
+.editor-link-popover-actions button:hover{filter:brightness(.97)}
+
 </style>
 </head>
 <body>
@@ -321,14 +331,23 @@ td{padding:14px 15px;border-top:1px solid var(--border);font-size:11px}
     </div>
     <form id="linkModalForm">
       <label for="linkModalUrl">URL tautan</label>
-      <input id="linkModalUrl" type="url" placeholder="https://contoh.com" required>
-      <div class="link-modal-preview">Tautan akan dibuka di tab baru agar artikel tetap terbuka.</div>
+      <input id="linkModalUrl" type="text" inputmode="url" autocomplete="url" placeholder="contoh.com atau https://contoh.com" required>
+      <div class="link-modal-preview">Cukup masukkan alamat seperti <b>hey.link/akun</b>. HTTPS akan ditambahkan otomatis.</div>
       <div class="link-modal-actions">
         <button type="button" class="btn btn-light" id="linkModalCancel">Batal</button>
         <button type="submit" class="btn btn-primary">Tambahkan Link</button>
       </div>
     </form>
   </section>
+</div>
+
+
+<div class="editor-link-popover" id="editorLinkPopover" role="dialog" aria-label="Pengaturan tautan">
+  <div class="editor-link-popover-url" id="editorLinkPopoverUrl"></div>
+  <div class="editor-link-popover-actions">
+    <button type="button" id="editExistingLink">Edit link</button>
+    <button type="button" id="removeExistingLink" class="danger">Hapus link</button>
+  </div>
 </div>
 
 <div class="media-picker-backdrop" id="mediaPickerBackdrop" role="dialog" aria-modal="true" aria-labelledby="mediaPickerTitle">
@@ -512,36 +531,78 @@ document.querySelectorAll("[data-block]").forEach(button => {
 });
 
 let savedLinkRange = null;
-function openLinkModal() {
+let editingAnchor = null;
+let activeEditorAnchor = null;
+
+function normalizeEditorUrl(value) {
+  let raw = String(value || "").trim();
+  if (!raw) return "";
+  if (!/^[a-z][a-z0-9+.-]*:/i.test(raw)) raw = "https://" + raw;
+  try {
+    const parsed = new URL(raw);
+    if (!["http:", "https:"].includes(parsed.protocol)) return "";
+    if (!parsed.hostname || !parsed.hostname.includes(".")) return "";
+    return parsed.href;
+  } catch (_) {
+    return "";
+  }
+}
+function openLinkModal(anchorToEdit = null) {
   if (!$("linkModalBackdrop") || !$("linkModalUrl")) {
     toast("Jendela tambah link tidak ditemukan. Muat ulang halaman.");
     return;
   }
+  editingAnchor = anchorToEdit;
   const selection = window.getSelection();
-  if (selection && selection.rangeCount && $("editor").contains(selection.anchorNode)) {
+  if (!anchorToEdit && selection && selection.rangeCount && $("editor").contains(selection.anchorNode)) {
     savedLinkRange = selection.getRangeAt(0).cloneRange();
-  } else {
+  } else if (!anchorToEdit) {
     savedLinkRange = null;
   }
-  $("linkModalUrl").value = "";
+  $("linkModalTitle").textContent = anchorToEdit ? "Edit tautan" : "Tambah tautan";
+  $("linkModalUrl").value = anchorToEdit ? (anchorToEdit.getAttribute("href") || "").replace(/^https?:\/\//i,"") : "";
+  $("linkModalForm").querySelector('button[type="submit"]').textContent = anchorToEdit ? "Simpan Perubahan" : "Tambahkan Link";
   $("linkModalBackdrop").classList.add("show");
   $("linkModalBackdrop").setAttribute("aria-hidden","false");
+  hideEditorLinkPopover();
   setTimeout(() => $("linkModalUrl").focus(), 30);
 }
 function closeLinkModal() {
   $("linkModalBackdrop").classList.remove("show");
   $("linkModalBackdrop").setAttribute("aria-hidden","true");
+  editingAnchor = null;
+}
+function hideEditorLinkPopover() {
+  $("editorLinkPopover").classList.remove("show");
+  activeEditorAnchor = null;
+}
+function showEditorLinkPopover(anchor) {
+  activeEditorAnchor = anchor;
+  const pop = $("editorLinkPopover");
+  $("editorLinkPopoverUrl").textContent = anchor.href;
+  const rect = anchor.getBoundingClientRect();
+  pop.style.left = Math.max(12, Math.min(rect.left, window.innerWidth - 352)) + "px";
+  pop.style.top = Math.min(window.innerHeight - 100, rect.bottom + 8) + "px";
+  pop.classList.add("show");
 }
 function insertEditorLink(event) {
   event.preventDefault();
-  const url = $("linkModalUrl").value.trim();
-  if (!/^https?:\/\/[^\s]+$/i.test(url)) {
-    $("linkModalUrl").setCustomValidity("Masukkan URL yang diawali http:// atau https://");
+  const url = normalizeEditorUrl($("linkModalUrl").value);
+  if (!url) {
+    $("linkModalUrl").setCustomValidity("Masukkan domain atau URL yang valid, contoh: hey.link/akun");
     $("linkModalUrl").reportValidity();
     $("linkModalUrl").setCustomValidity("");
     return;
   }
   $("editor").focus();
+  if (editingAnchor) {
+    editingAnchor.setAttribute("href", url);
+    editingAnchor.setAttribute("target","_blank");
+    editingAnchor.setAttribute("rel","noopener noreferrer");
+    closeLinkModal();
+    toast("Tautan berhasil diperbarui.");
+    return;
+  }
   const selection = window.getSelection();
   if (savedLinkRange) {
     selection.removeAllRanges();
@@ -562,32 +623,50 @@ function insertEditorLink(event) {
   closeLinkModal();
   toast("Link berhasil ditambahkan.");
 }
-// Delegated event handlers: tetap aktif meskipun toolbar dirender ulang.
+
+// Toolbar + popover handlers use delegation so the buttons remain responsive.
 document.addEventListener("pointerdown", event => {
-  if (event.target.closest && event.target.closest("#linkBtn")) {
-    event.preventDefault();
-  }
+  if (event.target.closest && (event.target.closest("#linkBtn") || event.target.closest("#editorLinkPopover"))) event.preventDefault();
 }, true);
 document.addEventListener("click", event => {
   const target = event.target;
   if (!target || !target.closest) return;
   if (target.closest("#linkBtn")) {
-    event.preventDefault();
-    event.stopPropagation();
-    openLinkModal();
-    return;
+    event.preventDefault(); event.stopPropagation(); openLinkModal(); return;
   }
   if (target.closest("#linkModalClose") || target.closest("#linkModalCancel")) {
-    event.preventDefault();
-    closeLinkModal();
+    event.preventDefault(); closeLinkModal(); return;
+  }
+  if (target.id === "linkModalBackdrop") { closeLinkModal(); return; }
+  if (target.closest("#editExistingLink")) {
+    if (activeEditorAnchor) openLinkModal(activeEditorAnchor);
     return;
   }
-  if (target.id === "linkModalBackdrop") closeLinkModal();
+  if (target.closest("#removeExistingLink")) {
+    if (activeEditorAnchor) {
+      const anchor = activeEditorAnchor;
+      const parent = anchor.parentNode;
+      while (anchor.firstChild) parent.insertBefore(anchor.firstChild, anchor);
+      parent.removeChild(anchor);
+      hideEditorLinkPopover();
+      toast("Link berhasil dihapus.");
+    }
+    return;
+  }
+  const clickedLink = target.closest("#editor a");
+  if (clickedLink) {
+    event.preventDefault();
+    showEditorLinkPopover(clickedLink);
+    return;
+  }
+  if (!target.closest("#editorLinkPopover")) hideEditorLinkPopover();
 }, true);
 $("linkModalForm").addEventListener("submit", insertEditorLink);
 document.addEventListener("keydown", event => {
-  if (event.key === "Escape") closeLinkModal();
+  if (event.key === "Escape") { closeLinkModal(); hideEditorLinkPopover(); }
 });
+window.addEventListener("scroll", hideEditorLinkPopover, true);
+
 function insertEditorImage() {
   const url = window.prompt("Masukkan URL gambar:");
   if (!url) return;

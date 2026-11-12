@@ -137,7 +137,7 @@ td{padding:14px 15px;border-top:1px solid var(--border);font-size:11px}
 
 
 #linkModalUrl{box-sizing:border-box}
-.editor-link-popover{position:fixed;z-index:100000;display:none;width:min(340px,calc(100vw - 24px));padding:12px;background:#fff;border:1px solid #e7e8f0;border-radius:12px;box-shadow:0 12px 35px rgba(24,25,45,.2)}
+.editor-link-popover{position:fixed!important;z-index:2147483000!important;display:none;pointer-events:auto;width:min(340px,calc(100vw - 24px));padding:12px;background:#fff;border:1px solid #e7e8f0;border-radius:12px;box-shadow:0 12px 35px rgba(24,25,45,.2)}
 .editor-link-popover.show{display:block}
 .editor-link-popover-url{font-size:12px;color:#2563eb;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:10px}
 .editor-link-popover-actions{display:flex;gap:8px}
@@ -626,7 +626,7 @@ function insertEditorLink(event) {
 
 // Toolbar + popover handlers use delegation so the buttons remain responsive.
 document.addEventListener("pointerdown", event => {
-  if (event.target.closest && (event.target.closest("#linkBtn") || event.target.closest("#editorLinkPopover"))) event.preventDefault();
+  if (event.target.closest && event.target.closest("#linkBtn")) event.preventDefault();
 }, true);
 document.addEventListener("click", event => {
   const target = event.target;
@@ -659,8 +659,17 @@ document.addEventListener("click", event => {
     showEditorLinkPopover(clickedLink);
     return;
   }
-  if (!target.closest("#editorLinkPopover")) hideEditorLinkPopover();
+  if (!target.closest("#editorLinkPopover") && !target.closest("#editor a")) hideEditorLinkPopover();
 }, true);
+// Direct capture listener on the contenteditable area: clicking an existing link opens its mini preview.
+$("editor").addEventListener("click", event => {
+  const anchor = event.target.closest && event.target.closest("a[href]");
+  if (!anchor || !$("editor").contains(anchor)) return;
+  event.preventDefault();
+  event.stopPropagation();
+  showEditorLinkPopover(anchor);
+}, true);
+
 $("linkModalForm").addEventListener("submit", insertEditorLink);
 document.addEventListener("keydown", event => {
   if (event.key === "Escape") { closeLinkModal(); hideEditorLinkPopover(); }

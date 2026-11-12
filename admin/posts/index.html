@@ -273,8 +273,7 @@ td{padding:14px 15px;border-top:1px solid var(--border);font-size:11px}
               <label for="postCategory">PILIH KATEGORI</label>
               <select id="postCategory">
                 <option value="">Tanpa kategori</option>
-                <option>Berita</option><option>Artikel</option>
-                <option>Informasi</option><option>Tutorial</option><option>Pengumuman</option>
+                <option>SLOT GAME</option><option>LIVE GAME</option><option>FISHING GAME</option><option>SPORT GAME</option>
               </select>
             </div>
           </div>
@@ -556,7 +555,7 @@ function openLinkModal(anchorToEdit = null) {
   const selection = window.getSelection();
   if (!anchorToEdit && selection && selection.rangeCount && $("editor").contains(selection.anchorNode)) {
     savedLinkRange = selection.getRangeAt(0).cloneRange();
-  } else if (!anchorToEdit) {
+  } else if (!anchorToEdit && !savedLinkRange) {
     savedLinkRange = null;
   }
   $("linkModalTitle").textContent = anchorToEdit ? "Edit tautan" : "Tambah tautan";
@@ -571,6 +570,7 @@ function closeLinkModal() {
   $("linkModalBackdrop").classList.remove("show");
   $("linkModalBackdrop").setAttribute("aria-hidden","true");
   editingAnchor = null;
+  savedLinkRange = null;
 }
 function hideEditorLinkPopover() {
   $("editorLinkPopover").classList.remove("show");
@@ -582,7 +582,7 @@ function showEditorLinkPopover(anchor) {
   $("editorLinkPopoverUrl").textContent = anchor.href;
   const rect = anchor.getBoundingClientRect();
   pop.style.left = Math.max(12, Math.min(rect.left, window.innerWidth - 352)) + "px";
-  pop.style.top = Math.min(window.innerHeight - 100, rect.bottom + 8) + "px";
+  pop.style.top = Math.max(12, Math.min(window.innerHeight - 125, rect.bottom + 8)) + "px";
   pop.classList.add("show");
 }
 function insertEditorLink(event) {
@@ -594,7 +594,6 @@ function insertEditorLink(event) {
     $("linkModalUrl").setCustomValidity("");
     return;
   }
-  $("editor").focus();
   if (editingAnchor) {
     editingAnchor.setAttribute("href", url);
     editingAnchor.setAttribute("target","_blank");
@@ -603,8 +602,9 @@ function insertEditorLink(event) {
     toast("Tautan berhasil diperbarui.");
     return;
   }
+  $("editor").focus();
   const selection = window.getSelection();
-  if (savedLinkRange) {
+  if (savedLinkRange && $("editor").contains(savedLinkRange.commonAncestorContainer)) {
     selection.removeAllRanges();
     selection.addRange(savedLinkRange);
   }
@@ -624,57 +624,73 @@ function insertEditorLink(event) {
   toast("Link berhasil ditambahkan.");
 }
 
-// Toolbar + popover handlers use delegation so the buttons remain responsive.
-document.addEventListener("pointerdown", event => {
-  if (event.target.closest && event.target.closest("#linkBtn")) event.preventDefault();
-}, true);
-document.addEventListener("click", event => {
-  const target = event.target;
-  if (!target || !target.closest) return;
-  if (target.closest("#linkBtn")) {
-    event.preventDefault(); event.stopPropagation(); openLinkModal(); return;
+// LINK EDITOR — handler tunggal, tidak saling menutup popover.
+// Simpan seleksi sebelum tombol toolbar mengambil fokus.
+$("linkBtn").addEventListener("pointerdown", event => {
+  event.preventDefault();
+  const sel = window.getSelection();
+  if (sel && sel.rangeCount && $("editor").contains(sel.anchorNode)) {
+    savedLinkRange = sel.getRangeAt(0).cloneRange();
   }
-  if (target.closest("#linkModalClose") || target.closest("#linkModalCancel")) {
-    event.preventDefault(); closeLinkModal(); return;
-  }
-  if (target.id === "linkModalBackdrop") { closeLinkModal(); return; }
-  if (target.closest("#editExistingLink")) {
-    if (activeEditorAnchor) openLinkModal(activeEditorAnchor);
-    return;
-  }
-  if (target.closest("#removeExistingLink")) {
-    if (activeEditorAnchor) {
-      const anchor = activeEditorAnchor;
-      const parent = anchor.parentNode;
-      while (anchor.firstChild) parent.insertBefore(anchor.firstChild, anchor);
-      parent.removeChild(anchor);
-      hideEditorLinkPopover();
-      toast("Link berhasil dihapus.");
-    }
-    return;
-  }
-  const clickedLink = target.closest("#editor a");
-  if (clickedLink) {
-    event.preventDefault();
-    showEditorLinkPopover(clickedLink);
-    return;
-  }
-  if (!target.closest("#editorLinkPopover") && !target.closest("#editor a")) hideEditorLinkPopover();
-}, true);
-// Direct capture listener on the contenteditable area: clicking an existing link opens its mini preview.
+});
+$("linkBtn").addEventListener("click", event => {
+  event.preventDefault();
+  openLinkModal();
+});
+$("linkModalClose").addEventListener("click", closeLinkModal);
+$("linkModalCancel").addEventListener("click", closeLinkModal);
+$("linkModalBackdrop").addEventListener("click", event => {
+  if (event.target === $("linkModalBackdrop")) closeLinkModal();
+});
+
+// Mencegah browser menggeser fokus editor ketika tombol preview ditekan.
+$("editorLinkPopover").addEventListener("pointerdown", event => {
+  if (event.target.closest("button")) event.preventDefault();
+});
+$("editExistingLink").addEventListener("click", event => {
+  event.preventDefault();
+  event.stopPropagation();
+  const anchor = activeEditorAnchor;
+  if (anchor && anchor.isConnected) openLinkModal(anchor);
+});
+$("removeExistingLink").addEventListener("click", event => {
+  event.preventDefault();
+  event.stopPropagation();
+  const anchor = activeEditorAnchor;
+  if (!anchor || !anchor.isConnected) return;
+  const parent = anchor.parentNode;
+  while (anchor.firstChild) parent.insertBefore(anchor.firstChild, anchor);
+  parent.removeChild(anchor);
+  parent.normalize();
+  hideEditorLinkPopover();
+  toast("Link berhasil dihapus. Teks tetap tersimpan.");
+});
+
+// Mousedown capture menghentikan navigasi sebelum contenteditable mengubah seleksi.
 $("editor").addEventListener("click", event => {
-  const anchor = event.target.closest && event.target.closest("a[href]");
+  const anchor = event.target.closest("a[href]");
   if (!anchor || !$("editor").contains(anchor)) return;
   event.preventDefault();
   event.stopPropagation();
   showEditorLinkPopover(anchor);
 }, true);
-
+$("editor").addEventListener("keydown", event => {
+  if (event.key === "Enter" && event.target.closest && event.target.closest("a[href]")) {
+    hideEditorLinkPopover();
+  }
+});
+document.addEventListener("pointerdown", event => {
+  if (!event.target.closest("#editorLinkPopover, #editor a[href], #linkModalBackdrop, #linkBtn")) {
+    hideEditorLinkPopover();
+  }
+});
 $("linkModalForm").addEventListener("submit", insertEditorLink);
 document.addEventListener("keydown", event => {
   if (event.key === "Escape") { closeLinkModal(); hideEditorLinkPopover(); }
 });
-window.addEventListener("scroll", hideEditorLinkPopover, true);
+// Jangan gunakan scroll listener capture pada seluruh window:
+// scrolling internal editor dapat langsung menyembunyikan preview.
+window.addEventListener("resize", hideEditorLinkPopover);
 
 function insertEditorImage() {
   const url = window.prompt("Masukkan URL gambar:");

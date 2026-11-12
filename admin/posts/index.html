@@ -543,12 +543,20 @@ function insertEditorLink(event) {
     selection.removeAllRanges();
     selection.addRange(savedLinkRange);
   }
+  if (!selection || selection.isCollapsed || !selection.toString().trim()) {
+    toast("Pilih teks artikel yang ingin dijadikan link terlebih dahulu.");
+    closeLinkModal();
+    return;
+  }
   document.execCommand("createLink", false, url);
-  $("editor").querySelectorAll('a[href="' + CSS.escape(url) + '"]').forEach(link => {
-    link.setAttribute("target","_blank");
-    link.setAttribute("rel","noopener noreferrer");
+  $("editor").querySelectorAll("a[href]").forEach(link => {
+    if (link.href === url) {
+      link.setAttribute("target","_blank");
+      link.setAttribute("rel","noopener noreferrer");
+    }
   });
   closeLinkModal();
+  toast("Link berhasil ditambahkan.");
 }
 $("linkBtn").onclick = openLinkModal;
 $("linkModalForm").addEventListener("submit", insertEditorLink);
@@ -567,7 +575,8 @@ function insertEditorImage() {
   $("editor").focus();
   document.execCommand("insertImage", false, url);
 }
-$("linkBtn").onclick = insertEditorLink;
+$("linkBtn").addEventListener("mousedown", event => event.preventDefault());
+$("linkBtn").onclick = openLinkModal;
 $("imageBtn").onclick = insertEditorImage;
 
 /* THUMBNAIL */
